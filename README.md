@@ -14,7 +14,7 @@
 
 - 홈 화면
   - method : `GET요청`
-  - endpoint : /api/v1/movie_community/
+  - endpoint : /api/v1/movie_community/movies
   - 응답 예시
     ```
     {
