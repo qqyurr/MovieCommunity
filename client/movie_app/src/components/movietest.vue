@@ -1,9 +1,34 @@
 <template>
-  <div>
-      <div v-for="(movie,idx) in movies" :key="idx">
-        {{ movie.title }}
-      </div>
-  </div>
+  <v-container
+    class="fill-height"
+    fluid
+    style="min-height: 300px"
+  >
+    <h1>comedy-movie</h1>
+    <v-card v-for="(movie,idx) in movies.comedy_movies" :key="idx">
+      <v-card-title >
+       {{ movie.title }}
+      </v-card-title>
+       <v-img 
+        :src="movie.poster_path" 
+        alt="poster img"
+        height="300"
+      >
+      </v-img>
+    </v-card>
+    <h1>action-movie</h1>
+    <v-card v-for="(movie,idx) in movies.action_movies" :key="idx">
+      <v-card-title >
+       {{ movie.title }}
+      </v-card-title>
+       <v-img 
+        :src="movie.poster_path" 
+        alt="poster img"
+        height="300"
+      >
+      </v-img>
+    </v-card>
+  </v-container>
 </template>
  
 <script>
@@ -24,6 +49,7 @@ export default {
     getMovie() {
       axios.get(BASE_URL)
       .then(res=>{
+        console.log(res)
         this.movies = res.data
       })
       .catch(err=>{
