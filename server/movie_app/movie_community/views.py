@@ -90,6 +90,8 @@ def review_list(request):
     elif request.method == 'POST':
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
+            print('---------------------------')
+            print(request.user.id)
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -98,7 +100,7 @@ def review_list(request):
 # 혹은 그냥 사이트에서 영화를 검색할 때 사용
 @api_view(['GET'])
 def search_by_movie_title(request):
-    keyword = request.POST.get('title')
+    keyword = request.data.get('title')
     searched_movies = Movie.objects.filter(title__contains=keyword)
     serializer = MovieSerializer(searched_movies, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
