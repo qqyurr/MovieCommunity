@@ -46,3 +46,36 @@
 	"avg_star":"3.5"
 }
 ```
+
+- 회원가입
+
+  - method : `POST`
+  - endpoint : /api/v1/movie_community/accounts/signup/
+  - request body 예시
+
+  ```
+  {
+  	"username":"gyuyeonKim",
+  	"password":"password1234",
+  	"passwordConfirmation":"password1234"
+  }
+  ```
+
+  - 응답 예시
+
+  ```
+  {
+  	"username":"gyuyeonKim",
+  	"today_choice":null
+  }
+  ```
+
+- 로그인
+  - method : `POST`
+  - endpoint : /api/v1/movie_community/accounts/api-token-auth/
+  - 응답 예시
+    ```
+    {
+    	"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0LCJ1c2VybmFtZSI6InVzZXI0IiwiZXhwIjoxNjA2MDU2MzIzLCJlbWFpbCI6IiJ9.vYs8-UYpEy1EyUU3OCsJ6kziCS-bp-HnSX4sUmvYTV0"
+    }
+    ```
