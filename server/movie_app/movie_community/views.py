@@ -1,17 +1,14 @@
-from django.shortcuts import render
-from .serializers import MovieSerializer, ReviewSerializer
-from .models import Movie
+from .serializers import MovieSerializer, ReviewSerializer, ReviewCommentSerializer
+from .models import Movie, Review, Review_Comment
+from accounts.models import User
 from django.shortcuts import get_object_or_404, get_list_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-import urllib.request
 from bs4 import BeautifulSoup
+from django.http import JsonResponse, HttpResponse
 import json
-from django.http import JsonResponse
-from django.http import HttpResponse
-from .models import Review, Review_Comment
-from accounts.models import User
+import urllib.request
 
 # Create your views here.
 
@@ -39,6 +36,26 @@ def movie_list(request):
     response_data['horror_movies'] = horror_movies_serializer.data
 
     return JsonResponse(response_data)
+
+
+# 아이디로 특정 영화 정보와 그에 달린 리뷰 리스트 반환
+@api_view(['GET'])
+def get_movie_by_id(request):
+    movie_id = request.data.get('movieId')
+    print('---------------------------------------------------------------')
+    print(movie_id)
+    movie = get_object_or_404(Movie, pk=movie_id)
+    reviews = Review.objects.filter(movie_id=movie_id)
+
+    for review in reviews:
+        comments = Review_Comment.objects.filter(review_id=review.id)
+        review.comments = comments
+
+    movie.reviews = reviews
+
+    # movie = Movie.objects.filter(pk=movie_id)
+    serializer = MovieSerializer(movie)
+    return Response(data=serializer.data)
 
 # @api_view(['GET'])
 # def movie_list(request):
@@ -74,8 +91,8 @@ def get_poster_path(request):
 @api_view(['GET'])
 def user_review_list(request):
     my_reviews = request.user.reviews
-    serializer = ReviewSerializer(my_reviews, many=True)
-    serializer = ReviewSerializer(my_reviews, many=True)
+    serializer = ReviewSerializer(
+        my_reviews, many=True)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
@@ -90,8 +107,6 @@ def review_list(request):
     elif request.method == 'POST':
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            print('---------------------------')
-            print(request.user.id)
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -104,3 +119,16 @@ def search_by_movie_title(request):
     searched_movies = Movie.objects.filter(title__contains=keyword)
     serializer = MovieSerializer(searched_movies, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# GET/POST : 리뷰에 달린 코멘트 리스트, 리뷰에 코멘트 작성
+@api_view(['GET', 'POST'])
+def comment_list(request):
+    if request.method == 'POST':
+        serializer = ReviewCommentSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=request.user)
+            # 그냥 아이디만 request body 에 넣어주면  serializer(data=request.data) 로 넣어주면 알아서 해당 아이디의 객체를 찾아서 넣어주는듯..대박 굳이
+            # 첨에는 request.POST.get('review') 해서 리뷰 아이디 찾아서 review = Review.objects.filter(id=review_id) 해서 찾아줘서 serializer(review=review)
+            # 이렇게 넣어주려고했는데 에러만 나고(user는 User 인스턴스여야 한다는 에러남. querydict 로 와서그런가.) 그냥 아무것도안하면 알아서 장고에서 다 해주는것이었다 디박
+            return Response(serializer.data, status=status.HTTP_200_OK)
