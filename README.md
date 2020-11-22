@@ -23,6 +23,52 @@
 
 ### `http://127.0.0.1:8000/swagger/` 에서도 확인 가능
 
+### 특정 영화의 리뷰 창
+
+- method : `GET요청`
+- endpoint : /api/v1/movie_community/specific_movies/
+- 응답 예시
+  ```
+  {
+      "id": 3,
+      "title": "Ask Tesadüfleri Sever 2",
+      "year": "2020",
+      ... 중략 ...
+      "avg_star": "",
+      "reviews": [
+          {
+              "id": 2,
+              "content": "해리포터는아즈카반의죄수가최",
+              "movie": 3,
+              "star": 5,
+              "comments": [
+                  {
+                      "id": 4,
+                      "content": "2번리뷰의 1댓글",
+                      "created_at": "2020-11-22T20:01:42.690017+09:00",
+                      "updated_at": "2020-11-22T20:01:42.690043+09:00",
+                      "review": 2
+                  },
+                  {
+                      "id": 5,
+                      "content": "2번리뷰의 2댓글",
+                      "created_at": "2020-11-22T20:01:45.933366+09:00",
+                      "updated_at": "2020-11-22T20:01:45.933472+09:00",
+                      "review": 2
+                  }
+              ]
+          },
+          {
+              "id": 3,
+              "content": "영화안본지오래ㄴ",
+              "movie": 3,
+              "star": 5,
+              "comments": []
+          }
+      ]
+  }
+  ```
+
 ## 홈 화면
 
 - method : `GET요청`
