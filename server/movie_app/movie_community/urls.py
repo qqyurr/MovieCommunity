@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import views
 
+
 urlpatterns = [
     # GET : 전체 영화 리스트
     path('movies/', views.movie_list),
