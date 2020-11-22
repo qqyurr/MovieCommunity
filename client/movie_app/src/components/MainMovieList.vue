@@ -4,7 +4,7 @@
     fluid
     style="min-height: 300px"
   >
-    <h1>comedy-movie</h1>
+    <h1>코미디</h1>
     <v-card v-for="(movie,idx) in movies.comedy_movies" :key="idx">
       <v-card-title >
        {{ movie.title }}
@@ -16,7 +16,7 @@
       >
       </v-img>
     </v-card>
-    <h1>action-movie</h1>
+    <h1>액션</h1>
     <v-card v-for="(movie,idx) in movies.action_movies" :key="idx">
       <v-card-title >
        {{ movie.title }}
@@ -36,7 +36,7 @@ const BASE_URL = 'http://localhost:8000/api/v1/movie_community/movies/'
 
 import axios from 'axios'
 export default {
-  name:'movietest',
+  name:'MainMovieList',
   data() {
     return {
       movies: [],
