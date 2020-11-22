@@ -1,21 +1,24 @@
 <template>
-  <v-sheet
-    height="400"
-    class="overflow-hidden"
-    style="position: relative;"
-  >
- 
-  <Home/>
-  </v-sheet>
+<div
+  class="d-flex flex-row"
+    flat
+    tile>
+  <div>
+    <Menu/>
+    <Home/>
+  </div>
+</div>
 </template>
 
 <script>
+import Menu from '@/views/Menu'
 import Home from '@/views/Home'
 export default {
   name: 'App',
 
   components: {
     Home,
+    Menu,
   },
 
   data: () => ({
