@@ -1,24 +1,27 @@
 <template>
-<div
-  class="d-flex flex-row"
-    flat
-    tile>
-  <div>
-    <Menu/>
-    <Home/>
+  <div id="app"
+    class="d-flex flex-row">
+      <div>
+        <Menu/>
+      </div>
+      <!-- <router-view/> -->
+      
   </div>
-</div>
 </template>
 
 <script>
 import Menu from '@/views/Menu'
-import Home from '@/views/Home'
+// import Home from '@/views/Home'
+// import Login from '@/views/Login'
+
+
 export default {
   name: 'App',
 
   components: {
-    Home,
+    // Home,
     Menu,
+    // Login,
   },
 
   data: () => ({

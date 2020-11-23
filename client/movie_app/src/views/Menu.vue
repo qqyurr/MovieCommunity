@@ -1,21 +1,65 @@
 <template>
-<div class='d-flex'>
-  <v-navigation-drawer
-  class='menubar'>
-    this is menu bar
-    userprofile사진, 필요
-    로그인 안했을 때는 - 로그인 버튼, 회원가입 버튼 나오게
-    로그인 했을 때는 - 마이페이지, 로그아웃, 검색창 나오게
-    <searching/>
-  </v-navigation-drawer>
-</div>
+    <div id="app">
+    <v-app id="inspire">
+      <v-app-bar app clipped-left class="primary">
+        <v-app-bar-nav-icon @click="drawerState = !drawerState"/>
+      </v-app-bar>
+      <v-navigation-drawer v-model="drawerState" app clipped color="grey lighten-4">
+        <!-- content -->
+      
+
+        <v-list dense>
+          <v-list-item
+            v-for="item in items"
+            :key="item.title"
+            link
+          >
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <router-link :to="item.url"> {{item.title}} </router-link>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+      <v-content>
+        <v-container>
+          <v-row justify="center" align="center" class="mt-10">
+            <v-col cols="auto">
+              <router-view/>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-content>
+    </v-app>
+  </div>
 </template>
 
+
+
 <script>
-import Searching from '../components/Searching.vue'
 export default {
-  components: { Searching },
-  name:'Menu',
+  name: 'Menu',
+  data () {
+      return {
+        items: [
+          { title: 'MyPage', icon: 'mdi-view-dashboard', url: '/mypage' },
+          { title: 'Home', icon: 'mdi-view-dashboard', url: '/' },
+          { title: 'Login', icon: 'mdi-forum', url: '/accounts/login' },
+          { title: 'Signup', icon: 'mdi-forum', url: '/accounts/signup' },
+        ],
+      }
+    },
+  computed: {
+    drawerState: {
+      get () { return this.$store.getters.drawerState },
+      set (v) { return this.$store.commit('toggleDrawerState', v) }
+    }
+  }
+
+
 }
 </script>
 
