@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 from django.http import JsonResponse, HttpResponse
 import json
 import urllib.request
+from django.core import serializers
+from django.forms.models import model_to_dict
 
 # Create your views here.
 
@@ -56,6 +58,37 @@ def get_movie_by_id(request):
     serializer = MovieSerializer(movie)
     return Response(data=serializer.data)
 
+
+@api_view(['GET', 'POST'])
+def reviewDetail(request, movie_id):
+    # GET 요청) 영화정보와 리뷰와 리뷰코멘트들을 묶어 반환.
+
+    print('------------------------------------------------')
+    print(movie_id)
+    if request.method == 'GET':
+        movie = get_object_or_404(Movie, pk=movie_id)
+        reviews = Review.objects.filter(movie_id=movie_id)
+        for review in reviews:
+            comments = Review_Comment.objects.filter(review_id=review.id)
+            review.comments = comments
+        movie.reviews = reviews
+        serializer = MovieSerializer(movie)
+        return Response(serializer.data)
+
+    # POST 요청)유저가 리뷰를 작성할 때 :
+    elif request.method == 'POST':
+        content = request.data.get('content')
+        star = request.data.get('star')
+        movie = get_object_or_404(Movie, pk=movie_id)
+        review = Review(content=content, star=star,
+                        movie=movie, user=request.user)
+        review.save()
+        serialized_obj = serializers.serialize('json', [review])
+
+        dict_obj = model_to_dict(review)
+        serialized = json.dumps(dict_obj)
+        return Response(serialized)
+
 # @api_view(['GET'])
 # def movie_list(request):
 #     # movies = get_list_or_404(Movie)
@@ -89,6 +122,8 @@ def get_poster_path(request):
 # user가 작성한 리뷰 리스트 반환 (마이페이지에서 사용)
 @api_view(['GET'])
 def user_review_list(request):
+    print('------------------------------------------------------------')
+    print(request.user.id)
     my_reviews = request.user.reviews
     serializer = ReviewSerializer(
         my_reviews, many=True)

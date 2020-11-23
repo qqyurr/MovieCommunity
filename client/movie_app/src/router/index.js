@@ -32,7 +32,7 @@ const routes = [
     component: Login,
   },
   {
-    path: '/moviedetail',
+    path: '/movies/:movieId/reviews', 
     name: 'MovieDetail',
     component: MovieDetail,
   },

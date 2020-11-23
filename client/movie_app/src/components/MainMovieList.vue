@@ -49,7 +49,7 @@
 </template>
  
 <script>
-const BASE_URL = 'http://localhost:8000/api/v1/movie_community/movies/'
+const SERVER_URL = 'http://localhost:8000/api/v1/movie_community/movies/'
 
 import axios from 'axios'
 export default {
@@ -64,7 +64,9 @@ export default {
   },
   methods: {
     getMovie() {
-      axios.get(BASE_URL)
+      const myToken = localStorage.getItem('jwt')
+
+      axios.get(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
         console.log(res)
         this.movies = res.data
@@ -74,8 +76,10 @@ export default {
       })
     },
     goToDetail(movie) {
-      console.log(movie)
-      this.$router.push('moviedetail')
+      console.log('goToDetail clicked! ')
+      this.$store.state.selectedMovie = movie.id
+      console.log(this.$store.state.selectedMovie)
+      this.$router.push('/movies/' + movie.id + '/reviews/')
     }
   },
 }
