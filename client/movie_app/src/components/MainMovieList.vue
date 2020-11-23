@@ -1,51 +1,103 @@
 <template>
-  <v-container
-    class="fill-height"
-    fluid
-    style="min-height: 300px"
-  >
-  <v-app id="app">
-    <v-content>
+  <v-app id="inspire">
+    <!-- <v-system-bar app>
+      <v-spacer></v-spacer>
 
-      <!-- MainContentContainer starts -->
+      <v-icon>mdi-square</v-icon>
 
+      <v-icon>mdi-circle</v-icon>
 
-      <!-- <v-container style="margin-top: -4rem; width: 1600px;">
-        <v-card outlined style="width: 1600px;" class="mx-auto" >
-          <v-card-title>Comedy</v-card-title>
-          <v-card-text style="width: 1600px;">
-            <v-row no-gutters>
-              <v-col v-for="(movie,idx) in movies.comedy_movies.slice(0,6)" :key="idx" cols="12" sm="6" md="2" class="pa-1">
-                <v-card outlined>
-                  <v-img :max-height="250" :src="movie.poster_path"></v-img>
-                  <v-card-title class="subtitle-1">{{movie.title}}</v-card-title>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-container> -->
+      <v-icon>mdi-triangle</v-icon>
+    </v-system-bar>
 
-      <v-container style="margin-top: -4rem; width: 1600px;">
-        <v-card outlined style="width: 1600px;" class="mx-auto" >
-          <v-card-title>Comedy</v-card-title>
-          <v-card-text style="width: 1600px;">
-            <v-row no-gutters>
-              <v-col v-for="(movie,idx) in movies.comedy_movies.slice(0,6)" :key="idx" cols="12" sm="6" md="2" class="pa-1">
+    <v-app-bar app>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+
+      <v-toolbar-title>Application</v-toolbar-title>
+    </v-app-bar>
+
+    <v-navigation-drawer
+      v-model="drawer"
+      fixed
+      temporary
+    >
+    </v-navigation-drawer> -->
+
+    <v-main class="grey lighten-2">
+      <v-container>
+        <v-row>
+
+                       <!-- <v-col v-for="(movie,idx) in movies.comedy_movies.slice(0,6)" :key="idx" cols="12" sm="6" md="2" class="pa-1">
                 <v-card @click='goToDetail(movie)' outlined>
                   <v-img :max-height="250" :src="movie.poster_path"></v-img>
                   <v-card-title class="subtitle-1">{{movie.title}}</v-card-title>
                 </v-card>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-container>
-      <!-- MainContentContainer ends -->
+              </v-col> -->
 
-      </v-content>
-    </v-app>
-  </v-container>
+
+
+          <!-- <template v-for="n in 4"> -->
+            <v-col
+              :key="n"
+              class="mt-2"
+              cols="12"
+            >
+            <strong>Comedy</strong>
+            </v-col>
+
+            <v-col
+              v-for="(movie,idx) in movies.comedy_movies.slice(0,6)"
+              :key="`${n}${idx}`"
+              cols="6"
+              md="2"
+            >
+              <v-sheet  height="150" >
+                <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+              </v-sheet>
+            </v-col>
+
+            <v-col
+              :key="n"
+              class="mt-2"
+              cols="12"
+            >
+            <strong>Action</strong>
+            </v-col>
+
+            <v-col
+              v-for="(movie,idx) in movies.action_movies.slice(0,6)"
+              :key="`${n}${idx}`"
+              cols="6"
+              md="2"
+            >
+              <v-sheet height="150">
+                <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+              </v-sheet>
+            </v-col>
+
+            <v-col
+              :key="n"
+              class="mt-2"
+              cols="12"
+            >
+            <strong>Horror</strong>
+            </v-col>
+
+            <v-col
+              v-for="(movie,idx) in movies.horror_movies.slice(0,6)"
+              :key="`${n}${idx}`"
+              cols="6"
+              md="2"
+            >
+              <v-sheet height="150">
+                <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+              </v-sheet>
+            </v-col>
+          <!-- </template> -->
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
  
 <script>
@@ -57,6 +109,7 @@ export default {
   data() {
     return {
       movies: [],
+      draweer: null,
     }
   },
   created() {
@@ -68,8 +121,9 @@ export default {
 
       axios.get(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
-        console.log(res)
-        this.movies = res.data
+        console.log(res.data.movies_by_genre)
+        console.log(res.data.movies_by_genre.action_movies)
+        this.movies = res.data.movies_by_genre
       })
       .catch(err=>{
         console.log(err)

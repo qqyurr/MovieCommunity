@@ -10,32 +10,19 @@
       줄거리 : {{ movieinfo.description }}
     </h3>
     <hr>
-    <h4 v-for='(review,idx) in movieinfo.reviews' :key='idx'>
-      <v-card
-          elevation="5"
-        >{{ review.content }} {{ review.star }}</v-card>
-    
-      <h5 v-for='(comment, idx) in review.comments' :key='idx'>
-        --- 대댓글: {{ comment.content }}  - {{ comment.created_at }}
-      </h5>
-    </h4>
+    <h2>자유롭게 리뷰를 남겨보세요</h2>
+
+
     <hr>
   </v-container>
 </template>
 
 <script>
-// const BASE_URL = 'http://localhost:8000/api/v1/movie_community/movies/' + this.$store.state.selectedMovie + '/reviews/'
-// const BASE_URL = 'http://localhost:8000/api/v1/movie_community/movies/' + props.movieId + '/reviews/'
-// const BASE_URL = 'http://localhost:8000/api/v1/movie_community/movies/' + 3 + '/reviews/'
-
-
 import axios from 'axios'
 
 
 export default {
   name:'MovieInfo',
-  computed: {
-  },
 
   data() {
     return {

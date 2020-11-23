@@ -36,8 +36,9 @@ def movie_list(request):
     response_data['thriller_movies'] = thriller_movies_serializer.data
     response_data['action_movies'] = action_movies_serializer.data
     response_data['horror_movies'] = horror_movies_serializer.data
+    
 
-    return JsonResponse(response_data)
+    return JsonResponse({'movies_by_genre' : response_data})
 
 
 # 아이디로 특정 영화 정보와 그에 달린 리뷰 리스트와 각 리뷰에 달린 코멘트 리스트 반환
@@ -92,7 +93,7 @@ def reviewDetail(request, movie_id):
 # @api_view(['GET'])
 # def movie_list(request):
 #     # movies = get_list_or_404(Movie)
-#     movies = Movie.objects.order_by("id")[:10]
+#     movies = Movie.objects.order_by("id")[100:]
 
 #     for movie in movies:
 #         url = 'https://www.imdb.com/title/'
@@ -105,8 +106,8 @@ def reviewDetail(request, movie_id):
 #         imgUrl = soup.find("img")["src"]
 #         movie.poster_path = imgUrl
 #         movie.save()
-#         print('saved')
-
+#         print(movie.id)
+#     print('completed')
 #     serializer = MovieSerializer(movies, many=True)
 #     return Response(serializer.data)
 
