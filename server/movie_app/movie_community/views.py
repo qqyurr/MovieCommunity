@@ -39,11 +39,10 @@ def movie_list(request):
 
 
 # 아이디로 특정 영화 정보와 그에 달린 리뷰 리스트와 각 리뷰에 달린 코멘트 리스트 반환
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def get_movie_by_id(request):
     movie_id = request.data.get('movieId')
-    print('---------------------------------------------------------------')
-    print(movie_id)
+
     movie = get_object_or_404(Movie, pk=movie_id)
     reviews = Review.objects.filter(movie_id=movie_id)
 
