@@ -6,7 +6,7 @@
       </v-app-bar>
       <v-navigation-drawer v-model="drawerState" app clipped color="grey lighten-4">
         <!-- content -->
-      
+    
         <v-list dense>
           <v-list-item
             v-for="item in items"
@@ -22,7 +22,6 @@
             </v-list-item-content>
           </v-list-item>
           <br>
-          <router-link @click.native="logout" to="#"> Logout </router-link>
 
           <!-- 검색 바  -->
           <searching/>
@@ -64,22 +63,12 @@ export default {
         ],
       }
     },
-  props: {
-    login: Boolean
-  },
-
-  methods: {
-    logout: function() {
-      localStorage.removeItem('jwt')
-      this.$router.push({name: 'Login'})
-    },
-  },
   computed: {
     drawerState: {
       get () { return this.$store.getters.drawerState },
       set (v) { return this.$store.commit('toggleDrawerState', v) }
     }
-  }
+  },
 
 
 }
