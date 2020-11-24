@@ -22,12 +22,17 @@
               <router-link :to="item.url"> {{item.title}} </router-link>
             </v-list-item-content>
           </v-list-item>
+          <br>
+
+          <searching/>
+
         </v-list>
       </v-navigation-drawer>
       <v-content>
         <v-container>
           <v-row justify="center" align="center" class="mt-10">
             <v-col cols="auto">
+              <!--출력되는곳 -->
               <router-view/>
             </v-col>
           </v-row>
@@ -40,8 +45,13 @@
 
 
 <script>
+import Searching from '@/components/Searching'
+
 export default {
   name: 'Menu',
+  components:{
+  Searching,
+  },
   data () {
       return {
         items: [
@@ -49,6 +59,8 @@ export default {
           { title: 'Home', icon: 'mdi-view-dashboard', url: '/' },
           { title: 'Login', icon: 'mdi-forum', url: '/accounts/login' },
           { title: 'Signup', icon: 'mdi-forum', url: '/accounts/signup' },
+          { title: 'Recommend', icon: 'mdi-forum', url: '/recommend' },
+
         ],
       }
     },

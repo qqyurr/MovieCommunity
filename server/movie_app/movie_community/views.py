@@ -9,12 +9,22 @@ from bs4 import BeautifulSoup
 from django.http import JsonResponse, HttpResponse
 import json
 import urllib.request
+from django.core import serializers
+from django.forms.models import model_to_dict
 
 # Create your views here.
 
 
 @api_view(['GET'])
-def movie_list(request):
+def all_movie_list(request):
+    movies = get_list_or_404(Movie)
+    serializer = MovieSerializer(movies, many=True)
+    return Response(data=serializer.data)
+
+
+# 장르별로 10개씩 영화 반환
+@api_view(['GET'])
+def movie_list_by_genre(request):
     # movies = get_list_or_404(Movie)
     comedy_movies = Movie.objects.filter(genre__startswith="Comedy")[:10]
     romance_movies = Movie.objects.filter(genre__startswith="Romance")[:10]
@@ -35,11 +45,11 @@ def movie_list(request):
     response_data['action_movies'] = action_movies_serializer.data
     response_data['horror_movies'] = horror_movies_serializer.data
 
-    return JsonResponse(response_data)
+    return JsonResponse({'movies_by_genre': response_data})
 
 
 # 아이디로 특정 영화 정보와 그에 달린 리뷰 리스트와 각 리뷰에 달린 코멘트 리스트 반환
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
 def get_movie_by_id(request):
     movie_id = request.data.get('movieId')
 
@@ -56,10 +66,41 @@ def get_movie_by_id(request):
     serializer = MovieSerializer(movie)
     return Response(data=serializer.data)
 
+
+@api_view(['GET', 'POST'])
+def reviewDetail(request, movie_id):
+    # GET 요청) 영화정보와 리뷰와 리뷰코멘트들을 묶어 반환.
+
+    print('------------------------------------------------')
+    print(movie_id)
+    if request.method == 'GET':
+        movie = get_object_or_404(Movie, pk=movie_id)
+        reviews = Review.objects.filter(movie_id=movie_id)
+        for review in reviews:
+            comments = Review_Comment.objects.filter(review_id=review.id)
+            review.comments = comments
+        movie.reviews = reviews
+        serializer = MovieSerializer(movie)
+        return Response(serializer.data)
+
+    # POST 요청)유저가 리뷰를 작성할 때 :
+    elif request.method == 'POST':
+        content = request.data.get('content')
+        star = request.data.get('star')
+        movie = get_object_or_404(Movie, pk=movie_id)
+        review = Review(content=content, star=star,
+                        movie=movie, user=request.user)
+        review.save()
+        serialized_obj = serializers.serialize('json', [review])
+
+        dict_obj = model_to_dict(review)
+        serialized = json.dumps(dict_obj)
+        return Response(serialized)
+
 # @api_view(['GET'])
 # def movie_list(request):
 #     # movies = get_list_or_404(Movie)
-#     movies = Movie.objects.order_by("id")[:10]
+#     movies = Movie.objects.order_by("id")[100:]
 
 #     for movie in movies:
 #         url = 'https://www.imdb.com/title/'
@@ -72,23 +113,17 @@ def get_movie_by_id(request):
 #         imgUrl = soup.find("img")["src"]
 #         movie.poster_path = imgUrl
 #         movie.save()
-#         print('saved')
-
+#         print(movie.id)
+#     print('completed')
 #     serializer = MovieSerializer(movies, many=True)
 #     return Response(serializer.data)
-
-
-def get_poster_path(request):
-    movies = get_list_or_404(Movie)
-    for movie in movies:
-        movie.poster_path = 'https://m.media-amazon.com/images/M/MV5BNmI5ZmM2NDgtMmNjNi00ZjY4LWJmZmYtYWVkNjdhODNiZjdiXkEyXkFqcGdeQXVyMTIxODU0NzI5._V1_UX182_CR0,0,182,268_AL_.jpg'
-        movie.save()
-    return JsonResponse({'message': 'okay'})
 
 
 # user가 작성한 리뷰 리스트 반환 (마이페이지에서 사용)
 @api_view(['GET'])
 def user_review_list(request):
+    print('------------------------------------------------------------')
+    print(request.user.id)
     my_reviews = request.user.reviews
     serializer = ReviewSerializer(
         my_reviews, many=True)
@@ -131,3 +166,12 @@ def comment_list(request):
             # 첨에는 request.POST.get('review') 해서 리뷰 아이디 찾아서 review = Review.objects.filter(id=review_id) 해서 찾아줘서 serializer(review=review)
             # 이렇게 넣어주려고했는데 에러만 나고(user는 User 인스턴스여야 한다는 에러남. querydict 로 와서그런가.) 그냥 아무것도안하면 알아서 장고에서 다 해주는것이었다 디박
             return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def recommend_movie(request, genre):
+
+    recommend_movies = Movie.objects.filter(
+        genre__startswith=genre).order_by('-avg_vote')[:5]
+    serializer = MovieSerializer(recommend_movies, many=True)
+    return Response(serializer.data)

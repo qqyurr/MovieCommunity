@@ -3,10 +3,15 @@
       <h1>my page</h1>
       <hr>
       <h2>내가 작성한 리뷰</h2>
+      <br>
+        <ul>
+            <li v-for="(review, idx) in myReviews" :key="idx">
+                <p> {{ review.content }} |
+                    내가 준 별점 : {{ review.star}}</p>
 
-      <p>반지의제왕 ⭑⭑⭑⭑⭑ go </p>
-      <p>해리포뤄 ⭑⭑⭑⭑⭑ go </p>
-      <p>호빗 ⭑⭑⭑⭑⭑ go </p>
+            </li>
+        </ul>
+
 
       
   </div>
@@ -14,7 +19,7 @@
 
 <script>
 import axios from 'axios'
-const SERVER_URL = ''
+const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/user_reviews/'
 
 export default {
     name: 'Mypage',
@@ -25,9 +30,13 @@ export default {
     },
     methods: {
         getMyReviews(){
-            axios.get(SERVER_URL)
+            console.log('getMyReviews called')
+            const myToken = localStorage.getItem('jwt')
+            axios.get(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
                 .then(res => {
                     console.log(res)
+                    this.myReviews = res.data
+                    console.log(this.myReviews)
                 })
                 .catch(err => {
                     console.log(err)

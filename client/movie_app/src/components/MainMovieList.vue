@@ -1,55 +1,70 @@
 <template>
-  <v-container
-    class="fill-height"
-    fluid
-    style="min-height: 300px"
-  >
-  <v-app id="app">
-    <v-content>
+  <v-app id="inspire" v-if="isLoaded">
+    <v-main class="grey lighten-2">
+      <v-container>
+        <v-row>
+            <v-col
+              class="mt-2"
+              cols="12"
+            >
+            <strong>Comedy</strong>
+            </v-col>
 
-      <!-- MainContentContainer starts -->
+            <v-col
+              v-for="(movie) in movies.comedy_movies.slice(0,6)"
+              :key="movie.id"
+              cols="6"
+              md="2"
+            >
+              <v-sheet  height="150" >
+                <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+              </v-sheet>
+            </v-col>
 
+            <v-col
+              class="mt-2"
+              cols="12"
+            >
+            <strong>Action</strong>
+            </v-col>
 
-      <!-- <v-container style="margin-top: -4rem; width: 1600px;">
-        <v-card outlined style="width: 1600px;" class="mx-auto" >
-          <v-card-title>Comedy</v-card-title>
-          <v-card-text style="width: 1600px;">
-            <v-row no-gutters>
-              <v-col v-for="(movie,idx) in movies.comedy_movies.slice(0,6)" :key="idx" cols="12" sm="6" md="2" class="pa-1">
-                <v-card outlined>
-                  <v-img :max-height="250" :src="movie.poster_path"></v-img>
-                  <v-card-title class="subtitle-1">{{movie.title}}</v-card-title>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-container> -->
+            <v-col
+              v-for="(movie) in movies.action_movies.slice(0,6)"
+              :key="movie.id"
+              cols="6"
+              md="2"
+            >
+              <v-sheet height="150">
+                <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+              </v-sheet>
+            </v-col>
 
-      <v-container style="margin-top: -4rem; width: 1600px;">
-        <v-card outlined style="width: 1600px;" class="mx-auto" >
-          <v-card-title>Comedy</v-card-title>
-          <v-card-text style="width: 1600px;">
-            <v-row no-gutters>
-              <v-col v-for="(movie,idx) in movies.comedy_movies.slice(0,6)" :key="idx" cols="12" sm="6" md="2" class="pa-1">
-                <v-card @click='goToDetail(movie)' outlined>
-                  <v-img :max-height="250" :src="movie.poster_path"></v-img>
-                  <v-card-title class="subtitle-1">{{movie.title}}</v-card-title>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-card-text>
-        </v-card>
+            <v-col
+              class="mt-2"
+              cols="12"
+            >
+            <strong>Horror</strong>
+            </v-col>
+
+            <v-col
+              v-for="(movie) in movies.horror_movies.slice(0,6)"
+              :key="movie.id"
+              cols="6"
+              md="2"
+            >
+              <v-sheet height="150">
+                <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+              </v-sheet>
+            </v-col>
+          <!-- </template> -->
+        </v-row>
       </v-container>
-      <!-- MainContentContainer ends -->
-
-      </v-content>
-    </v-app>
-  </v-container>
+    </v-main>
+  </v-app>
 </template>
  
 <script>
-const BASE_URL = 'http://localhost:8000/api/v1/movie_community/movies/'
+const SERVER_URL = 'http://localhost:8000/api/v1/movie_community/movie_list_by_genre/'
 
 import axios from 'axios'
 export default {
@@ -57,6 +72,8 @@ export default {
   data() {
     return {
       movies: [],
+      draweer: null,
+      isLoaded: false,
     }
   },
   created() {
@@ -64,18 +81,23 @@ export default {
   },
   methods: {
     getMovie() {
-      axios.get(BASE_URL)
+      const myToken = localStorage.getItem('jwt')
+      axios.get(SERVER_URL, {headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
-        console.log(res)
-        this.movies = res.data
+        console.log(res.data.movies_by_genre)
+        console.log(res.data.movies_by_genre.action_movies)
+        this.movies = res.data.movies_by_genre
+        this.isLoaded = true
       })
       .catch(err=>{
         console.log(err)
       })
     },
     goToDetail(movie) {
-      console.log(movie)
-      this.$router.push('moviedetail')
+      console.log('goToDetail clicked! ')
+      this.$store.state.selectedMovie = movie.id
+      console.log(this.$store.state.selectedMovie)
+      this.$router.push('/movies/' + movie.id + '/reviews/')
     }
   },
 }
