@@ -24,13 +24,7 @@
 </template>
 
 <script>
-// const BASE_URL = 'http://localhost:8000/api/v1/movie_community/movies/' + this.$store.state.selectedMovie + '/reviews/'
-// const BASE_URL = 'http://localhost:8000/api/v1/movie_community/movies/' + props.movieId + '/reviews/'
-// const BASE_URL = 'http://localhost:8000/api/v1/movie_community/movies/' + 3 + '/reviews/'
-
-
 import axios from 'axios'
-
 
 export default {
   name:'MovieInfo',
@@ -48,14 +42,12 @@ export default {
   },
 
   created() {
-    console.log('------------------ movie id is : ')
-    console.log(this.movieId)
     this.getMovieInfo()
   },
 
   watch: {
     movieId() {
-      this.getMovieInfo
+      this.getMovieInfo()
     }
   },
   methods: {

@@ -56,7 +56,6 @@ export default {
       })
     },
     goToDetail(search) {
-      console.log('(2) go to movie detail page -  movieId :')
       const myToken = localStorage.getItem('jwt')
       axios.get(BASE_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{

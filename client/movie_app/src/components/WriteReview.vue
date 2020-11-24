@@ -19,7 +19,7 @@
           size="18"
         ></v-rating>
         <v-btn @click="createPost">
-          이 버튼을 누르면 리뷰 저장 + 별점 저장 
+          작성하기 
         </v-btn>
     </v-card>
   </v-container>
@@ -35,30 +35,36 @@ export default {
       review : {
         content : '',
         star : 0,
-        movie : this.$store.state.selectedMovie,
+        movie : this.movieId,
       }
     }
   },
   watch: {
-    movieId(newValue){
-      this.movieId = Number(newValue)
+    movieId(){
+      console.log('movid has been changed')
     }
   },
+  // watch: {
+  //   movieId(newValue){
+  //     this.movieId = Number(newValue)
+  //   }
+  // },
   props: {
     movieId : [String, Number]
   },
   methods: {
     createPost() {
-      // 항상 이제 로그인해야만 요청할 수 있기 때문에, token 빼와서 header 에 넣어서 요청해야함
+      // 이제 로그인해야만 요청할 수 있기 때문에, token 빼와서 header 에 넣어서 요청해야함
+      const SERVER_URL = `http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`
       const myToken = localStorage.getItem('jwt')
       const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
-      axios.post(`http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`, this.review, headers)
-        // .then(res=> {
-          
-        // })
+
+      axios.post(SERVER_URL, this.review, headers)
+        .then(res=>{
+          console.log(res)
+        })
       this.review.star = 0 
       this.review.content = ''
-      // this.$router.push(`/movies/${this.movieId}/reviews`)
     },
   },
 }
