@@ -19,61 +19,17 @@
       elevation="2"
     >이미지옆에 설명</v-card>
 
+    
+
     <!-- 리뷰창 시작 : 리뷰 컴포넌트 불러오기 -->
     <Review
-      v-for="(review, idx) in reviews"
+      v-for="(review, idx) in movieinfo.reviews"
       :key="idx"
       :review="review"
+      @comment-created="onCommentCreated"
+      @review-deleted="onReviewDeleted"
     />
-    <!-- 댓글리스트 for문 시작 -->
-    <h4 v-for='(review,idx) in movieinfo.reviews' :key='idx'>
-      <v-card
-          class="pa-md-4"
-          elevation="2"
-        >{{ review.content }} {{ review.star }}
 
-        <!-- 댓글에 달린 대댓 버튼 시작 -->
-        <v-icon
-          @click="writeComment" 
-          large
-          color="blue darken-2"
-        >
-          mdi-message-text
-        </v-icon>
-        <!-- 댓글에 달린 대댓 버튼 끝-->
-
-        <!-- 댓글에 달린 삭제 버튼 시작-->
-        <v-btn
-          @click="deleteReview(review.id)"
-          icon
-          color="pink"
-        >
-          <v-icon>mdi-heart</v-icon>
-        </v-btn>
-        <!-- 댓글에 달린 삭제 버튼 끝-->
-      </v-card>
-
-        <!-- 대댓 인풋 시작(숨겨놓음) 댓글 마다 다는것임-->
-        <span v-if="showComment">
-          <v-text-field
-          v-model="commentContent"
-          @keypress.enter="createComment(review.id)"
-          >
-          </v-text-field>
-        </span>
-        <!-- 대댓 인풋 끝-->
-
-
-
-      <!-- 리뷰에 달린 대댓글 출력 -->
-      <h4 v-for='(comment, idx) in review.comments' :key='idx'>
-        <v-card
-          class="ml-10 pa-md-4" color="white" 
-          elevation="5"
-        >{{ comment.content }} {{ comment.created_at}}</v-card>
-      </h4>
-    </h4>
-    <hr>
     
     <!-- 아래는 리뷰 작성하는 form  -->
       <!-- 별점 -->
@@ -118,12 +74,6 @@ export default {
       movie : this.movieId,
       reviewAdded: false,
       reviewDeleted: false,
-      commentContent: '',
-
-      // 내가 작성한 리뷰인지 아닌지
-      myReview: false,
-      commentCreated: false,
-      showComment: false,
     }
   },
 
@@ -147,10 +97,6 @@ export default {
     reviewDeleted() {
       this.getMovieInfo()
     },
-
-    commentCreated() {
-      this.getMovieInfo()
-    }
   },
   methods: {
 
@@ -185,45 +131,13 @@ export default {
       this.reviewAdded = !this.reviewAdded
     },
 
-    // 리뷰 삭제
-    deleteReview(reviewId) {
-      console.log('delete btn clicked')
-      const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${reviewId}/`
-      const myToken = localStorage.getItem('jwt')
-
-      axios.delete(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        this.reviewDeleted = !this.reviewDeleted
+    onCommentCreated() {
+      console.log(' comment created : movieInfo')
+      this.reviewAdded = !this.reviewAdded
     },
 
-    // 대댓글 작성
-    createComment(reviewId) {
-      const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${reviewId}/comments/`
-      const myToken = localStorage.getItem('jwt')
-      const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
-
-      console.log(this.commentContent)
-      console.log(this.reviewId)
-      axios.post(SERVER_URL, {content: this.commentContent, review: reviewId}, headers)
-        .then(res=>{
-          console.log(' comment created? ')
-          console.log(res)
-        })
-        .catch(err=> {
-          console.log(err)
-        })
-        this.commentCreated = !this.commentCreated
-        this.showComment = false
-
-    },
-
-    writeComment() {
-      this.showComment = true
+    onReviewDeleted() {
+      this.reviewDeleted = !this.reviewDeleted
     },
   },
 
