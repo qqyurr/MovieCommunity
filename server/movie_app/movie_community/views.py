@@ -166,3 +166,12 @@ def comment_list(request):
             # 첨에는 request.POST.get('review') 해서 리뷰 아이디 찾아서 review = Review.objects.filter(id=review_id) 해서 찾아줘서 serializer(review=review)
             # 이렇게 넣어주려고했는데 에러만 나고(user는 User 인스턴스여야 한다는 에러남. querydict 로 와서그런가.) 그냥 아무것도안하면 알아서 장고에서 다 해주는것이었다 디박
             return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def recommend_movie(request, genre):
+
+    recommend_movies = Movie.objects.filter(
+        genre__startswith=genre).order_by('-avg_vote')[:5]
+    serializer = MovieSerializer(recommend_movies, many=True)
+    return Response(serializer.data)

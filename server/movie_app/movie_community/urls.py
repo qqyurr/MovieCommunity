@@ -28,7 +28,7 @@ urlpatterns = [
     path('search_movie_title/', views.search_by_movie_title),
 
     # GET : 영화 추천 결과 반환
-    # path('recommend/<genre:genre>/', views.)
+    path('recommend/<str:genre>/', views.recommend_movie),
 
 
 
