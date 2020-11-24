@@ -32,6 +32,7 @@ const routes = [
     component: Login,
   },
   {
+    // 동적 라우팅
     path: '/movies/:movieId/reviews', 
     name: 'MovieDetail',
     component: MovieDetail,

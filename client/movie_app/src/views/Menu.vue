@@ -22,6 +22,10 @@
               <router-link :to="item.url"> {{item.title}} </router-link>
             </v-list-item-content>
           </v-list-item>
+          <br>
+
+          <searching/>
+
         </v-list>
       </v-navigation-drawer>
       <v-content>
@@ -40,8 +44,13 @@
 
 
 <script>
+import Searching from '@/components/Searching'
+
 export default {
   name: 'Menu',
+  components:{
+  Searching,
+  },
   data () {
       return {
         items: [

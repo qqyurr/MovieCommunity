@@ -16,7 +16,15 @@ from django.forms.models import model_to_dict
 
 
 @api_view(['GET'])
-def movie_list(request):
+def all_movie_list(request):
+    movies = get_list_or_404(Movie)
+    serializer = MovieSerializer(movies, many=True)
+    return Response(data=serializer.data)
+
+
+# 장르별로 10개씩 영화 반환
+@api_view(['GET'])
+def movie_list_by_genre(request):
     # movies = get_list_or_404(Movie)
     comedy_movies = Movie.objects.filter(genre__startswith="Comedy")[:10]
     romance_movies = Movie.objects.filter(genre__startswith="Romance")[:10]
@@ -36,9 +44,8 @@ def movie_list(request):
     response_data['thriller_movies'] = thriller_movies_serializer.data
     response_data['action_movies'] = action_movies_serializer.data
     response_data['horror_movies'] = horror_movies_serializer.data
-    
 
-    return JsonResponse({'movies_by_genre' : response_data})
+    return JsonResponse({'movies_by_genre': response_data})
 
 
 # 아이디로 특정 영화 정보와 그에 달린 리뷰 리스트와 각 리뷰에 달린 코멘트 리스트 반환
@@ -110,14 +117,6 @@ def reviewDetail(request, movie_id):
 #     print('completed')
 #     serializer = MovieSerializer(movies, many=True)
 #     return Response(serializer.data)
-
-
-def get_poster_path(request):
-    movies = get_list_or_404(Movie)
-    for movie in movies:
-        movie.poster_path = 'https://m.media-amazon.com/images/M/MV5BNmI5ZmM2NDgtMmNjNi00ZjY4LWJmZmYtYWVkNjdhODNiZjdiXkEyXkFqcGdeQXVyMTIxODU0NzI5._V1_UX182_CR0,0,182,268_AL_.jpg'
-        movie.save()
-    return JsonResponse({'message': 'okay'})
 
 
 # user가 작성한 리뷰 리스트 반환 (마이페이지에서 사용)

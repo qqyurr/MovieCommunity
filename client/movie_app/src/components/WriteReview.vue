@@ -34,7 +34,7 @@ export default {
     return {
       review : {
         content : '',
-        star : '',
+        star : 0,
         movie : this.$store.state.selectedMovie,
       }
     }
@@ -44,6 +44,7 @@ export default {
   },
   methods: {
     createPost() {
+      // 항상 이제 로그인해야만 요청할 수 있기 때문에, token 빼와서 header 에 넣어서 요청해야함
       const myToken = localStorage.getItem('jwt')
       const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
       axios.post(`http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`, this.review, headers)
