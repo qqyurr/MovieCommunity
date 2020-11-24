@@ -163,3 +163,17 @@ def recommend_movie(request, genre):
         genre__startswith=genre).order_by('-avg_vote')[:5]
     serializer = MovieSerializer(recommend_movies, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def findWriter(request, reviewId):
+    review = get_object_or_404(Review, pk=reviewId)
+    print('----------------------------------------')
+    print(reviewId)
+    print(review.user.id)
+    print(request.user.id)
+
+    if request.user.id == review.user_id:
+        return Response({'isWriter': True})
+    else:
+        return Response({'isWriter': False})

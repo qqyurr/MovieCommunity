@@ -34,3 +34,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#app {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+</style>

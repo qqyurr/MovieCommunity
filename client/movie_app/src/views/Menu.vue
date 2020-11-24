@@ -21,8 +21,10 @@
               <router-link :to="item.url"> {{item.title}} </router-link>
             </v-list-item-content>
           </v-list-item>
-          <br>
-          <router-link @click.native="logout" to="#"> Logout </router-link>
+          
+          <v-list-item-content>
+            <router-link @click.native="logout" to="#"> Logout </router-link>
+          </v-list-item-content>
 
           <!-- 검색 바  -->
           <searching/>
@@ -85,6 +87,3 @@ export default {
 }
 </script>
 
-<style>
-
-</style>

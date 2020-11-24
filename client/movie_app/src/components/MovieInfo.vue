@@ -1,8 +1,7 @@
 <template>
   <v-container>
     <!-- 영화 정보 출력  -->
-    <h3>
-      영화 번호 : {{this.movieId}}
+    <h3 style="font-family: 'Source Sans Pro', sans-serif;">
       {{ movieinfo.title }}
     </h3>
     <img :src="movieinfo.poster_path" alt="">
@@ -11,16 +10,8 @@
         elevation="2"
       > {{ movieinfo.description }} 
       </v-card>
-      줄거리 : {{ movieinfo.description }}
     </h3>
     <hr>
-    <v-card
-      class="d-inline"
-      elevation="2"
-    >이미지옆에 설명</v-card>
-
-    
-
     <!-- 리뷰창 시작 : 리뷰 컴포넌트 불러오기 -->
     <Review
       v-for="(review, idx) in movieinfo.reviews"
@@ -145,5 +136,5 @@ export default {
 </script>
 
 <style>
-
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
 </style>

@@ -31,6 +31,8 @@ urlpatterns = [
     # GET : 영화 추천 결과 반환
     path('recommend/<str:genre>/', views.recommend_movie),
 
+    # GET : 로그인한 사용자가 리뷰 작성자인지 아닌지 boolean 값 반환
+    path('reviews/<int:reviewId>/writer/', views.findWriter),
 
 
 ]
