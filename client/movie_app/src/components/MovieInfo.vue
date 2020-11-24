@@ -44,13 +44,19 @@ export default {
   },
 
   props: {
-    movieId : String,
+    movieId : [String, Number]
   },
 
   created() {
     console.log('------------------ movie id is : ')
     console.log(this.movieId)
     this.getMovieInfo()
+  },
+
+  watch: {
+    movieId() {
+      this.getMovieInfo
+    }
   },
   methods: {
 

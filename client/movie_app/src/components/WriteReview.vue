@@ -39,8 +39,13 @@ export default {
       }
     }
   },
+  watch: {
+    movieId(newValue){
+      this.movieId = Number(newValue)
+    }
+  },
   props: {
-    movieId : String
+    movieId : [String, Number]
   },
   methods: {
     createPost() {
@@ -48,9 +53,12 @@ export default {
       const myToken = localStorage.getItem('jwt')
       const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
       axios.post(`http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`, this.review, headers)
-      this.review.star = ''
+        // .then(res=> {
+          
+        // })
+      this.review.star = 0 
       this.review.content = ''
-      this.$router.push(`/movies/${this.movieId}/reviews`)
+      // this.$router.push(`/movies/${this.movieId}/reviews`)
     },
   },
 }

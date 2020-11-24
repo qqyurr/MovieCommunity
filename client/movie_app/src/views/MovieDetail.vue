@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="movieId">
     <movie-info :movieId="movieId"/>
     <!-- <reviews :movieId="movieId"/> -->
     <write-review :movieId="movieId"/>
@@ -16,13 +16,18 @@ export default {
   name:'MovieDetail',
   data: function() {
     return {
-      movieId : this.$route.params.movieId,
-      movieData : [],
+      movieId : '',
     }
   },
 
   mounted() {
-    console.log('-----------this.$router')
+    this.movieId = `${this.$route.params.movieId}`
+  },
+
+  watch: {
+    $route(){
+      this.movieId = `${this.$route.params.movieId}`
+    }
   },
 
   components:{
