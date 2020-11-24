@@ -2,13 +2,13 @@
   <div v-if="movieId">
     <movie-info :movieId="movieId"/>
     <!-- <reviews :movieId="movieId"/> -->
-    <write-review :movieId="movieId"/>
+    <!-- <write-review :movieId="movieId"/> -->
   </div>
 </template>
 
 <script>
 import MovieInfo from '@/components/MovieInfo'
-import WriteReview from '@/components/WriteReview'
+// import WriteReview from '@/components/WriteReview'
 // import Reviews from '../components/Reviews.vue'
 
 
@@ -32,7 +32,7 @@ export default {
 
   components:{
     MovieInfo,
-    WriteReview,
+    // WriteReview,
     // Reviews,
   },
   created: function() {

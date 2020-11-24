@@ -20,7 +20,35 @@
       </h5>
     </h4>
     <hr>
+    
+    <!-- 아래는 리뷰 작성하는 form  -->
+    <v-card
+    dark>
+      <v-textarea
+        @keypress.enter="createPost"
+        v-model="content"
+        name="input"
+        filled
+        label="Review"
+        auto-grow
+      ></v-textarea>
+      <v-rating
+          v-model="star"
+          background-color="white"
+          color="yellow accent-4"
+          dense
+          hover
+          size="18"
+        ></v-rating>
+        <v-btn @click="createPost">
+          작성하기 
+        </v-btn>
+    </v-card>
+
+
   </v-container>
+
+  
 </template>
 
 <script>
@@ -34,6 +62,11 @@ export default {
   data() {
     return {
       movieinfo: [],
+      content : '',
+      star : 0,
+      movie : this.movieId,
+
+      reviewAdded: false,
     }
   },
 
@@ -48,10 +81,15 @@ export default {
   watch: {
     movieId() {
       this.getMovieInfo()
-    }
+    },
+
+    reviewAdded() {
+      this.getMovieInfo()
+    },
   },
   methods: {
 
+    // 영화와 댓글과 대댓글들
     getMovieInfo() {
       const myToken = localStorage.getItem('jwt')
       axios.get(`http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
@@ -62,7 +100,22 @@ export default {
       .catch(err => {
         console.log(err)
       })
-    }
+    },
+
+    // 리뷰작성 포스트요청
+      createPost() {
+      const SERVER_URL = `http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`
+      const myToken = localStorage.getItem('jwt')
+      const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
+
+      axios.post(SERVER_URL, {content: this.content, star: this.star, movie: this.movieId}, headers)
+        .then(res=>{
+          console.log(res)
+        })
+      this.star = 0 
+      this.content = ''
+      this.reviewAdded = !this.reviewAdded
+    },
   },
 
 }
