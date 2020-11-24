@@ -16,13 +16,13 @@ export default {
   name:'MovieDetail',
   data: function() {
     return {
-      movieId : this.$route.params.movieId 
+      movieId : this.$route.params.movieId,
+      movieData : [],
     }
   },
 
   mounted() {
     console.log('-----------this.$router')
-    console.log(this.$route)
   },
 
   components:{
@@ -30,9 +30,7 @@ export default {
     WriteReview,
     // Reviews,
   },
-
-  
-    Reviewscreated: function() {
+  created: function() {
       console.log('route params movie id is !!!')
       console.log(this.movieId)
       console.log(this.$route.params.movieId)

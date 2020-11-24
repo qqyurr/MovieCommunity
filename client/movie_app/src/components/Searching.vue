@@ -42,6 +42,7 @@ export default {
   },
   methods: {
     loadEntries() {
+      console.log('(1) searching movie title....')
       const myToken = localStorage.getItem('jwt')
       axios.get(BASE_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
@@ -55,20 +56,21 @@ export default {
       })
     },
     goToDetail(search) {
-      console.log('go to detail clicked')
+      console.log('(2) go to movie detail page')
       const myToken = localStorage.getItem('jwt')
       axios.get(BASE_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
         res.data.forEach(element => {
           if (search === element.title){
-            this.$router.push('/movies/1/reviews')
+            if (this.$route.path != '/movies/' + element.id + '/reviews') {
+              this.$router.push('/movies/' + element.id + '/reviews')
+              }
+            }
 
-            // if (this.$route.path != '/movies/' + element.id + '/reviews') this.$router.push('/movies/' + element.id + '/reviews')
             // this.$router.go(this.$router.currentRoute);
             // return this.$router.push({ name: 'MovieDetail', params: { movieId: element.id }})
             // return this.$router.push('/movies/' + element.id + '/reviews')
-          }
-        });
+          });
       })
     },
 
