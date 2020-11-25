@@ -8,8 +8,8 @@
         class="navbar d-flex justify-space-between white"
       >
         <v-app-bar-nav-icon @click="drawerState = !drawerState" class='logo'/>
-        <router-link :to="'/'" class='logo' > 
-                  
+        <router-link :to="'/'" class='logo'> 
+                
         <h1 class='font-italic logo'>
           Oh, young me
         </h1>
@@ -70,7 +70,7 @@ export default {
   components:{
   Searching,
   },
-  
+
   methods: {
     logout: function() {
       localStorage.removeItem('jwt')

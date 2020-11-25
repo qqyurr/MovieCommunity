@@ -1,13 +1,30 @@
 <template>
   <div class="reviewClass">
       <!-- 댓글 시작 -->
-      <li style="list-style: none; padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
-        <span class="comment" style="font-size:13px;">{{ review.content }}</span>
-          <span>{{review.star}}</span>
-      </li>
-
-
+      <span v-if="updateNotClicked">
+        <li style="list-style: none; padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
+          <span class="comment" style="font-size:13px;">{{ review.content }}</span>
+            <span>{{review.star}}</span>
+            <i class="far fa-comment" style="margin-left:1%" @click="showCommentInput"></i>
+            <i class="far fa-edit" style="margin-left:1%" @click="showReview(review.id)"></i>
+            <i class="far fa-trash-alt" style="margin-left:1%" @click="deleteReview(review.id)"></i>
+        </li>
+      </span>
       <!-- 댓글 끝 -->
+
+      <!-- 수정) 댓글 업데이트 인풋 출력 시작(수정버튼 클릭시에만 보여주기) 원래 댓글을 숨긴다-->
+
+      <!-- v-model 이 양방향바인딩을 해줘서 value 와 충돌이 일어남 -->
+      <span v-if="showUpdateInput">
+        <v-text-field
+          :value="reviewUpdateContent"
+          @keypress.enter="updateReview(review.id)"
+          v-model="reviewUpdateContent"
+        >
+        </v-text-field>
+
+        
+      </span>
 
         <!-- 대댓 인풋 시작(숨겨놓음) 댓글 마다 다는것임-->
         <span v-if="showComment">
@@ -28,14 +45,6 @@
           <span>{{comment.createdTime}}</span>
         </li>
       </div>
-<!-- 
-      <div v-for='(comment, idx) in review.comments' :key='idx'>
-        <v-card
-            
-          class="ml-10 pa-md-4" color="white" 
-          elevation="5"
-        >{{ comment.content }}</v-card>
-      </div> -->
       <!-- 리뷰에 달린 대댓글 출력 끝 -->
   </div>
 </template>
@@ -54,8 +63,19 @@ export default {
         return {
             writer: false,
             commentCreated: false,
-            showComment: false,
+
+            originalContent: this.review.content,
+
+            //showUpdateInput
+            showUpdateInput: false,
+
+            showComment: false, 
             commentContent: '',
+
+            updateNotClicked: true,
+
+            // 유저가 수정한 리뷰 내용
+            reviewUpdateContent: this.review.content,
         }
     },
     watch: {
@@ -77,9 +97,32 @@ export default {
     },
     methods: {
 
-    updateReview(reviewId) {
-        console.log(reviewId)
-        console.log('review update clicked')
+    // 리뷰 수정창 보이기
+    showReview(reviewId){
+      console.log('review update clicked')
+      console.log(reviewId)
+      this.showUpdateInput = true
+      console.log("showupdateInput : ", this.showUpdateInput)
+      this.updateNotClicked = false
+      console.log("updateNotClicked: ", this.updateNotClicked)
+      console.log(this.review.content)
+     
+    },
+
+    // 리뷰 업데이트 하기
+    updateReview(reviewId){
+      const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${reviewId}/`
+      const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
+      axios.put(SERVER_URL, {content: this.reviewUpdateContent}, headers)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        this.showUpdateInput = false
+        this.updateNotClicked = !this.updateNotClicked
+        this.$emit('comment-created')
     },
     
     // 리뷰 삭제
@@ -95,6 +138,7 @@ export default {
           console.log(err)
         })
         this.$emit('review-deleted')
+        
     },
 
     showCommentInput() {
