@@ -2,11 +2,19 @@
   <div>
     <div>
         <div> 
-          <!-- <img src="../assets/story_white.png" style="width: 1200px;" alt=""> -->
-          <!-- <img src="../assets/story_white.png" style="width: 720; " alt=""> -->
 
-         <div class="row row-no-gutters box">
+          <!-- 왼쪽 : 이야기, 오른쪽 : 추천 영화 포스터 -->
+          <div class="row row-no-gutters box" v-if="showStory">
             <img class="col-7" width=800 height=700 src="../assets/story_only.png" alt="">
+            <img @click="goToDetail(movie)" class="col-5" width=530 height=700 :src="recommendedMoviePoster" alt="">
+          </div>
+
+          <div class="row row-no-gutters box" v-else>
+            <div class="afterChoice">
+                <div class="typing-demo">
+                  당신에게 딱 맞는 영화 {{recommendMovieTitle}}
+                </div>
+            </div>
             <img @click="goToDetail(movie)" class="col-5" width=530 height=700 :src="recommendedMoviePoster" alt="">
           </div>
 
@@ -25,13 +33,6 @@
             <br>
              <v-btn style="margin-top:2%" @click='getMovie()'>pick!</v-btn>
           </div>
-
-         
-          <!-- <div v-for='(movie,idx) in movies' :key=idx >
-            {{ movie.title }}
-            <img :src="movie.poster_path" alt="poster" @click="goToDetail(movie)">
-          </div> -->
-     
         </div>
     </div>
   </div>
@@ -47,7 +48,9 @@ export default {
       picked: '',
       movie: [],
       selected: [],
+      recommendMovieTitle: '',
       recommendedMoviePoster: '',
+      showStory: true,
     }
   },
   methods:{
@@ -59,12 +62,13 @@ export default {
        console.log('movie title : ' , res.data[0].title)
        console.log('movie id : ' , res.data[0].id)
        this.recommendedMoviePoster = res.data[0].poster_path
+       this.recommendMovieTitle = res.data[0].title
        this.movie = res.data[0]
+       this.showStory = false
       })
 
     },
     goToDetail(movie) {
-      console.log('goToDetail clicked! ')
       this.$store.state.selectedMovie = movie.id
       console.log(this.$store.state.selectedMovie)
       this.$router.push('/movies/' + movie.id + '/reviews/')
@@ -80,16 +84,6 @@ export default {
         max-width: 100%;
         max-height: 100%;
     }
-    .left{
-        max-width: 100%;
-        max-height: 100%;
-        display: block; /* remove extra space below image */
-    }
-    .right{
-        max-width: 100%;
-        max-height: 100%;
-        display: block; /* remove extra space below image */
-    }
     .box{
         width: 1300px;     
         height: 700px;   
@@ -98,5 +92,36 @@ export default {
 
     .checkbox {
       display: inline;
+    }
+
+    .afterChoice {
+      width: 730px;
+      height: 690px;
+      /*This part is important for centering*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .typing-demo {
+      width: 22ch;
+      animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid;
+      font-family: monospace;
+      font-size: 2em;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0
+      }
+    }
+        
+    @keyframes blink {
+      50% {
+        border-color: transparent
+      }
     }
 </style>

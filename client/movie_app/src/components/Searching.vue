@@ -42,11 +42,9 @@ export default {
   },
   methods: {
     loadEntries() {
-      console.log('(1) searching movie title....')
       const myToken = localStorage.getItem('jwt')
       axios.get(BASE_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
-        console.log(res.data)
         res.data.forEach(element => {
           this.entries.push(element.title)
         });

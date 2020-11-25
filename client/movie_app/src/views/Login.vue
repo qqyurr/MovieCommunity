@@ -21,6 +21,7 @@
         :type="show1 ? 'text' : 'password'"
         label="password"
         required
+        @keypress.enter="login"
       ></v-text-field>
 
       <v-btn
@@ -49,6 +50,11 @@ const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
         password: '',
       },
     }),
+    watch: {
+    '$store.state.login': function() {
+      console.log('I am Login.vue watch : loggined status changed : ', this.$store.state.login)
+    }
+  },
 
     methods: {
       login() {
@@ -57,7 +63,9 @@ const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
             console.log(res.data.token)
             localStorage.setItem('jwt', res.data.token)
             this.$router.push({name: 'Home'})
-
+            this.$store.state.login = true
+            console.log('this.$store.state.login', this.$store.state.login)
+            this.$forceUpdate()
           })
           .catch(err => {
             console.log(err)

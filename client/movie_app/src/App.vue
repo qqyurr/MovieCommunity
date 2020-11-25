@@ -30,6 +30,7 @@ export default {
     const token = localStorage.getItem('jwt')
     if (token) {
       this.login = true
+      this.$store.state.login = true
     }
   },
 };
