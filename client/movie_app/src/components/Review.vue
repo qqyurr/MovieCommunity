@@ -1,42 +1,10 @@
 <template>
   <div class="reviewClass">
       <!-- 댓글 시작 -->
-      <li style="padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
-        <span class="comment" style="font-size:13px; margin-left:2%">{{ review.content }}</span>
+      <li style="list-style: none; padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
+        <span class="comment" style="font-size:13px;">{{ review.content }}</span>
           <span>{{review.star}}</span>
       </li>
-
-
-      <v-card
-          class="pa-md-4"
-          elevation="2"
-        >{{ review.content }} {{ review.star }}
-
-        <!-- 댓글에 달린 대댓 버튼 시작 -->
-        <v-icon @click="showCommentInput"
-        large 
-        color="blue darken-2">
-        mdi-message-text
-        </v-icon>
-        <!-- 댓글에 달린 대댓 버튼 끝-->
-
-        <!-- 댓글에 달린 수정 버튼 시작 -->
-        <v-icon @click="updateReview(review.id)">mdi-pencil</v-icon>
-
-        <!-- 댓글에 달린 삭제 버튼 시작-->
-        <span v-if="writer">
-        <v-btn
-            @click="deleteReview(review.id)"
-            class="ma-2"
-            text
-            icon
-            color="red lighten-2"
-        >
-        <v-icon>mdi-thumb-down</v-icon>
-          </v-btn>
-        </span>
-        <!-- 댓글에 달린 삭제 버튼 끝-->
-      </v-card>
 
 
       <!-- 댓글 끝 -->
@@ -54,9 +22,9 @@
 
       <!-- 리뷰에 달린 대댓글 출력 -->
       <div v-for="(comment, idx) in review.comments" :key='idx'>
-        <li style="padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
-        <i class="fa fa-share fa-flip-vertical re"></i>
-        <span class="comment" style="font-size:13px; margin-left:2%">{{ comment.content }}</span>
+        <li style="margin-left:2%; list-style: none;padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
+        <i class="fa fa-share fa-flip-vertical re" style=color:#ccc;></i>
+        <span class="comment" style="font-size:13px; margin-left:1%">{{ comment.content }}</span>
           <span>{{comment.createdTime}}</span>
         </li>
       </div>
