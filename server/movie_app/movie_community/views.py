@@ -168,7 +168,7 @@ def comment_list(request, review_id):
 def recommend_movie(request, genre):
 
     recommend_movies = Movie.objects.filter(
-        genre__startswith=genre).order_by('-avg_vote')[:5]
+        genre__startswith=genre).order_by('-avg_vote')[:1]
     serializer = MovieSerializer(recommend_movies, many=True)
     return Response(serializer.data)
 
