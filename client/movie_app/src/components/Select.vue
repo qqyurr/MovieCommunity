@@ -12,7 +12,7 @@
                 </article>
               </section>
             </div>
-            <img @click="goToDetail(movie)" class="col-5" width=530 height=700 :src="recommendedMoviePoster" alt="">
+            <img @click="goToDetail(movie)" class="col-5" width=530 height=700 src="https://thumbs.gfycat.com/AngryChillyHatchetfish-max-1mb.gif" alt="">
           </div>
 
           <div class="row row-no-gutters box" v-else>
@@ -104,7 +104,7 @@ export default {
        this.recommendedMoviePoster = res.data[0].poster_path
        this.recommendMovieTitle = res.data[0].title
        console.log('recommededMovieTitle : ', this.recommendMovieTitle)
-       const wholeSentence = '도전을 받아들일 준비가 되어있는 당신에게 추천하는 영화 영화 포스터를 눌러 리뷰페이지로 이동하세요!'
+       const wholeSentence = '도전을 받아들일 준비가 되어있는 당신에게 추천하는 영화 영화 포스터를 눌러 리뷰페이지로 이동하세요도전을 받아들일 준비가 되어있는 당신에게 추천하는 영화 영화 포스터를 눌러 리뷰페이지로 이동하세!'
        this.movie = res.data[0]
        this.showStory = false
        this.showEffect(wholeSentence)
