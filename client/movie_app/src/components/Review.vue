@@ -1,6 +1,12 @@
 <template>
   <div class="reviewClass">
       <!-- 댓글 시작 -->
+      <li style="padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
+        <span class="comment" style="font-size:13px; margin-left:2%">{{ review.content }}</span>
+          <span>{{review.star}}</span>
+      </li>
+
+
       <v-card
           class="pa-md-4"
           elevation="2"
@@ -29,7 +35,6 @@
         <v-icon>mdi-thumb-down</v-icon>
           </v-btn>
         </span>
-
         <!-- 댓글에 달린 삭제 버튼 끝-->
       </v-card>
 
@@ -48,13 +53,22 @@
         <!-- 대댓 인풋 끝-->
 
       <!-- 리뷰에 달린 대댓글 출력 -->
+      <div v-for="(comment, idx) in review.comments" :key='idx'>
+        <li style="padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
+        <i class="fa fa-share fa-flip-vertical re"></i>
+        <span class="comment" style="font-size:13px; margin-left:2%">{{ comment.content }}</span>
+          <span>{{comment.createdTime}}</span>
+        </li>
+      </div>
+<!-- 
       <div v-for='(comment, idx) in review.comments' :key='idx'>
         <v-card
             
           class="ml-10 pa-md-4" color="white" 
           elevation="5"
         >{{ comment.content }}</v-card>
-      </div>
+      </div> -->
+      <!-- 리뷰에 달린 대댓글 출력 끝 -->
   </div>
 </template>
 
