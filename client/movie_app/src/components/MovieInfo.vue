@@ -1,17 +1,16 @@
 <template>
   <v-container>
     <!-- 영화 정보 출력  -->
-    <h3 style="font-family: 'Source Sans Pro', sans-serif;">
-      {{ movieinfo.title }}
-    </h3>
-    <img :src="movieinfo.poster_path" alt="">
-    <h3>
-      <v-card
-        elevation="2"
-      > {{ movieinfo.description }} 
-      </v-card>
-    </h3>
-    <hr>
+    <div class="movieInfo">
+      <div class="poster" style="display:inline">
+        <img :src="movieinfo.poster_path" alt="">
+      </div>
+      <div class="description" style="display:inline">
+        {{ movieinfo.title }}
+        {{ movieinfo.description }} 
+      </div>
+    </div>
+
     <!-- 리뷰창 시작 : 리뷰 컴포넌트 불러오기 -->
     <Review
       v-for="(review, idx) in movieinfo.reviews"
