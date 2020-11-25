@@ -1,14 +1,9 @@
 <template>
-  <v-app class="home">
-
-    <v-icon dark>
-      mdi-format-list-bulleted-square
-    </v-icon>
+  <div>
     <no-login />
     <!-- <규연이가 아이패드로 그린 우리의 로고...손그림 그것이 매력포인트여 -->
     <main-movie-list />
-
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -24,3 +19,6 @@ export default {
   }
 }
 </script>
+<style>
+
+</style>

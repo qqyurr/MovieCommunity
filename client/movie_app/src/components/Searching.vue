@@ -4,10 +4,9 @@
     :items="entries"
     :search-input.sync="search"
     clearable
-    filled
-    rounded
     return-object
     @keypress.enter="goToDetail(search)"
+    class='searchinput'
   ></v-autocomplete>
 </template>
 
@@ -73,5 +72,9 @@ export default {
 </script>
 
 <style>
-
+.searchinput {
+  
+  margin-left: 10%;
+  margin-right: 10%;
+}
 </style>
