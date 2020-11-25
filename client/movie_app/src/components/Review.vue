@@ -6,14 +6,19 @@
           <span class="comment" style="font-size:13px;">{{ review.content }}</span>
             <span>{{review.star}}</span>
             <i class="far fa-comment" style="margin-left:1%" @click="showCommentInput"></i>
-            <i class="far fa-edit" style="margin-left:1%" @click="showReview(review.id)"></i>
-            <i class="far fa-trash-alt" style="margin-left:1%" @click="deleteReview(review.id)"></i>
+
+            <!-- 로그인 유저와 리뷰 작성자가 일치할 때만 수정/삭제 버튼 보여주기 시작-->
+            <span v-if="writer">
+              <i class="far fa-edit" style="margin-left:1%" @click="showReview(review.id)"></i>
+              <i class="far fa-trash-alt" style="margin-left:1%" @click="deleteReview(review.id)"></i>
+            </span>
+            <!-- 로그인 유저와 리뷰 작성자가 일치할 때만 수정/삭제 버튼 보여주기 끝-->
+
         </li>
       </span>
       <!-- 댓글 끝 -->
 
       <!-- 수정) 댓글 업데이트 인풋 출력 시작(수정버튼 클릭시에만 보여주기) 원래 댓글을 숨긴다-->
-
       <!-- v-model 이 양방향바인딩을 해줘서 value 와 충돌이 일어남 -->
       <span v-if="showUpdateInput">
         <v-text-field
@@ -169,6 +174,5 @@ export default {
 <style scoped>
 .reviewClass {
     font-family: 'Nanum Gothic Coding', monospace;
-
 }
 </style>
