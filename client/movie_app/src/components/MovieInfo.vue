@@ -1,15 +1,26 @@
 <template>
   <v-container>
     <!-- 영화 정보 출력  -->
-    <div class="movieInfo">
-      <div class="poster" style="display:inline">
+    
+
+    <div class="movieInfo col" style="border-style:solid; border-width:0.5px; border-radius: 5px;">
+      
+      <div class="poster col-3" style="display:inline">
         <img :src="movieinfo.poster_path" alt="">
       </div>
-      <div class="description" style="display:inline">
-        {{ movieinfo.title }}
-        {{ movieinfo.description }} 
+
+      <div class="col-8 description" style="margin-left:4%;">
+        <h1>{{ movieinfo.title }}</h1>
+        <br>
+        <h3>actors</h3>
+        <div v-for="(actor,idx) in actors" :key='idx'>
+          {{ actor }}
+        </div>
+        <br>
+        <p>{{ movieinfo.description }}</p>
       </div>
     </div>
+    
 
     <!-- 리뷰창 시작 : 리뷰 컴포넌트 불러오기 -->
     <Review
@@ -64,6 +75,7 @@ export default {
       movie : this.movieId,
       reviewAdded: false,
       reviewDeleted: false,
+      actors: [],
     }
   },
 
@@ -95,6 +107,9 @@ export default {
       const myToken = localStorage.getItem('jwt')
       axios.get(`http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
+        const acts = res.data.actors.split(',')
+        this.actors = acts.slice(0,5)
+        console.log(this.actors)
         console.log(res)
         this.movieinfo = res.data
       })
@@ -136,4 +151,24 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
+v-container {
+  font:Source Sans Pro;
+}
+.movieInfo {
+  display:flex;
+  flex-direction: row;
+  position: relative;
+}
+.poster{
+  position: relative;
+
+}
+img {
+  position: absolute;
+  top: 10%;
+  left: 20%;
+}
+.description{
+  
+}
 </style>

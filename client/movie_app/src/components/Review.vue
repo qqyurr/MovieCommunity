@@ -3,16 +3,71 @@
       <!-- 댓글 시작 -->
       <span v-if="updateNotClicked">
         <li style="list-style: none; padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
-          <span class="comment" style="font-size:13px;">{{ review.content }}</span>
-            <span>{{review.star}}</span>
-            <i class="far fa-comment" style="margin-left:1%" @click="showCommentInput"></i>
+          <div class='comment_one'>
 
-            <!-- 로그인 유저와 리뷰 작성자가 일치할 때만 수정/삭제 버튼 보여주기 시작-->
-            <span v-if="writer">
-              <i class="far fa-edit" style="margin-left:1%" @click="showReview(review.id)"></i>
-              <i class="far fa-trash-alt" style="margin-left:1%" @click="deleteReview(review.id)"></i>
-            </span>
-            <!-- 로그인 유저와 리뷰 작성자가 일치할 때만 수정/삭제 버튼 보여주기 끝-->
+          <h4 class='bold'>익명{{ review.id }}
+          <span v-if="writer">
+            <i class="far fa-edit" style="margin-left:1%" @click="showReview(review.id)"></i>
+          </span>
+          <span>
+            <i class="far fa-comment" style="margin-left:1%" @click="showCommentInput"></i>
+          </span>
+          <span v-if="writer">
+            <i class="far fa-trash-alt" style="margin-left:1%" @click="deleteReview(review.id)"></i>
+          </span>
+          </h4>
+          <div class='starcolor'>
+          <div v-if="review.star === 0">
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          </div>
+          <div v-if="review.star === 1">
+          <i class='fas fa-star'></i>
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          </div>
+          <div v-if="review.star === 2">
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          </div>
+          <div v-if="review.star === 3">
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          <i class='far fa-star'></i>
+          <i class='far fa-star'></i>
+          </div>
+          <div v-if="review.star === 4">
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          <i class='far fa-star'></i>
+          </div>
+          <div v-if="review.star === 5">
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          <i class='fas fa-star'></i>
+          </div>
+          </div>
+          <h4>
+          <span class="comment">{{ review.content }}</span>
+          </h4>
+
+
+          <!-- 로그인 유저와 리뷰 작성자가 일치할 때만 수정/삭제 버튼 보여주기 시작-->
+          <!-- 로그인 유저와 리뷰 작성자가 일치할 때만 수정/삭제 버튼 보여주기 끝-->
+          </div>
 
         </li>
       </span>
@@ -172,7 +227,15 @@ export default {
 </script>
 
 <style scoped>
-.reviewClass {
-    font-family: 'Nanum Gothic Coding', monospace;
+.comment_one {
+  display:flex;
+  flex-direction: column;
+}
+.comment {
+  font-weight: 100;
+}
+.starcolor {
+  opacity: 70%;
+  font-size: 60%;
 }
 </style>
