@@ -48,31 +48,9 @@ def movie_list_by_genre(request):
     return JsonResponse({'movies_by_genre': response_data})
 
 
-# 아이디로 특정 영화 정보와 그에 달린 리뷰 리스트와 각 리뷰에 달린 코멘트 리스트 반환
-@api_view(['GET'])
-def get_movie_by_id(request):
-    movie_id = request.data.get('movieId')
-
-    movie = get_object_or_404(Movie, pk=movie_id)
-    reviews = Review.objects.filter(movie_id=movie_id)
-
-    for review in reviews:
-        comments = Review_Comment.objects.filter(review_id=review.id)
-        review.comments = comments
-
-    movie.reviews = reviews
-
-    # movie = Movie.objects.filter(pk=movie_id)
-    serializer = MovieSerializer(movie)
-    return Response(data=serializer.data)
-
-
 @api_view(['GET', 'POST'])
-def reviewDetail(request, movie_id):
+def review_detail(request, movie_id):
     # GET 요청) 영화정보와 리뷰와 리뷰코멘트들을 묶어 반환.
-
-    print('------------------------------------------------')
-    print(movie_id)
     if request.method == 'GET':
         movie = get_object_or_404(Movie, pk=movie_id)
         reviews = Review.objects.filter(movie_id=movie_id)
@@ -145,8 +123,18 @@ def review_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+@api_view(['DELETE'])
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, pk=review_id)
+    if review.user_id != request.user.id:
+        print('자신이 작성한 글만 지울 수 있습니다.')
+        return Response({'error': '자신이 작성한 글만 지울 수 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        review.delete()
+        return Response({'id': review_id, 'message': 'review deleted'}, status=status.HTTP_204_NO_CONTENT)
+
+
 # 유저가 리뷰 작성할 때 input에서 영화 제목 검색하면, 밑에 타이틀 쫘르륵 떠서 선택하게 하기
-# 혹은 그냥 사이트에서 영화를 검색할 때 사용
 @api_view(['GET'])
 def search_by_movie_title(request):
     keyword = request.data.get('title')
@@ -157,7 +145,7 @@ def search_by_movie_title(request):
 
 # GET/POST : 리뷰에 달린 코멘트 리스트, 리뷰에 코멘트 작성
 @api_view(['GET', 'POST'])
-def comment_list(request):
+def comment_list(request, review_id):
     if request.method == 'POST':
         serializer = ReviewCommentSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
@@ -175,3 +163,17 @@ def recommend_movie(request, genre):
         genre__startswith=genre).order_by('-avg_vote')[:5]
     serializer = MovieSerializer(recommend_movies, many=True)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def findWriter(request, reviewId):
+    review = get_object_or_404(Review, pk=reviewId)
+    print('----------------------------------------')
+    print(reviewId)
+    print(review.user.id)
+    print(request.user.id)
+
+    if request.user.id == review.user_id:
+        return Response({'isWriter': True})
+    else:
+        return Response({'isWriter': False})

@@ -1,7 +1,7 @@
 <template>
-  <v-app id="inspire" v-if="isLoaded">
-    <v-main class="grey lighten-2">
-      <v-container>
+  <div id="inspire" v-if="isLoaded">
+    <div class="white bigback">
+      <v-container >
         <v-row>
             <v-col
               class="mt-2"
@@ -11,28 +11,30 @@
             </v-col>
 
             <v-col
-              v-for="(movie) in movies.comedy_movies.slice(0,6)"
+              v-for="(movie) in movies.comedy_movies.slice(0,5)"
               :key="movie.id"
               cols="6"
               md="2"
+              class='ml-4 mr-4 mt-4 mb-4'
             >
               <v-sheet  height="150" >
                 <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
               </v-sheet>
             </v-col>
-
+   
             <v-col
-              class="mt-2"
+              class="mt-4"
               cols="12"
             >
             <strong>Action</strong>
             </v-col>
 
             <v-col
-              v-for="(movie) in movies.action_movies.slice(0,6)"
+              v-for="(movie) in movies.action_movies.slice(0,5)"
               :key="movie.id"
               cols="6"
               md="2"
+               class='ml-4 mr-4 mt-4 mb-4'
             >
               <v-sheet height="150">
                 <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
@@ -40,17 +42,18 @@
             </v-col>
 
             <v-col
-              class="mt-2"
+              class="mt-4"
               cols="12"
             >
             <strong>Horror</strong>
             </v-col>
 
             <v-col
-              v-for="(movie) in movies.horror_movies.slice(0,6)"
+              v-for="(movie) in movies.horror_movies.slice(0,5)"
               :key="movie.id"
               cols="6"
               md="2"
+               class='ml-4 mr-4 mt-4 mb-4'
             >
               <v-sheet height="150">
                 <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
@@ -59,8 +62,8 @@
           <!-- </template> -->
         </v-row>
       </v-container>
-    </v-main>
-  </v-app>
+    </div>
+  </div>
 </template>
  
 <script>
@@ -104,7 +107,14 @@ export default {
 </script>
 
 <style>
-
+#inspire {
+  position: relative;
+  top: 60px;
+  right: 40px;
+}
+.bigback {
+  padding: 0 0 0 0 !important;
+}
 </style>
 
 

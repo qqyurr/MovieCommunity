@@ -2,7 +2,7 @@
   <div id="app"
     class="d-flex flex-row">
       <div>
-        <Menu/>
+        <Menu :login="login"/>
       </div>
       <!-- <router-view/> -->
       
@@ -11,21 +11,32 @@
 
 <script>
 import Menu from '@/views/Menu'
-// import Home from '@/views/Home'
-// import Login from '@/views/Login'
 
 
 export default {
   name: 'App',
 
   components: {
-    // Home,
     Menu,
-    // Login,
   },
 
-  data: () => ({
-    //
-  }),
+  data: function() {
+    return {
+      login: false
+    }
+  },
+  
+  created: function() {
+    const token = localStorage.getItem('jwt')
+    if (token) {
+      this.login = true
+    }
+  },
 };
 </script>
+
+<style scoped>
+#app {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+</style>

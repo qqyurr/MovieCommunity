@@ -1,14 +1,25 @@
 <template>
-    <div id="app">
-    <v-app id="inspire">
-      <v-app-bar app clipped-left class="primary">
-        <v-app-bar-nav-icon @click="drawerState = !drawerState"/>
+    
+    <v-app id="app">
+      <v-app-bar 
+        app 
+        flat 
+        clipped-left 
+        class="navbar d-flex justify-space-between white"
+      >
+        <v-app-bar-nav-icon @click="drawerState = !drawerState" class='logo'/>
+        <router-link :to="'/'" class='logo' > 
+                  
+        <h1 class='font-italic logo'>
+          Oh, young me
+        </h1>
+        </router-link>
       </v-app-bar>
-      <v-navigation-drawer v-model="drawerState" app clipped color="grey lighten-4">
+      <v-navigation-drawer v-model="drawerState" app flat clipped color="white" >
         <!-- content -->
       
 
-        <v-list dense>
+        <v-list dense class='menu'>
           <v-list-item
             v-for="item in items"
             :key="item.title"
@@ -19,14 +30,21 @@
             </v-list-item-icon>
 
             <v-list-item-content>
-              <router-link :to="item.url"> {{item.title}} </router-link>
+              <router-link :to="item.url" class='link'> 
+                  {{item.title}} 
+                </router-link>
             </v-list-item-content>
           </v-list-item>
           <br>
 
-          <searching/>
+          <searching class='searching'/>
 
         </v-list>
+
+            <v-list-item-content>
+            <router-link @click.native="logout" to="#"> Logout </router-link>
+          </v-list-item-content>
+
       </v-navigation-drawer>
       <v-content>
         <v-container>
@@ -39,7 +57,7 @@
         </v-container>
       </v-content>
     </v-app>
-  </div>
+
 </template>
 
 
@@ -52,14 +70,22 @@ export default {
   components:{
   Searching,
   },
+  
+  methods: {
+    logout: function() {
+      localStorage.removeItem('jwt')
+      this.$router.push({name: 'Login'})
+    },
+  },
+
   data () {
       return {
         items: [
-          { title: 'MyPage', icon: 'mdi-view-dashboard', url: '/mypage' },
-          { title: 'Home', icon: 'mdi-view-dashboard', url: '/' },
-          { title: 'Login', icon: 'mdi-forum', url: '/accounts/login' },
-          { title: 'Signup', icon: 'mdi-forum', url: '/accounts/signup' },
-          { title: 'Recommend', icon: 'mdi-forum', url: '/recommend' },
+          { title: 'MyPage', icon: 'mdi-home', url: '/mypage' },
+          { title: 'Home', icon: 'mdi-account', url: '/' },
+          { title: 'Login', icon: 'mdi-login', url: '/accounts/login' },
+          { title: 'Signup', icon: 'mdi-account-plus-outline', url: '/accounts/signup' },
+          { title: 'Recommend', icon: 'mdi-compass-outline', url: '/recommend' },
 
         ],
       }
@@ -76,5 +102,24 @@ export default {
 </script>
 
 <style>
-
+.logo {
+  font-weight: 600;
+  text-decoration: none !important;
+  color: grey;
+}
+.link{
+  color: grey !important;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+.searching{
+  margin: 10 10 10 10;
+}
+.navbar {
+  opacity: 50%;
+}
+.menu {
+  opacity: 70%;
+  border-color:none !important;
+}
 </style>
