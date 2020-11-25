@@ -3,26 +3,32 @@
     <!-- 영화 정보 출력  -->
     
 
-    <div class="movieInfo col" style="border-style:solid; border-width:0.5px; border-radius: 5px;">
+    <div class="movieInfo col" style="margin-bottom: 5%; border-style:solid; border-width:0.5px; border-radius: 5px;">
       
       <div class="poster col-3" style="display:inline">
-        <img :src="movieinfo.poster_path" alt="">
+        <img class="imgTag" width=240 height=360 :src="movieinfo.poster_path" alt="">
       </div>
 
       <div class="col-8 description" style="margin-left:4%;">
         <h1>{{ movieinfo.title }}</h1>
         <br>
-        <h3>actors</h3>
+        <h3>Director : {{ movieinfo.director}}</h3>
+        <br>
+        <h3>Actors</h3>
         <div v-for="(actor,idx) in actors" :key='idx'>
           {{ actor }}
         </div>
+        
         <br>
+        <h3>Synopsis</h3>
         <p>{{ movieinfo.description }}</p>
       </div>
     </div>
     
 
     <!-- 리뷰창 시작 : 리뷰 컴포넌트 불러오기 -->
+    <div>
+    <h3 style="margin-left:1%; margin-bottom:2%">댓글 목록 ({{movieinfo.reviews.length}}개의 댓글)</h3>
     <Review
       v-for="(review, idx) in movieinfo.reviews"
       :key="idx"
@@ -30,6 +36,7 @@
       @comment-created="onCommentCreated"
       @review-deleted="onReviewDeleted"
     />
+    </div>
 
     
     <!-- 아래는 리뷰 작성하는 form  -->
@@ -107,10 +114,9 @@ export default {
       const myToken = localStorage.getItem('jwt')
       axios.get(`http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
+        console.log('my data', res.data.reviews.length)
         const acts = res.data.actors.split(',')
         this.actors = acts.slice(0,5)
-        console.log(this.actors)
-        console.log(res)
         this.movieinfo = res.data
       })
       .catch(err => {
@@ -151,10 +157,20 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
+
+.img {
+  /* <img src="paris.jpg" alt="Paris" width="400" height="300"> */
+    max-width: 100%;
+    max-height: 100%;
+    margin-bottom: 2px;
+}
+
 v-container {
   font:Source Sans Pro;
 }
 .movieInfo {
+  width: 1100px;
+  height: 430px;
   display:flex;
   flex-direction: row;
   position: relative;
@@ -163,10 +179,11 @@ v-container {
   position: relative;
 
 }
-img {
+.imgTag {
   position: absolute;
-  top: 10%;
-  left: 20%;
+  /* margin: auto; */
+  top: 5%;
+  /* left: 20%;  */
 }
 .description{
   

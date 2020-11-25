@@ -87,8 +87,6 @@ export default {
       const myToken = localStorage.getItem('jwt')
       axios.get(SERVER_URL, {headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
-        console.log(res.data.movies_by_genre)
-        console.log(res.data.movies_by_genre.action_movies)
         this.movies = res.data.movies_by_genre
         this.isLoaded = true
       })
@@ -97,9 +95,7 @@ export default {
       })
     },
     goToDetail(movie) {
-      console.log('goToDetail clicked! ')
       this.$store.state.selectedMovie = movie.id
-      console.log(this.$store.state.selectedMovie)
       this.$router.push('/movies/' + movie.id + '/reviews/')
     }
   },

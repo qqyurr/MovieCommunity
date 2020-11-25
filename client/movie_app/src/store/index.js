@@ -7,7 +7,8 @@ export default new Vuex.Store({
   state: {
     movie: '',
     selectedMovie: 2,
-    drawerState: false
+    drawerState: false,
+    login: false,
   },
   mutations: {
     toggleDrawerState (state, data) {

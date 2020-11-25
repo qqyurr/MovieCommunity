@@ -1,33 +1,38 @@
 <template>
-  <v-form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-text-field
-      v-model="credentials.username"
-      :counter="10"
-      label="ID"
-      required
-    ></v-text-field>
 
-    <v-text-field
-      v-model="credentials.password"
-      :type="show1 ? 'text' : 'password'"
-      label="password"
-      required
-    ></v-text-field>
-
-    <v-btn
-      :disabled="!valid"
-      class="mr-4"
-      @click="login"
+  <div>
+    <div class="header">
+      <h2>LogIn</h2>  
+    </div>
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
     >
+      <v-text-field
+        v-model="credentials.username"
+        :counter="10"
+        label="ID"
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="credentials.password"
+        :type="show1 ? 'text' : 'password'"
+        label="password"
+        required
+        @keypress.enter="login"
+      ></v-text-field>
+
+      <v-btn
+        :disabled="!valid"
+        class="mr-4"
+        @click="login"
+      >
       로그인
-    </v-btn>
-
-
-  </v-form>
+      </v-btn>
+    </v-form>
+  </div>
 </template>
 
 <script>
@@ -45,6 +50,11 @@ const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
         password: '',
       },
     }),
+    watch: {
+    '$store.state.login': function() {
+      console.log('I am Login.vue watch : loggined status changed : ', this.$store.state.login)
+    }
+  },
 
     methods: {
       login() {
@@ -53,7 +63,9 @@ const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
             console.log(res.data.token)
             localStorage.setItem('jwt', res.data.token)
             this.$router.push({name: 'Home'})
-
+            this.$store.state.login = true
+            console.log('this.$store.state.login', this.$store.state.login)
+            this.$forceUpdate()
           })
           .catch(err => {
             console.log(err)

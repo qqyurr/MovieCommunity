@@ -17,29 +17,23 @@
       <v-navigation-drawer v-model="drawerState" app clipped color="white" >
         <!-- content -->
         <v-list dense class='menu'>
-          <v-list-item
-            v-for="item in items"
-            :key="item.title"
-            link
-          >
-            <v-list-item-icon>
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-icon>
 
-            <v-list-item-content v-if="item.title === 'Logout'">
-              <router-link @click.native="logout" :to="item.url" class='link'> Logout </router-link>
-            </v-list-item-content>
+          <!--MenuItem 컨포넌트에 for문 돌면서 아이템 하나씩 넘겨주기 -->
+          <Menu-item 
+           v-for="(item, idx) in items"
+           :item="item"
+           :key="idx"
+          />
+            <span v-if="this.$store.state.login === true">
+              <v-list-item>
+              <v-list-item-icon>
+                  <v-icon>mdi-logout</v-icon>
+                </v-list-item-icon>
+              <router-link @click.native="logout" to="/" class='link'> Logout </router-link>
+              </v-list-item>
+            </span>
 
-            <v-list-item-content v-else>
-              <router-link :to="item.url" class='link'> 
-                  {{item.title}} 
-              </router-link>
-            </v-list-item-content>
-          
-          
-          </v-list-item>
-          
-          <br>
+
           <searching class='searching'/>
         </v-list>
            
@@ -59,16 +53,17 @@
     </v-app>
 </template>
 
-
-
 <script>
 import Searching from '@/components/Searching'
+import MenuItem from '../components/MenuItem.vue'
 
 export default {
   name: 'Menu',
   components:{
-  Searching,
+    Searching,
+    MenuItem,
   },
+
   props: {
     login : Boolean,
   },
@@ -76,18 +71,21 @@ export default {
     logout: function() {
       localStorage.removeItem('jwt')
       this.$router.push({name: 'Login'})
+      this.$store.state.login = false
+      this.$forceUpdate()
     },
   },
 
   data () {
       return {
+        isLoggedIn: this.$store.state.login,
         items: [
-          { title: 'Home', icon: 'mdi-home', url: '/' },
-          { title: 'MyPage', icon: 'mdi-account', url: '/mypage' },
-          { title: 'Login', icon: 'mdi-login', url: '/accounts/login' },
-          { title: 'Logout', icon:'mdi-logout', url: '/'},
-          { title: 'Signup', icon: 'mdi-account-plus-outline', url: '/accounts/signup' },
-          { title: 'Recommend', icon: 'mdi-compass-outline', url: '/recommend' },
+          { title: 'Home', icon: 'mdi-home', url: '/', showIfLoggined: true },
+          { title: 'MyPage', icon: 'mdi-account', url: '/mypage', showIfLoggined: true },
+          { title: 'Login', icon: 'mdi-login', url: '/accounts/login', showIfLoggined: false },
+          // { title: 'Logout', icon:'mdi-logout', url: '/', showIfLoggined: true},
+          { title: 'Signup', icon: 'mdi-account-plus-outline', url: '/accounts/signup', showIfLoggined: false },
+          { title: 'Recommend', icon: 'mdi-compass-outline', url: '/recommend', showIfLoggined: true },
         ],
       }
     },

@@ -8,7 +8,6 @@
             <li v-for="(review, idx) in myReviews" :key="idx">
                 <p> {{ review.content }} |
                     내가 준 별점 : {{ review.star}}</p>
-
             </li>
         </ul>
 
@@ -34,9 +33,7 @@ export default {
             const myToken = localStorage.getItem('jwt')
             axios.get(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
                 .then(res => {
-                    console.log(res)
                     this.myReviews = res.data
-                    console.log(this.myReviews)
                 })
                 .catch(err => {
                     console.log(err)

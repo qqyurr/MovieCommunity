@@ -3,6 +3,7 @@
     v-model="newTag"
     :items="entries"
     :search-input.sync="search"
+    placeholder="영화를 검색하세요"
     clearable
     return-object
     @keypress.enter="goToDetail(search)"
@@ -41,11 +42,9 @@ export default {
   },
   methods: {
     loadEntries() {
-      console.log('(1) searching movie title....')
       const myToken = localStorage.getItem('jwt')
       axios.get(BASE_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
-        console.log(res.data)
         res.data.forEach(element => {
           this.entries.push(element.title)
         });
