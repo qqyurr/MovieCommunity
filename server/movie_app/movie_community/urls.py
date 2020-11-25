@@ -15,8 +15,8 @@ urlpatterns = [
     # GET/POST : 전체 리뷰 리스트, 리뷰 작성
     path('reviews/', views.review_list),
 
-    # DELETE : 리뷰 삭제
-    path('reviews/<int:review_id>/', views.delete_review),
+    # DELETE : 리뷰 업데이트 및 삭제
+    path('reviews/<int:review_id>/', views.update_review),
 
     # GET : 로그인한 유저가 작성한 리뷰 리스트
     path('user_reviews/', views.user_review_list),
@@ -33,6 +33,5 @@ urlpatterns = [
 
     # GET : 로그인한 사용자가 리뷰 작성자인지 아닌지 boolean 값 반환
     path('reviews/<int:reviewId>/writer/', views.findWriter),
-
 
 ]

@@ -123,15 +123,23 @@ def review_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-@api_view(['DELETE'])
-def delete_review(request, review_id):
+# 리뷰 업데이트하기
+@api_view(['PUT', 'DELETE'])
+def update_review(request, review_id):
     review = get_object_or_404(Review, pk=review_id)
+
     if review.user_id != request.user.id:
         print('자신이 작성한 글만 지울 수 있습니다.')
         return Response({'error': '자신이 작성한 글만 지울 수 있습니다.'}, status=status.HTTP_400_BAD_REQUEST)
-    else:
+
+    if request.method == 'DELETE':
         review.delete()
         return Response({'id': review_id, 'message': 'review deleted'}, status=status.HTTP_204_NO_CONTENT)
+
+    elif request.method == 'PUT':
+        review.content = request.data.get('content')
+        review.save()
+        return Response({'msg': 'saved'})
 
 
 # 유저가 리뷰 작성할 때 input에서 영화 제목 검색하면, 밑에 타이틀 쫘르륵 떠서 선택하게 하기
