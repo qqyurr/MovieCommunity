@@ -17,6 +17,7 @@
       <v-navigation-drawer v-model="drawerState" app clipped color="white" >
         <!-- content -->
         <v-list dense class='menu'>
+          <!-- 라우트 출력 v-for 시작 -->
           <v-list-item
             v-for="item in items"
             :key="item.title"
@@ -35,9 +36,8 @@
                   {{item.title}} 
               </router-link>
             </v-list-item-content>
-          
-          
           </v-list-item>
+          <!-- 라우트 출력 v-for 끝 -->
           
           <br>
           <searching class='searching'/>

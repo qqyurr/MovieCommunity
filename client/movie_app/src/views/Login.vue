@@ -1,33 +1,37 @@
 <template>
-  <v-form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-text-field
-      v-model="credentials.username"
-      :counter="10"
-      label="ID"
-      required
-    ></v-text-field>
 
-    <v-text-field
-      v-model="credentials.password"
-      :type="show1 ? 'text' : 'password'"
-      label="password"
-      required
-    ></v-text-field>
-
-    <v-btn
-      :disabled="!valid"
-      class="mr-4"
-      @click="login"
+  <div>
+    <div class="header">
+      <h2>LogIn</h2>  
+    </div>
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
     >
+      <v-text-field
+        v-model="credentials.username"
+        :counter="10"
+        label="ID"
+        required
+      ></v-text-field>
+
+      <v-text-field
+        v-model="credentials.password"
+        :type="show1 ? 'text' : 'password'"
+        label="password"
+        required
+      ></v-text-field>
+
+      <v-btn
+        :disabled="!valid"
+        class="mr-4"
+        @click="login"
+      >
       로그인
-    </v-btn>
-
-
-  </v-form>
+      </v-btn>
+    </v-form>
+  </div>
 </template>
 
 <script>

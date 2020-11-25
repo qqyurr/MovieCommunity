@@ -1,53 +1,58 @@
 <template>
-  <v-form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-text-field
-      v-model="credentials.username"
-      :counter="10"
-      :rules="nameRules"
-      label="ID"
-      required
-    ></v-text-field>
-
-    <v-text-field
-      v-model="credentials.password"
-      :type="show1 ? 'text' : 'password'"
-      label="password"
-      required
-    ></v-text-field>
-
-    <v-text-field
-      v-model="credentials.passwordConfirmation"
-      :type="show1 ? 'text' : 'password'"
-      label="password confirmation"
-      required
-    ></v-text-field>
-
-    <v-checkbox
-      :rules="[v => !!v || 'You must agree to continue!']"
-      label="욕설, 비난, 혐오발언을 하지 않겠습니다"
-      required  
-    ></v-checkbox>
-
-    <v-btn
-      :disabled="!valid"
-      class="mr-4"
-      @click="signup"
+  <div>
+    <div class="header">
+      <h2>Sign up</h2>  
+    </div>
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
     >
-      회원가입
-    </v-btn>
+      <v-text-field
+        v-model="credentials.username"
+        :counter="10"
+        :rules="nameRules"
+        label="ID"
+        required
+      ></v-text-field>
 
-    <v-btn
-      class="mr-4"
-      @click="reset"
-    >
-      초기화
-    </v-btn>
+      <v-text-field
+        v-model="credentials.password"
+        :type="show1 ? 'text' : 'password'"
+        label="password"
+        required
+      ></v-text-field>
 
-  </v-form>
+      <v-text-field
+        v-model="credentials.passwordConfirmation"
+        :type="show1 ? 'text' : 'password'"
+        label="password confirmation"
+        required
+      ></v-text-field>
+
+      <v-checkbox
+        :rules="[v => !!v || 'You must agree to continue!']"
+        label="욕설, 비난, 혐오발언을 하지 않겠습니다"
+        required  
+      ></v-checkbox>
+
+      <v-btn
+        :disabled="!valid"
+        class="mr-4"
+        @click="signup"
+      >
+        회원가입
+      </v-btn>
+
+      <v-btn
+        class="mr-4"
+        @click="reset"
+      >
+        초기화
+      </v-btn>
+
+    </v-form>
+  </div>
 </template>
 
 <script>

@@ -3,6 +3,7 @@
     v-model="newTag"
     :items="entries"
     :search-input.sync="search"
+    placeholder="영화를 검색하세요"
     clearable
     return-object
     @keypress.enter="goToDetail(search)"

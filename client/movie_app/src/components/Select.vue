@@ -7,48 +7,30 @@
 
          <div class="row row-no-gutters box">
             <img class="col-7" width=800 height=700 src="../assets/story_only.png" alt="">
-            <img class="col-5" width=530 height=700 src="https://contentserver.com.au/assets/600828_p13153578_p_v8_ab.jpg" alt="">
+            <img @click="goToDetail(movie)" class="col-5" width=530 height=700 :src="recommendedMoviePoster" alt="">
           </div>
 
-
-
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1"> 배고프니까 일단 따라간다. </label>
+          <div style="margin-left:5%; margin-top:3%">
+            <input type="radio" id="comedy" value="comedy" v-model="picked">
+            <label for="comedy" style="margin-left:1%">배고프니까 일단 따라간다. </label>
+            <br> 
+            <input type="radio" id="romance" value="romance" v-model="picked">
+            <label for="romance" style="margin-left:1%">의심스러우니 경계하며 따라간다</label>
             <br>
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1"> 의심스러우니 경계하며 따라간다. </label>
+            <input type="radio" id="thriller" value="thriller" v-model="picked">
+            <label for="thriller" style="margin-left:1%">일단 거절한 후 몰래 뒤따라가서 식량을 훔쳐온다.</label>
             <br>
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1"> 일단 거절한 후 몰래 뒤따라가서 식량을 훔쳐온다. </label>
+            <input type="radio" id="action" value="action" v-model="picked">
+            <label for="action" style="margin-left:1%">생명의 은인이 나타났다. 친절하게 대하자</label>
             <br>
-            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-            <label class="form-check-label" for="defaultCheck1"> 생명의 은인이 나타났다. 친절하게 대하자.</label>
+             <v-btn style="margin-top:2%" @click='getMovie()'>pick!</v-btn>
           </div>
 
-                <span>Picked: {{ picked }}</span>
-      
-          <!-- <input type="radio" id="comedy" value="comedy" v-model="picked">
-          <label for="comedy">34132432</label>
-          <br> 
-          <input type="radio" id="romance" value="romance" v-model="picked">
-          <label for="romance">romance</label>
-          <br>
-          <input type="radio" id="thriller" value="thriller" v-model="picked">
-          <label for="thriller">thriller</label>
-          <br>
-          <input type="radio" id="action" value="action" v-model="picked">
-          <label for="action">action</label>
-          <br>
-          <span>Picked: {{ picked }}</span>
-          <br> -->
-
-
-          <v-btn @click='getMovie()'>pick!</v-btn>
-          <div v-for='(movie,idx) in movies' :key=idx >
+         
+          <!-- <div v-for='(movie,idx) in movies' :key=idx >
             {{ movie.title }}
             <img :src="movie.poster_path" alt="poster" @click="goToDetail(movie)">
-          </div>
+          </div> -->
      
         </div>
     </div>
@@ -63,8 +45,9 @@ export default {
     return {
       radioGroup: 1,
       picked: '',
-      movies:[],
+      movie: [],
       selected: [],
+      recommendedMoviePoster: '',
     }
   },
   methods:{
@@ -72,15 +55,19 @@ export default {
       const myToken = localStorage.getItem('jwt')
       axios.get(`http://localhost:8000/api/v1/movie_community/recommend/${this.picked}`, {headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
-        this.movies = res.data
+       console.log(res.data[0].poster_path)
+       console.log('movie title : ' , res.data[0].title)
+       console.log('movie id : ' , res.data[0].id)
+       this.recommendedMoviePoster = res.data[0].poster_path
+       this.movie = res.data[0]
       })
-      // 'recommend/<str:genre>/'
+
     },
     goToDetail(movie) {
-    console.log('goToDetail clicked! ')
-    this.$store.state.selectedMovie = movie.id
-    console.log(this.$store.state.selectedMovie)
-    this.$router.push('/movies/' + movie.id + '/reviews/')
+      console.log('goToDetail clicked! ')
+      this.$store.state.selectedMovie = movie.id
+      console.log(this.$store.state.selectedMovie)
+      this.$router.push('/movies/' + movie.id + '/reviews/')
     }
 
   },

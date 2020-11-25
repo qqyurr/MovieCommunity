@@ -6,7 +6,7 @@
     <div class="movieInfo col" style="border-style:solid; border-width:0.5px; border-radius: 5px;">
       
       <div class="poster col-3" style="display:inline">
-        <img :src="movieinfo.poster_path" alt="">
+        <img class="imgTag" :src="movieinfo.poster_path" alt="">
       </div>
 
       <div class="col-8 description" style="margin-left:4%;">
@@ -163,7 +163,7 @@ v-container {
   position: relative;
 
 }
-img {
+.imgTag {
   position: absolute;
   top: 10%;
   left: 20%;
