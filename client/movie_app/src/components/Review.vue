@@ -16,53 +16,55 @@
             <i class="far fa-trash-alt" style="margin-left:1%" @click="deleteReview(review.id)"></i>
           </span>
           </h4>
-          <div class='starcolor'>
-          <div v-if="review.star === 0">
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
+          <div class='reviewComment' style="background-color:#FAF8F5; border-radius:5px; margin-top:5px; padding-top:5px; padding-left: 20px; padding-bottom:20px;" >
+            <div class='starcolor' style='margin-top:1%; margin-bottom:1%;'>
+            <div v-if="review.star === 0">
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            </div>
+            <div v-if="review.star === 1">
+            <i class='fas fa-star'></i>
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            </div>
+            <div v-if="review.star === 2">
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            </div>
+            <div v-if="review.star === 3">
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            <i class='far fa-star'></i>
+            <i class='far fa-star'></i>
+            </div>
+            <div v-if="review.star === 4">
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            <i class='far fa-star'></i>
+            </div>
+            <div v-if="review.star === 5">
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            <i class='fas fa-star'></i>
+            </div>
+            </div>
+            <h4>
+            <span class="comment">{{ review.content }}</span>
+            </h4>
           </div>
-          <div v-if="review.star === 1">
-          <i class='fas fa-star'></i>
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
-          </div>
-          <div v-if="review.star === 2">
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
-          </div>
-          <div v-if="review.star === 3">
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          <i class='far fa-star'></i>
-          <i class='far fa-star'></i>
-          </div>
-          <div v-if="review.star === 4">
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          <i class='far fa-star'></i>
-          </div>
-          <div v-if="review.star === 5">
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          <i class='fas fa-star'></i>
-          </div>
-          </div>
-          <h4>
-          <span class="comment">{{ review.content }}</span>
-          </h4>
 
 
           <!-- 로그인 유저와 리뷰 작성자가 일치할 때만 수정/삭제 버튼 보여주기 시작-->
@@ -235,7 +237,8 @@ export default {
   font-weight: 100;
 }
 .starcolor {
-  opacity: 70%;
+  opacity: 50%;
   font-size: 60%;
 }
+
 </style>

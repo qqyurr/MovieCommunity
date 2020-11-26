@@ -7,10 +7,10 @@
         class="navbar d-flex justify-space-between white"
       >
         <v-app-bar-nav-icon @click="drawerState = !drawerState" class='logo'/>
-        <router-link :to="'/'" class='logo' >             
-          <h1 class='font-italic logo'>
-            Oh, young me
-          </h1>
+        <router-link :to="'/'" class='logo' style="width:300px;">             
+          <span class='logo' style='font-size:30px; padding:2%'>
+            Oh, Young Me
+          </span>
         </router-link>
       </v-app-bar>
 
@@ -101,24 +101,26 @@ export default {
 </script>
 
 <style>
+
 .logo {
-  font-weight: 600;
+  font-family: 'La Belle Aurore';
   text-decoration: none !important;
   color: grey;
 }
 .link{
-  color: grey !important;
+  color: black !important;
   font-weight: 600;
+
   text-decoration: none !important;
 }
 .searching{
   margin: 10 10 10 10;
 }
 .navbar {
-  opacity: 50%;
+  opacity: 70%;
 }
 .menu {
   opacity: 70%;
-  border-color:none !important;
+  font-family:'Montserrat','Times New Roman', Times, serif
 }
 </style>

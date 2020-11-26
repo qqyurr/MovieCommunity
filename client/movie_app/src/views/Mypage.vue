@@ -7,7 +7,7 @@
         <ul>
             <li v-for="(review, idx) in myReviews" :key="idx">
                 <p> {{ review.content }} |
-                    내가 준 별점 : {{ review.star}}</p>
+                    내가 준 별점 : {{ review.star }}</p>
 
             </li>
         </ul>

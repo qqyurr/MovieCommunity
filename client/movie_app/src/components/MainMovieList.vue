@@ -1,67 +1,76 @@
 <template>
   <div id="inspire" v-if="isLoaded">
     <div class="white bigback">
-      <v-container >
-        <v-row>
-            <v-col
-              class="mt-2"
-              cols="12"
-            >
-            <strong>Comedy</strong>
-            </v-col>
+
+
+
+             <div style="margin: 10%;">
+          </div>
+          <div class='direction_change'>
+            <hr>
+            <strong style="width:120px;" class='mt-5'>Comedy</strong>
+         
 
             <v-col
               v-for="(movie) in movies.comedy_movies.slice(0,5)"
               :key="movie.id"
               cols="6"
               md="2"
-              class='ml-4 mr-4 mt-4 mb-4'
+              class='ml-4 mr-0 mt-4 mb-4'
             >
-              <v-sheet  height="150" >
-                <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
-              </v-sheet>
+            <v-hover>
+              <v-card  height="150" elevation="hover ? 12 : 2" >
+                <v-img :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+              </v-card>
+            </v-hover>
             </v-col>
-   
-            <v-col
-              class="mt-4"
-              cols="12"
-            >
-            <strong>Action</strong>
-            </v-col>
-
+          </div>
+            <!--Comedy-->
+          <div style="margin: 8%;">
+          </div>
+            <!--Action-->
+          <div class='direction_change'>
+            <strong style="width:120px;" class='mt-5'>Action</strong>
             <v-col
               v-for="(movie) in movies.action_movies.slice(0,5)"
               :key="movie.id"
               cols="6"
               md="2"
-               class='ml-4 mr-4 mt-4 mb-4'
+               class='ml-4 mt-4 mb-4'
             >
-              <v-sheet height="150">
-                <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
-              </v-sheet>
+              <v-card height="150" elevation="2">
+                <v-img :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+              </v-card>
             </v-col>
-
-            <v-col
-              class="mt-4"
-              cols="12"
-            >
-            <strong>Horror</strong>
-            </v-col>
-
+          </div>
+            <!--Action-->
+          <div style="margin: 8%;">
+          </div>
+            <!--Horror-->
+          <div class='direction_change'>
+            <strong style="width:120px;"  class='mt-5'>Horror</strong>
             <v-col
               v-for="(movie) in movies.horror_movies.slice(0,5)"
               :key="movie.id"
               cols="6"
               md="2"
-               class='ml-4 mr-4 mt-4 mb-4'
+               class='ml-4 mt-4 mb-4'
             >
-              <v-sheet height="150">
-                <v-img :max-height="250" :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
-              </v-sheet>
+              <v-card height="150" elevation="2">
+                <v-img :src="movie.poster_path" @click="goToDetail(movie)">
+                <v-card-tite>{{ movie.title }}</v-card-tite>
+                </v-img>
+              </v-card>
             </v-col>
-          <!-- </template> -->
-        </v-row>
-      </v-container>
+      
+          </div>
+          <!--Horror -->
+          <div style="margin: 20%;">
+          </div>
+   
+            <!--Comedy--> 
+        
+  
     </div>
   </div>
 </template>
@@ -108,13 +117,16 @@ export default {
 
 <style>
 #inspire {
-  position: relative;
-  top: 60px;
-  right: 40px;
+  position: sticky;
+  font-family:'Montserrat','Cormorant Garamond','Cormorant Unicase','Coustard' ,'La Belle Aurore','Noto Sans KR','Serif';
+  font-size: 20px;
 }
-.bigback {
-  padding: 0 0 0 0 !important;
+.direction_change {
+  display: flex;
+  padding: 30px;
+  background-color: #FAF8F5;
 }
+
 </style>
 
 

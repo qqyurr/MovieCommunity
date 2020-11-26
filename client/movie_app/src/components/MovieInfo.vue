@@ -1,26 +1,29 @@
 <template>
-  <v-container>
+  <v-container class='back'>
     <!-- 영화 정보 출력  -->
     
 
-    <div class="movieInfo col" style="border-style:solid; border-width:0.5px; border-radius: 5px;">
+    <div class="movieInfo col" style="border-style:solid; border-color:#bcbbb5; border-width:0.3px; border-radius: 5px;">
       
       <div class="poster col-3" style="display:inline">
-        <img :src="movieinfo.poster_path" alt="">
+        <img class="imgTag" :src="movieinfo.poster_path" alt="">
       </div>
 
       <div class="col-8 description" style="margin-left:4%;">
         <h1>{{ movieinfo.title }}</h1>
+        <h5>RATE {{ movieinfo.avg_vote }}</h5>
         <br>
         <h3>actors</h3>
-        <div v-for="(actor,idx) in actors" :key='idx'>
+        <div style="font-size:13px;" v-for="(actor,idx) in actors" :key='idx'>
           {{ actor }}
         </div>
         <br>
-        <p>{{ movieinfo.description }}</p>
+        
+        <h3>overview</h3>
+        <div style="font-size:14px;">{{ movieinfo.description }}</div>
       </div>
     </div>
-    
+    <div style="margin:5%;"></div>
 
     <!-- 리뷰창 시작 : 리뷰 컴포넌트 불러오기 -->
     <Review
@@ -151,7 +154,7 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300&display=swap');
-v-container {
+.back {
   font:Source Sans Pro;
 }
 .movieInfo {
@@ -163,7 +166,7 @@ v-container {
   position: relative;
 
 }
-img {
+.imgTag {
   position: absolute;
   top: 10%;
   left: 20%;
