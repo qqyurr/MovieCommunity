@@ -1,6 +1,6 @@
 <template>
   <div style='margin:4%'>
-      <img @click="goToDetail(movie)" class='footprint' height="700px" src="https://thumbs.gfycat.com/AngryChillyHatchetfish-max-1mb.gif" alt="">
+      <img v-if=footprint @click="goToDetail(movie)" class='footprintgif' style='height:500px' src="https://thumbs.gfycat.com/AngryChillyHatchetfish-max-1mb.gif" alt="">
 
     <!-- 왼쪽 : 이야기, 오른쪽 : 추천 영화 포스터 -->
     <div class="row box" v-if="showStory">
@@ -68,6 +68,7 @@ export default {
       string: this.recommendMovieTitle,
       explanation: '도전을 받아들일 준비가 되어있는 당신에게 추천하는 영화 <' + this.recommendMovieTitle + '> 영화 포스터를 눌러 리뷰페이지로 이동하세요!',
       index: 0,
+      footprint: true,
     }
   },
   computed: {
@@ -113,6 +114,7 @@ export default {
        this.showEffect(wholeSentence)
        this.index = 0 
        this.notClicked = !this.notClicked
+       this.footprint = !this.footprint
       },
 
     showEffect(sentence) {
@@ -145,7 +147,7 @@ export default {
     }
     .box{
         width: 1300px;     
-        height: 600px;   
+        height: 500px;   
         /* border: 5px solid grey; */
     }  
 
@@ -200,10 +202,10 @@ export default {
     .choicetext {
       width: 700px;
     }
-    .footprint {
+    .footprintgif {
       display: absolute;
       right: 10%;
-      height: 50%;
+      height: 20%;
     }
 
 @media only screen and (max-width: 600px) {
