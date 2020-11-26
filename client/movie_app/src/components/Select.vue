@@ -1,50 +1,50 @@
 <template>
-  <div>
-    <div>
-        <div> 
+  <div style='margin:4%'>
+      <img @click="goToDetail(movie)" class='footprint' height="700px" src="https://thumbs.gfycat.com/AngryChillyHatchetfish-max-1mb.gif" alt="">
 
-          <!-- 왼쪽 : 이야기, 오른쪽 : 추천 영화 포스터 -->
-          <div class="row row-no-gutters box" v-if="showStory">
-            <div class="col-7 afterChoice" width=800 height=700>
-              <section class="section" id="app">
-                <article class="article">
-                  <p class="p-tag" :data-end="lastLetter">{{ islandStory.substring(0, islandStory.length - 1) }}</p>
-                </article>
-              </section>
+    <!-- 왼쪽 : 이야기, 오른쪽 : 추천 영화 포스터 -->
+    <div class="row box" v-if="showStory">
+      <div style="margin:10%;"></div>
+      <div class="col-6 afterChoice" width=800 height=700>
+        <section class="section" id="app">
+          <article class="article">
+            <div class='storyback'>
+            <p class="p-tag" :data-end="lastLetter">{{ islandStory.substring(0, islandStory.length - 1) }}</p>
             </div>
-            <img @click="goToDetail(movie)" class="col-5" width=530 height=700 src="https://thumbs.gfycat.com/AngryChillyHatchetfish-max-1mb.gif" alt="">
-          </div>
-
-          <div class="row row-no-gutters box" v-else>
-            <div class="afterChoice">
-              <section class="section" id="app">
-                <article class="article">
-                  <p class="p-tag" :data-end="lastLetter">{{ phrase.substring(0, phrase.length - 1) }}</p>
-                </article>
-              </section>
-            </div>
-            <img @click="goToDetail(movie)" class="col-5" width=530 height=700 :src="recommendedMoviePoster" alt="">
-          </div>
-          
-          <div v-if="notClicked">
-            <div style="margin-left:5%; margin-top:3%">
-              <input type="radio" id="comedy" value="comedy" v-model="picked">
-              <label for="comedy" style="margin-left:1%">배고프니까 일단 따라간다. </label>
-              <br> 
-              <input type="radio" id="romance" value="romance" v-model="picked">
-              <label for="romance" style="margin-left:1%">의심스러우니 경계하며 따라간다</label>
-              <br>
-              <input type="radio" id="thriller" value="thriller" v-model="picked">
-              <label for="thriller" style="margin-left:1%">일단 거절한 후 몰래 뒤따라가서 식량을 훔쳐온다.</label>
-              <br>
-              <input type="radio" id="action" value="action" v-model="picked">
-              <label for="action" style="margin-left:1%">생명의 은인이 나타났다. 친절하게 대하자</label>
-              <br>
-              <v-btn style="margin-top:2%" @click='getMovie()'>pick!</v-btn>
-            </div>
-          </div>
-        </div>
+          </article>
+        </section>
+      </div>
     </div>
+
+    <div class="row row-no-gutters box" v-else>
+      <div class="afterChoice">
+        <section class="section" id="app">
+          <article class="article">
+            <p class="p-tag" :data-end="lastLetter">{{ phrase.substring(0, phrase.length - 1) }}</p>
+          </article>
+        </section>
+      </div>
+      <img @click="goToDetail(movie)" class="col-5 movieposter" width=530 height=700 :src="recommendedMoviePoster" alt="">
+    </div>
+
+    <div v-if="notClicked" class='choices'>
+      <div style="margin-left:5%; margin-top:3%" class='choicetext'>
+        <input type="radio" id="comedy" value="comedy" v-model="picked">
+        <label for="comedy" style="margin-left:1%">배고프니까 일단 따라간다. </label>
+        <br> 
+        <input type="radio" id="romance" value="romance" v-model="picked">
+        <label for="romance" style="margin-left:1%">의심스러우니 경계하며 따라간다</label>
+        <br>
+        <input type="radio" id="thriller" value="thriller" v-model="picked">
+        <label for="thriller" style="margin-left:1%">일단 거절한 후 몰래 뒤따라가서 식량을 훔쳐온다.</label>
+        <br>
+        <input type="radio" id="action" value="action" v-model="picked">
+        <label for="action" style="margin-left:1%">생명의 은인이 나타났다. 친절하게 대하자</label>
+        <br>
+        <v-btn style="margin-top:4%;" @click='getMovie()'>pick!</v-btn>
+      </div>
+    </div>
+          
   </div>
 </template>
 <script>
@@ -145,7 +145,7 @@ export default {
     }
     .box{
         width: 1300px;     
-        height: 700px;   
+        height: 600px;   
         /* border: 5px solid grey; */
     }  
 
@@ -155,9 +155,11 @@ export default {
 
     .afterChoice {
       width: 730px;
-      height: 690px;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
-
 
     .section {
       align-items: center;
@@ -167,6 +169,7 @@ export default {
 
     .article {
       width: 50%;
+      
     }
 
     /* 스토리 출력되는 부분 */
@@ -180,11 +183,33 @@ export default {
       font-family: 'Noto Serif KR', serif;
     }
 
+    .choices {
+      margin-left: 30%;
+      width: 700px;
+      font-size: 20px;
+      height: 500px;
+      display: flex;
+      font-family: 'Noto Serif Kr';
+      cursor: pointer;
+    }
+
+    .movieposter {
+      cursor: pointer;
+    }
+    
+    .choicetext {
+      width: 700px;
+    }
+    .footprint {
+      display: absolute;
+      right: 10%;
+      height: 50%;
+    }
 
 @media only screen and (max-width: 600px) {
   .article {
     box-sizing: border-box;
-    padding: 0 1.3em;
+    height: 600px;
     width: 100%;
   }
 }
