@@ -1,6 +1,6 @@
 <template>
   <div id="app"
-    class="d-flex flex-row">
+    class="d-flex flex-row appBack">
       <div>
         <Menu :login="login"/>
       </div>
@@ -38,6 +38,11 @@ export default {
 
 <style scoped>
 #app {
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: 'Montserrat','Noto Sans Kr', sans-serif;
 }
+.appBack {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
 </style>

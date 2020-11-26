@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div id="homeBack">
     <no-login />
     <!-- <규연이가 아이패드로 그린 우리의 로고...손그림 그것이 매력포인트여 -->
-    <main-movie-list />
+    <main-movie-list class="sticker"/>
   </div>
 </template>
 
@@ -16,9 +16,15 @@ export default {
   components: {
     MainMovieList,
     NoLogin,
-  }
+  },
 }
 </script>
 <style>
-
+.homeBack {
+  margin: 0;
+  padding:0;
+}
+.sticker {
+  position:sticky;
+}
 </style>

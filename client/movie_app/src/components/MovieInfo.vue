@@ -1,9 +1,9 @@
 <template>
-  <v-container>
+  <v-container class='back'>
     <!-- 영화 정보 출력  -->
     
 
-    <div class="movieInfo col" style="margin-bottom: 5%; border-style:solid; border-width:0.5px; border-radius: 5px;">
+    <div class="movieInfo col" style="border-style:solid; border-color:#bcbbb5; margin-bottom: 5%; border-width:0.3px; border-radius: 5px;">
       
       <div class="poster col-3" style="display:inline">
         <img class="imgTag" width=240 height=360 :src="movieinfo.poster_path" alt="">
@@ -11,11 +11,11 @@
 
       <div class="col-8 description" style="margin-left:4%;">
         <h1>{{ movieinfo.title }}</h1>
-        <br>
-        <h3>Director : {{ movieinfo.director}}</h3>
+        <h5 style="color:#ffcc80">RATE</h5> 
+          <h5>{{ movieinfo.avg_vote }} / 10</h5>
         <br>
         <h3>Actors</h3>
-        <div v-for="(actor,idx) in actors" :key='idx'>
+        <div style="font-size:13px;" v-for="(actor,idx) in actors" :key='idx'>
           {{ actor }}
         </div>
         
@@ -24,7 +24,7 @@
         <p style="margin-bottom:3%;">{{ movieinfo.description }}</p>
       </div>
     </div>
-    
+    <div style="margin:5%;"></div>
 
     <!-- 리뷰창 시작 : 리뷰 컴포넌트 불러오기 -->
     <div>
