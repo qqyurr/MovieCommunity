@@ -1,6 +1,6 @@
 <template>
   <div class='mainBack'>
-    <img class='mainImg' src="../assets/moonrise-line.png" alt="">
+    <img class='mainImg' src="../assets/poster_orange_font.png" alt="">
 
   </div>
 </template>

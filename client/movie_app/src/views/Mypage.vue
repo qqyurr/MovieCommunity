@@ -10,9 +10,6 @@
                     내가 준 별점 : {{ review.star }}</p>
             </li>
         </ul>
-
-
-      
   </div>
 </template>
 
