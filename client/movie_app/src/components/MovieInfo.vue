@@ -21,7 +21,7 @@
         
         <br>
         <h3>Synopsis</h3>
-        <p>{{ movieinfo.description }}</p>
+        <p style="margin-bottom:3%;">{{ movieinfo.description }}</p>
       </div>
     </div>
     
@@ -114,7 +114,6 @@ export default {
       const myToken = localStorage.getItem('jwt')
       axios.get(`http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
-        console.log('my data', res.data.reviews.length)
         const acts = res.data.actors.split(',')
         this.actors = acts.slice(0,5)
         this.movieinfo = res.data
