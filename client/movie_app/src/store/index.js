@@ -9,6 +9,8 @@ export default new Vuex.Store({
     selectedMovie: 2,
     drawerState: false,
     login: false,
+    isLoggedInUserWriter: false,
+    loggedInUserData: 100,
   },
   mutations: {
     toggleDrawerState (state, data) {
@@ -16,7 +18,10 @@ export default new Vuex.Store({
     }
   },
   getters : {
-    drawerState: (state) => state.drawerState
+    drawerState: (state) => state.drawerState,
+    getLoggedInUserData(state) {
+      return state.loggedInUserData
+    }
   },
   actions: {
   },

@@ -72,6 +72,7 @@ export default {
       localStorage.removeItem('jwt')
       this.$router.push({name: 'Login'})
       this.$store.state.login = false
+      console.log('log out : ' , this.$store.loggedInUserData)
       this.$forceUpdate()
     },
   },

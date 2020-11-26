@@ -123,7 +123,7 @@ def review_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
-# 리뷰 업데이트하기
+# 리뷰 업데이트하기 (수정 , 삭제)
 @api_view(['PUT', 'DELETE'])
 def update_review(request, review_id):
     review = get_object_or_404(Review, pk=review_id)
