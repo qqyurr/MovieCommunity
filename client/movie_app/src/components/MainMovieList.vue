@@ -1,16 +1,12 @@
 <template>
   <div id="inspire" v-if="isLoaded">
     <div class="white bigback">
-
-
-
-             <div style="margin: 10%;">
+          <div style="margin: 10%;">
           </div>
-          <div class='direction_change'>
-            <hr>
-            <strong style="width:120px;" class='mt-5'>Comedy</strong>
-         
-
+          <div class='direction_change' style="height:160px;">
+              <span style="width:120px;">
+            <strong class='mt-5'>Comedy</strong>
+            </span>
             <v-col
               v-for="(movie) in movies.comedy_movies.slice(0,5)"
               :key="movie.id"
@@ -19,18 +15,20 @@
               class='ml-4 mr-0 mt-4 mb-4'
             >
             <v-hover>
-              <v-card  height="150" elevation="hover ? 12 : 2" >
-                <v-img :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+              <v-card   height="150" elevation="hover ? 12 : 2" >
+                <v-img class='cardhover' :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
               </v-card>
             </v-hover>
             </v-col>
           </div>
             <!--Comedy-->
-          <div style="margin: 8%;">
+          <div style="margin: 20%;" >
           </div>
             <!--Action-->
-          <div class='direction_change'>
-            <strong style="width:120px;" class='mt-5'>Action</strong>
+          <div class='direction_change' style="height:160px;">
+            <span style="width:120px;">
+            <strong class='mt-5'>Action</strong>
+            </span>
             <v-col
               v-for="(movie) in movies.action_movies.slice(0,5)"
               :key="movie.id"
@@ -39,16 +37,18 @@
                class='ml-4 mt-4 mb-4'
             >
               <v-card height="150" elevation="2">
-                <v-img :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
+                <v-img class='cardhover' :src="movie.poster_path" @click="goToDetail(movie)"></v-img>
               </v-card>
             </v-col>
           </div>
             <!--Action-->
-          <div style="margin: 8%;">
+          <div style="margin: 20%;" >
           </div>
             <!--Horror-->
-          <div class='direction_change'>
-            <strong style="width:120px;"  class='mt-5'>Horror</strong>
+          <div class='direction_change' style="height:160px;">
+            <span style="width:120px;">
+            <strong  class='mt-5'>Horror</strong>
+            </span>
             <v-col
               v-for="(movie) in movies.horror_movies.slice(0,5)"
               :key="movie.id"
@@ -57,8 +57,7 @@
                class='ml-4 mt-4 mb-4'
             >
               <v-card height="150" elevation="2">
-                <v-img :src="movie.poster_path" @click="goToDetail(movie)">
-                <v-card-tite>{{ movie.title }}</v-card-tite>
+                <v-img class='cardhover' :src="movie.poster_path" @click="goToDetail(movie)">
                 </v-img>
               </v-card>
             </v-col>
@@ -124,8 +123,18 @@ export default {
 .direction_change {
   display: flex;
   padding: 30px;
-  background-color: #FAF8F5;
+  background-color: navajowhite;
+  box-shadow: 0 0px 0px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
+.cardhover {
+
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+.cardhover:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
 
 </style>
 

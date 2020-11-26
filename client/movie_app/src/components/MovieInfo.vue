@@ -11,7 +11,8 @@
 
       <div class="col-8 description" style="margin-left:4%;">
         <h1>{{ movieinfo.title }}</h1>
-        <h5>RATE {{ movieinfo.avg_vote }}</h5>
+        <h5 style="color:#ffcc80">RATE</h5> 
+          <h5>{{ movieinfo.avg_vote }} / 10</h5>
         <br>
         <h3>actors</h3>
         <div style="font-size:13px;" v-for="(actor,idx) in actors" :key='idx'>
