@@ -25,21 +25,23 @@
             </div>
             <img @click="goToDetail(movie)" class="col-5" width=530 height=700 :src="recommendedMoviePoster" alt="">
           </div>
-
-          <div style="margin-left:5%; margin-top:3%">
-            <input type="radio" id="comedy" value="comedy" v-model="picked">
-            <label for="comedy" style="margin-left:1%">배고프니까 일단 따라간다. </label>
-            <br> 
-            <input type="radio" id="romance" value="romance" v-model="picked">
-            <label for="romance" style="margin-left:1%">의심스러우니 경계하며 따라간다</label>
-            <br>
-            <input type="radio" id="thriller" value="thriller" v-model="picked">
-            <label for="thriller" style="margin-left:1%">일단 거절한 후 몰래 뒤따라가서 식량을 훔쳐온다.</label>
-            <br>
-            <input type="radio" id="action" value="action" v-model="picked">
-            <label for="action" style="margin-left:1%">생명의 은인이 나타났다. 친절하게 대하자</label>
-            <br>
-             <v-btn style="margin-top:2%" @click='getMovie()'>pick!</v-btn>
+          
+          <div v-if="notClicked">
+            <div style="margin-left:5%; margin-top:3%">
+              <input type="radio" id="comedy" value="comedy" v-model="picked">
+              <label for="comedy" style="margin-left:1%">배고프니까 일단 따라간다. </label>
+              <br> 
+              <input type="radio" id="romance" value="romance" v-model="picked">
+              <label for="romance" style="margin-left:1%">의심스러우니 경계하며 따라간다</label>
+              <br>
+              <input type="radio" id="thriller" value="thriller" v-model="picked">
+              <label for="thriller" style="margin-left:1%">일단 거절한 후 몰래 뒤따라가서 식량을 훔쳐온다.</label>
+              <br>
+              <input type="radio" id="action" value="action" v-model="picked">
+              <label for="action" style="margin-left:1%">생명의 은인이 나타났다. 친절하게 대하자</label>
+              <br>
+              <v-btn style="margin-top:2%" @click='getMovie()'>pick!</v-btn>
+            </div>
           </div>
         </div>
     </div>
@@ -54,6 +56,7 @@ export default {
   name:'Select',
   data () {
     return {
+      notClicked: true,
       radioGroup: 1,
       picked: '',
       movie: [],
@@ -109,6 +112,7 @@ export default {
        this.showStory = false
        this.showEffect(wholeSentence)
        this.index = 0 
+       this.notClicked = !this.notClicked
       },
 
     showEffect(sentence) {

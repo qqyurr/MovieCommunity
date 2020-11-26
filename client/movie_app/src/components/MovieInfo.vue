@@ -28,7 +28,7 @@
 
     <!-- 리뷰창 시작 : 리뷰 컴포넌트 불러오기 -->
     <div>
-    <h3 style="margin-left:1%; margin-bottom:2%">댓글 목록 ({{movieinfo.reviews.length}}개의 댓글)</h3>
+    <h3 style="margin-left:1%; margin-bottom:2%">댓글 목록 ({{length_of_reviews}}개의 댓글)</h3>
     <Review
       v-for="(review, idx) in movieinfo.reviews"
       :key="idx"
@@ -83,6 +83,7 @@ export default {
       reviewAdded: false,
       reviewDeleted: false,
       actors: [],
+      length_of_reviews: 0,
     }
   },
 
@@ -117,6 +118,7 @@ export default {
         const acts = res.data.actors.split(',')
         this.actors = acts.slice(0,5)
         this.movieinfo = res.data
+        this.length_of_reviews = res.data.reviews.length
       })
       .catch(err => {
         console.log(err)
