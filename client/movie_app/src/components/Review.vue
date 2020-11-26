@@ -7,57 +7,54 @@
 
           <h4 class='bold'>익명  {{ review.id }}
         
-
-            <span v-if="writer"  class='pointer'>
+            
+            <span v-if="this.loggedInUserId === review.user"  class='pointer'>
               <i class="far fa-edit" style="margin-left:1%" @click="showReview()"></i>
+              <i class="far fa-trash-alt pointer" style="margin-left:1%" @click="deleteReview(review.id)"></i>
             </span>
             <span>
               <i class="far fa-comment pointer" style="margin-left:1%" @click="showCommentInput"></i>
             </span>
-            <span v-if="writer">
-              <i class="far fa-trash-alt pointer" style="margin-left:1%" @click="deleteReview(review.id)"></i>
-            </span>
-         
         
           </h4>
           <div class='reviewComment' style="background-color:#FAF8F5; border-radius:10px; margin-top:5px; padding-top:5px; padding-left: 20px; padding-bottom:20px;" >
             <div class='starcolor' style='margin-top:1%; margin-bottom:1%; color:#FFCC80;'>
-            <div v-if="review.star === 0">
+            <div style="margin-left: -20px;" v-if="review.star === 0">
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             </div>
-            <div v-if="review.star === 1">
+            <div style="margin-left: -20px;" v-if="review.star === 1">
             <i class='fas fa-star'></i>
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             </div>
-            <div v-if="review.star === 2">
+            <div style="margin-left: -20px;" v-if="review.star === 2">
             <i class='fas fa-star'></i>
             <i class='fas fa-star'></i>
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             </div>
-            <div v-if="review.star === 3">
+            <div style="margin-left: -20px;" v-if="review.star === 3">
             <i class='fas fa-star'></i>
             <i class='fas fa-star'></i>
             <i class='fas fa-star'></i>
             <i class='far fa-star'></i>
             <i class='far fa-star'></i>
             </div>
-            <div v-if="review.star === 4">
+            <div style="margin-left: -20px;" v-if="review.star === 4">
             <i class='fas fa-star'></i>
             <i class='fas fa-star'></i>
             <i class='fas fa-star'></i>
             <i class='fas fa-star'></i>
             <i class='far fa-star'></i>
             </div>
-            <div v-if="review.star === 5">
+            <div style="margin-left: -20px;" v-if="review.star === 5">
             <i class='fas fa-star'></i>
             <i class='fas fa-star'></i>
             <i class='fas fa-star'></i>
@@ -127,6 +124,7 @@ export default {
     },
     data() {
         return {
+            loggedInUserId: this.$store.getters.getLoggedInUserData,
             writer: false,
             commentCreated: false,
 
@@ -151,6 +149,8 @@ export default {
     },
     // 로그인한 유저가 댓글의 작성자와 같은지 확인
     created: function() {
+        console.log('user Id : ', this.$store.getters.getLoggedInUserData)
+        console.log('review user Id : ', this.review.user_id)
         const reviewId = this.review.id
         const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${reviewId}/writer/`
         axios.get(SERVER_URL, {params:{reviewId:reviewId}, headers: {'Authorization' : 'JWT ' + myToken }})
@@ -232,6 +232,7 @@ export default {
   flex-direction: column;
 }
 .starcolor {
+  margin-left: 2%;
   font-size: 6px;
 }
 .inputStar {
