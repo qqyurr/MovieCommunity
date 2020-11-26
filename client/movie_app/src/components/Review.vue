@@ -6,15 +6,19 @@
           <div class='comment_one'>
 
           <h4 class='bold'>익명  {{ review.id }}
-          <span v-if="writer">
-            <i class="far fa-edit" style="margin-left:1%" @click="showReview()"></i>
-          </span>
-          <span>
-            <i class="far fa-comment" style="margin-left:1%" @click="showCommentInput"></i>
-          </span>
-          <span v-if="writer">
-            <i class="far fa-trash-alt" style="margin-left:1%" @click="deleteReview(review.id)"></i>
-          </span>
+        
+
+            <span v-if="writer"  class='pointer'>
+              <i class="far fa-edit" style="margin-left:1%" @click="showReview()"></i>
+            </span>
+            <span>
+              <i class="far fa-comment pointer" style="margin-left:1%" @click="showCommentInput"></i>
+            </span>
+            <span v-if="writer">
+              <i class="far fa-trash-alt pointer" style="margin-left:1%" @click="deleteReview(review.id)"></i>
+            </span>
+         
+        
           </h4>
           <div class='reviewComment' style="background-color:#FAF8F5; border-radius:10px; margin-top:5px; padding-top:5px; padding-left: 20px; padding-bottom:20px;" >
             <div class='starcolor' style='margin-top:1%; margin-bottom:1%; color:#FFCC80;'>
@@ -104,7 +108,7 @@
         <li class='inputStar' style="margin-left:1%; list-style: none;padding: 12px !important; border-top:1px solid; border-radius:10px; border-color: #EEE; ">
         <i class="fa fa-share fa-flip-vertical re" style=color:#ccc;></i>
         <span class="comment" style="font-size:20px; font-color:black; margin-left:1%">{{ comment.content }}</span>
-          <span>{{comment.created_at}}</span>
+          <span style="margin-left:3px;">{{comment.created_at}}</span>
         </li>
       </div>
       <!-- 리뷰에 달린 대댓글 출력 끝 -->
@@ -235,6 +239,9 @@ export default {
 }
 .inputStar {
   font-size: 10px;
+}
+.pointer {
+  cursor : pointer;
 }
 
 </style>

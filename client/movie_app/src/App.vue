@@ -1,11 +1,10 @@
 <template>
   <div id="app"
     class="d-flex flex-row appBack">
-      <div>
+      <div class='what'>
         <Menu :login="login"/>
       </div>
-      <!-- <router-view/> -->
-      
+           
   </div>
 </template>
 

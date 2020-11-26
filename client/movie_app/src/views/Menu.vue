@@ -32,8 +32,6 @@
               <router-link @click.native="logout" to="/" class='link'> Logout </router-link>
               </v-list-item>
             </span>
-
-
           <searching class='searching'/>
         </v-list>
            

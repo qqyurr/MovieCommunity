@@ -119,13 +119,14 @@ export default {
 .direction_change {
   display: flex;
   padding: 30px;
-  background-color: navajowhite;
+  background-color: ede6e6;
   box-shadow: 0 0px 0px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 .cardhover {
 
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  cursor : pointer;
 }
 .cardhover:hover {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
