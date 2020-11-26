@@ -3,7 +3,7 @@
     <!-- 영화 정보 출력  -->
     
 
-    <div class="movieInfo col" style="border-style:solid; border-color:#bcbbb5; margin-bottom: 5%; border-width:0.3px; border-radius: 5px;">
+    <div class="movieInfo col" style="margin-bottom: 5%; border-radius: 10px;">
       
       <div class="poster col-3" style="display:inline">
         <img class="imgTag" width=240 height=360 :src="movieinfo.poster_path" alt="">
@@ -175,6 +175,7 @@ v-container {
   display:flex;
   flex-direction: row;
   position: relative;
+  background-color: #f4f4f4;
 }
 .poster{
   position: relative;
