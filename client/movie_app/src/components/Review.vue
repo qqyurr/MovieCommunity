@@ -5,9 +5,9 @@
         <li style="list-style: none; padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
           <div class='comment_one'>
 
-          <h4 class='bold'>익명{{ review.id }}
+          <h4 class='bold'>익명  {{ review.id }}
           <span v-if="writer">
-            <i class="far fa-edit" style="margin-left:1%" @click="showReview(review.id)"></i>
+            <i class="far fa-edit" style="margin-left:1%" @click="showReview()"></i>
           </span>
           <span>
             <i class="far fa-comment" style="margin-left:1%" @click="showCommentInput"></i>
@@ -103,8 +103,8 @@
       <div v-for="(comment, idx) in review.comments" :key='idx'>
         <li class='inputStar' style="margin-left:1%; list-style: none;padding: 12px !important; border-top:1px solid; border-radius:10px; border-color: #EEE; ">
         <i class="fa fa-share fa-flip-vertical re" style=color:#ccc;></i>
-        <span class="comment" style="font-size:13px; margin-left:1%">{{ comment.content }}</span>
-          <span>{{comment.createdTime}}</span>
+        <span class="comment" style="font-size:20px; font-color:black; margin-left:1%">{{ comment.content }}</span>
+          <span>{{comment.created_at}}</span>
         </li>
       </div>
       <!-- 리뷰에 달린 대댓글 출력 끝 -->
@@ -160,15 +160,9 @@ export default {
     methods: {
 
     // 리뷰 수정창 보이기
-    showReview(reviewId){
-      console.log('review update clicked')
-      console.log(reviewId)
+    showReview(){
       this.showUpdateInput = true
-      console.log("showupdateInput : ", this.showUpdateInput)
       this.updateNotClicked = false
-      console.log("updateNotClicked: ", this.updateNotClicked)
-      console.log(this.review.content)
-     
     },
 
     // 리뷰 업데이트 하기
