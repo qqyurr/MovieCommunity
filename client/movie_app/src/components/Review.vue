@@ -61,9 +61,7 @@
             <i class='fas fa-star'></i>
             </div>
             </div>
-            <h4>
-            <span class="comment">{{ review.content }}</span>
-            </h4>
+            <h4>{{review.content}}</h4>
           </div>
 
 
@@ -102,8 +100,10 @@
       <!-- 리뷰에 달린 대댓글 출력 -->
       <div v-for="(comment, idx) in review.comments" :key='idx'>
         <li class='inputStar' style="margin-left:1%; list-style: none;padding: 12px !important; border-top:1px solid; border-radius:10px; border-color: #EEE; ">
-        <i class="fa fa-share fa-flip-vertical re" style=color:#ccc;></i>
-        <span class="comment" style="font-size:20px; font-color:black; margin-left:1%">{{ comment.content }}</span>
+
+        <span class="comment" style="font-size:20px; font-color:black; margin-left:1%">
+          <i class="fa fa-share fa-flip-vertical re" style=color:#ccc;></i>
+          {{ comment.content }}</span>
           <span>{{comment.created_at}}</span>
         </li>
       </div>
@@ -226,9 +226,6 @@ export default {
 .comment_one {
   display:flex;
   flex-direction: column;
-}
-.comment {
-  font-weight: 100;
 }
 .starcolor {
   font-size: 6px;

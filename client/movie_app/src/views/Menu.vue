@@ -39,15 +39,17 @@
            
       </v-navigation-drawer>
 
-      <v-content>
-        <v-container>
+      <v-content class="itsme">
+        
+        <!-- 여기가 이미지 감싸는 태그인데 마진땜에 전체 안되는 곳임 -->
+        <div class="wallpaper">
           <v-row justify="center" align="center" class="mt-10">
             <v-col cols="auto">
               <!--출력되는곳 -->
               <router-view/>
             </v-col>
           </v-row>
-        </v-container>
+        </div>
       </v-content>
 
     </v-app>
@@ -99,6 +101,10 @@ export default {
 </script>
 
 <style>
+
+.wallpaper {
+
+}
 
 .logo {
   font-family: 'La Belle Aurore';
