@@ -96,7 +96,7 @@ export default {
 .nomargin {
     padding: 0px !important;
     margin: 0px !important;
-    width: 600px;
+    width: 800px;
     display: flex;
     flex-direction: column;
 }

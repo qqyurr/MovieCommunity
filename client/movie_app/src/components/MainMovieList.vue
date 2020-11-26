@@ -113,8 +113,8 @@ export default {
 <style>
 #inspire {
   position: sticky;
-  font-family:'Montserrat','Cormorant Garamond','Cormorant Unicase','Coustard' ,'La Belle Aurore','Noto Sans KR','Serif';
-  font-size: 20px;
+  font-family:'La Belle Aurore','Noto Sans KR','Serif';
+  font-size: 40px;
 }
 .direction_change {
   display: flex;
