@@ -14,17 +14,17 @@
         </router-link>
       </v-app-bar>
 
+      <!-- 왼쪽 네브 바 시작 -->
       <v-navigation-drawer v-model="drawerState" app clipped color="white" >
         <!-- content -->
         <v-list dense class='menu'>
-
           <!--MenuItem 컨포넌트에 for문 돌면서 아이템 하나씩 넘겨주기 -->
           <Menu-item 
            v-for="(item, idx) in items"
            :item="item"
            :key="idx"
           />
-            <span v-if="this.$store.state.login === true">
+            <span v-if="this.LoggedInUserData.isLoggedIn === true">
               <v-list-item>
               <v-list-item-icon>
                   <v-icon>mdi-logout</v-icon>
@@ -34,8 +34,8 @@
             </span>
           <searching class='searching'/>
         </v-list>
-           
       </v-navigation-drawer>
+      <!-- 왼쪽 네브 바 끝 -->
 
       <v-content class="itsme">
         
@@ -56,6 +56,7 @@
 <script>
 import Searching from '@/components/Searching'
 import MenuItem from '../components/MenuItem.vue'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'Menu',
@@ -64,33 +65,29 @@ export default {
     MenuItem,
   },
 
-  props: {
-    login : Boolean,
-  },
-  methods: {
-    logout: function() {
-      localStorage.removeItem('jwt')
-      this.$router.push({name: 'Login'})
-      this.$store.state.login = false
-      console.log('log out : ' , this.$store.loggedInUserData)
-      this.$forceUpdate()
-    },
-  },
-
   data () {
       return {
-        isLoggedIn: this.$store.state.login,
         items: [
           { title: 'Home', icon: 'mdi-home', url: '/', showIfLoggined: true },
           { title: 'MyPage', icon: 'mdi-account', url: '/mypage', showIfLoggined: true },
           { title: 'Login', icon: 'mdi-login', url: '/accounts/login', showIfLoggined: false },
-          // { title: 'Logout', icon:'mdi-logout', url: '/', showIfLoggined: true},
           { title: 'Signup', icon: 'mdi-account-plus-outline', url: '/accounts/signup', showIfLoggined: false },
           { title: 'Recommend', icon: 'mdi-compass-outline', url: '/recommend', showIfLoggined: true },
         ],
       }
     },
+  methods: {
+    logout: function() {
+      localStorage.removeItem('jwt')
+      this.$store.commit('fetchLoggedInUserData')
+      this.$router.push({name: 'Login'})
+      
+    },
+  },
+
   computed: {
+    ...mapGetters(['LoggedInUserData']),
+
     drawerState: {
       get () { return this.$store.getters.drawerState },
       set (v) { return this.$store.commit('toggleDrawerState', v) }
@@ -100,11 +97,6 @@ export default {
 </script>
 
 <style>
-
-.wallpaper {
-
-}
-
 .logo {
   font-family: 'La Belle Aurore';
   text-decoration: none !important;

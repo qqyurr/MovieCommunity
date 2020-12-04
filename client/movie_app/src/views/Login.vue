@@ -37,6 +37,7 @@
 
 <script>
 import axios from 'axios'
+import {mapMutations, mapGetters} from 'vuex'
 
 const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
 
@@ -50,39 +51,17 @@ const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
         password: '',
       },
     }),
-    watch: {
-    '$store.state.login': function() {
-      console.log('I am Login.vue watch : loggined status changed : ', this.$store.state.login)
-    }
-  },
 
     methods: {
+      ...mapMutations(['toggleLoginState', 'fetchLoggedInUsername']),
+      ...mapGetters(['LoggedInUserData']),
+
       login() {
         axios.post(SERVER_URL + 'api-token-auth/', this.credentials)
           .then(res => {
-            console.log(res.data.token)
             localStorage.setItem('jwt', res.data.token)
             this.$router.push({name: 'Home'})
-            this.$store.state.login = true
-            this.$store.state.loginUserName = res.data.token
-            console.log('this.$store.state.login', this.$store.state.login)
-            this.$forceUpdate()
-            const token = res.data.token
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-
-            console.log(jsonPayload)
-            const userInfo = JSON.parse(jsonPayload)
-            console.log(userInfo)
-            console.log(userInfo.user_id)
-            this.$store.state.loggedInUserData = userInfo.user_id
-
-            console.log('logged in user id : ' , this.$store.getters.getLoggedInUserData)
-            
-
+            this.$store.commit('fetchLoggedInUserData')
           })
           .catch(err => {
             console.log(err)

@@ -115,7 +115,6 @@ export default {
       const myToken = localStorage.getItem('jwt')
       axios.get(`http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
-        console.log(res)
         const acts = res.data.actors.split(',')
         this.actors = acts.slice(0,5)
         this.movieinfo = res.data

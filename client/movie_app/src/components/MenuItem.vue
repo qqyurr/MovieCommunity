@@ -1,6 +1,6 @@
 <template>
   <div>
-      <span v-if="item.showIfLoggined === this.$store.state.login">
+      <span v-if="item.showIfLoggined === this.LoggedInUserData.isLoggedIn">
         <v-list-item>
         <v-list-item-icon>
           <v-icon>{{ item.icon }}</v-icon>
@@ -12,10 +12,17 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
+
 export default {
   name: 'MenuItem',
   props: {
     item: Object
+  },
+  
+  computed: {
+    ...mapGetters(['LoggedInUserData'])
   },
 
   methods: {

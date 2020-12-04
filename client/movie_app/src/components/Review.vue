@@ -8,7 +8,7 @@
           <h4 class='bold'>익명  {{ review.id }}
         
             
-            <span v-if="this.loggedInUserId === review.user"  class='pointer'>
+            <span v-if="this.$store.getters.LoggedInUserData.userId === this.review.user"  class='pointer'>
               <i class="far fa-edit" style="margin-left:1%" @click="showReview()"></i>
               <i class="far fa-trash-alt pointer" style="margin-left:1%" @click="deleteReview(review.id)"></i>
             </span>
@@ -64,10 +64,6 @@
             </div>
             <h4>{{review.content}}</h4>
           </div>
-
-
-          <!-- 로그인 유저와 리뷰 작성자가 일치할 때만 수정/삭제 버튼 보여주기 시작-->
-          <!-- 로그인 유저와 리뷰 작성자가 일치할 때만 수정/삭제 버튼 보여주기 끝-->
           </div>
 
         </li>
@@ -124,7 +120,6 @@ export default {
     },
     data() {
         return {
-            loggedInUserId: this.$store.getters.getLoggedInUserData,
             writer: false,
             commentCreated: false,
 
@@ -149,8 +144,6 @@ export default {
     },
     // 로그인한 유저가 댓글의 작성자와 같은지 확인
     created: function() {
-        console.log('user Id : ', this.$store.getters.getLoggedInUserData)
-        console.log('review user Id : ', this.review.user_id)
         const reviewId = this.review.id
         const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${reviewId}/writer/`
         axios.get(SERVER_URL, {params:{reviewId:reviewId}, headers: {'Authorization' : 'JWT ' + myToken }})
