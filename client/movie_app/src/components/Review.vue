@@ -64,7 +64,6 @@
             <h4>{{review.content}}</h4>
           </div>
           </div>
-
         </li>
       </span>
       <!-- 댓글 끝 -->
@@ -78,8 +77,6 @@
           v-model="reviewUpdateContent"
         >
         </v-text-field>
-
-        
       </span>
 
         <!-- 대댓 인풋 시작(숨겨놓음) 댓글 마다 다는것임-->
@@ -108,10 +105,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-      const myToken = localStorage.getItem('jwt')
-
-
 
 export default {
     name: 'Review',
@@ -120,75 +113,47 @@ export default {
     },
     data() {
         return {
-            writer: false,
-            commentCreated: false,
-
             originalContent: this.review.content,
-
-            //showUpdateInput
             showUpdateInput: false,
-
             showComment: false, 
             commentContent: '',
-
             updateNotClicked: true,
-
-            // 유저가 수정한 리뷰 내용
             reviewUpdateContent: this.review.content,
         }
     },
-    watch: {
-        writer() {
-            this.$emit('review-deleted')
-        },
-    },
-    // 로그인한 유저가 댓글의 작성자와 같은지 확인
-    created: function() {
-        const reviewId = this.review.id
-        const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${reviewId}/writer/`
-        axios.get(SERVER_URL, {params:{reviewId:reviewId}, headers: {'Authorization' : 'JWT ' + myToken }})
-        .then(res => {
-            this.writer= res.data.isWriter
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    },
     methods: {
+      // 리뷰 수정 아이콘 클릭하면 수정창 보이기
+      showReview(){
+        this.showUpdateInput = true
+        this.updateNotClicked = false
+      },
 
-    deleteOneReview(review) {
-      console.log(review)
-      this.$store.dispatch('deleteReview', review)
+      // 대댓글 아이콘 클릭하면 대댓글 입력창 보이기
+      showCommentInput() {
+          this.showComment = !this.showComment
+      },
+      
+      // 리뷰 삭제 mutation 함수 호출하기
+      deleteOneReview(review) {
+        this.$store.dispatch('deleteReview', review)
+      },
 
-    },
+      // 리뷰 업데이트 mutation 함수 호출하기
+      updateOneReview(review){
+          const reviewUpdateContent = this.reviewUpdateContent
+          this.$store.dispatch('updateReview', {review, reviewUpdateContent})
+          this.showUpdateInput = false
+          this.updateNotClicked = !this.updateNotClicked
+      },
 
-    // 리뷰 수정창 보이기
-    showReview(){
-      this.showUpdateInput = true
-      this.updateNotClicked = false
-    },
-
-    // 리뷰 업데이트 하기
-    updateOneReview(review){
-        const reviewUpdateContent = this.reviewUpdateContent
-        this.$store.dispatch('updateReview', {review, reviewUpdateContent})
-        this.showUpdateInput = false
-        this.updateNotClicked = !this.updateNotClicked
-    },
-  
-
-    showCommentInput() {
-        this.showComment = !this.showComment
-    },
-
-    // 대댓글 작성
-    createOneComment(review) {
-        const commentContent = this.commentContent
-        this.$store.dispatch('createReviewComment', {review, commentContent})
-        this.commentCreated = !this.commentCreated
-        this.showComment = false
-        this.commentContent = ''
-        },
+      // 대댓글 작성 mutation 함수 호출하기
+      createOneComment(review) {
+          const commentContent = this.commentContent
+          this.$store.dispatch('createReviewComment', {review, commentContent})
+          this.commentCreated = !this.commentCreated
+          this.showComment = false
+          this.commentContent = ''
+      },
     },
 }
 </script>
