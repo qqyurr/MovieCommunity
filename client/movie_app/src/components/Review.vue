@@ -55,26 +55,24 @@
         </span>
         <!-- 대댓 인풋 끝-->
 
-      <!-- 리뷰에 달린 대댓글 출력 -->
-      <div v-for="(comment, idx) in review.comments" :key='idx'>
-        <li class='inputStar' style="margin-left:1%; list-style: none;padding: 12px !important; border-top:1px solid; border-radius:10px; border-color: #EEE; ">
+      <!-- 리뷰에 달린 대댓글 출력하기 위해 for문을 돌며 ReviewComment 컴포넌트에 comment를 하나씩 넘겨줌 -->
+      <ReviewComment
+      v-for="(comment, idx) in review.comments"
+      :key="idx"
+      :comment="comment"
+      />
+      <!-- 리뷰에 달린 대댓글t for문 끝 -->
 
-        <span class="comment" style="font-size:20px; font-color:black; margin-left:1%">
-          <i class="fa fa-share fa-flip-vertical re" style=color:#ccc;></i>
-          {{ comment.content }}</span>
-          <div>
-          </div>
-        </li>
-      </div>
-      <!-- 리뷰에 달린 대댓글 출력 끝 -->
   </div>
 </template>
 
 <script>
 import moment from 'moment'
+import ReviewComment from './ReviewComment.vue'
 
 
 export default {
+  components: { ReviewComment },
     name: 'Review',
     props: {
         review: Object,
@@ -149,9 +147,6 @@ export default {
   margin-bottom:1%; 
   margin-left:1px; 
   color: goldenrod;
-}
-.inputStar {
-  font-size: 10px;
 }
 .pointer {
   cursor : pointer;
