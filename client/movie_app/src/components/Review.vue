@@ -1,11 +1,12 @@
 <template>
   <div class="reviewClass">
-      <!-- 댓글 시작 -->
+      <!-- 리뷰 시작 -->
       <span v-if="updateNotClicked">
         <li style="list-style: none; padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
           <div class='comment_one'>
           <h4 class='bold'>익명  {{ review.id }}
-            <span v-if="this.$store.getters.LoggedInUserData.userId === this.review.user"  class='pointer'>
+            <!-- 리뷰 작성자와 로그인한 유저가 일치하면 수정, 삭제 아이콘 보이기 -->
+            <span v-if="this.$store.getters.LoggedInUserData.userId === this.review.user">
               <i class="far fa-edit" style="margin-left:1%" @click="showReview()"></i>
               <i class="far fa-trash-alt pointer" style="margin-left:1%" @click="deleteOneReview(review)"></i>
             </span>
@@ -59,7 +60,7 @@
             <i class='fas fa-star'></i>
             </div>
             </div>
-            <h4>{{review.content}}</h4>
+            <h4 v-bind:class="{myReview: this.$store.getters.LoggedInUserData.userId === this.review.user}">{{review.content}}</h4>
           </div>
           </div>
         </li>
@@ -157,6 +158,10 @@ export default {
 </script>
 
 <style scoped>
+.myReview {
+  color: darkgreen;
+}
+
 .comment_one {
   display:flex;
   flex-direction: column;
