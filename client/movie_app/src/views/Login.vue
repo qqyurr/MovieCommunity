@@ -31,6 +31,7 @@
       >
       로그인
       </v-btn>
+      <div style="margin: 10px; color: red;">{{errorMessage}}</div>
     </v-form>
   </div>
 </template>
@@ -46,6 +47,7 @@ const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
     data: () => ({
       valid: true,
       show1 : false,
+      errorMessage: '',
       credentials: {
         username : '',
         password: '',
@@ -64,7 +66,9 @@ const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/accounts/'
             this.$store.commit('fetchLoggedInUserData')
           })
           .catch(err => {
-            console.log(err)
+            if (err.response.status === 400) {
+              this.errorMessage = "올바른 아이디와 패스워드를 입력해주세요"
+            }
           })
       },
       validate () {

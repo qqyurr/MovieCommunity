@@ -16,8 +16,8 @@
 
       <!-- 왼쪽 네브 바 시작 -->
       <v-navigation-drawer v-model="drawerState" app clipped color="white" >
-        <!-- content -->
         <v-list dense class='menu'>
+        <div class="welcome-message">Welcome ! {{this.$store.getters.LoggedInUserData.username}}</div>
           <!--MenuItem 컨포넌트에 for문 돌면서 아이템 하나씩 넘겨주기 -->
           <Menu-item 
            v-for="(item, idx) in items"
@@ -97,6 +97,16 @@ export default {
 </script>
 
 <style>
+.welcome-message {
+  color: orangered;
+  font-weight: 600;
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+
 .logo {
   font-family: 'La Belle Aurore';
   text-decoration: none !important;
@@ -116,6 +126,5 @@ export default {
 }
 .menu {
   opacity: 70%;
-  font-family:'Montserrat','Times New Roman', Times, serif
 }
 </style>
