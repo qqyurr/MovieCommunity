@@ -6,11 +6,10 @@
           <div class='comment_one'>
 
           <h4 class='bold'>익명  {{ review.id }}
-        
-            
+  
             <span v-if="this.$store.getters.LoggedInUserData.userId === this.review.user"  class='pointer'>
               <i class="far fa-edit" style="margin-left:1%" @click="showReview()"></i>
-              <i class="far fa-trash-alt pointer" style="margin-left:1%" @click="deleteReview(review.id)"></i>
+              <i class="far fa-trash-alt pointer" style="margin-left:1%" @click="deleteOneReview(review)"></i>
             </span>
             <span>
               <i class="far fa-comment pointer" style="margin-left:1%" @click="showCommentInput"></i>
@@ -75,7 +74,7 @@
       <span v-if="showUpdateInput">
         <v-text-field
           :value="reviewUpdateContent"
-          @keypress.enter="updateReview(review.id)"
+          @keypress.enter="updateOneReview(review)"
           v-model="reviewUpdateContent"
         >
         </v-text-field>
@@ -88,7 +87,7 @@
           <v-text-field
           placeholder="여기에 대댓글을 작성해주세요"
           v-model="commentContent"
-          @keypress.enter="createComment(review.id)"
+          @keypress.enter="createOneComment(review)"
           >
           </v-text-field>
         </span>
@@ -110,8 +109,9 @@
 
 <script>
 import axios from 'axios'
+      const myToken = localStorage.getItem('jwt')
 
-const myToken = localStorage.getItem('jwt')
+
 
 export default {
     name: 'Review',
@@ -156,6 +156,12 @@ export default {
     },
     methods: {
 
+    deleteOneReview(review) {
+      console.log(review)
+      this.$store.dispatch('deleteReview', review)
+
+    },
+
     // 리뷰 수정창 보이기
     showReview(){
       this.showUpdateInput = true
@@ -163,57 +169,25 @@ export default {
     },
 
     // 리뷰 업데이트 하기
-    updateReview(reviewId){
-      const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${reviewId}/`
-      const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
-      axios.put(SERVER_URL, {content: this.reviewUpdateContent}, headers)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    updateOneReview(review){
+        const reviewUpdateContent = this.reviewUpdateContent
+        this.$store.dispatch('updateReview', {review, reviewUpdateContent})
         this.showUpdateInput = false
         this.updateNotClicked = !this.updateNotClicked
-        this.$emit('comment-created')
     },
-    
-    // 리뷰 삭제
-    deleteReview(reviewId) {
-      console.log('delete btn clicked')
-      const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${reviewId}/`
-
-      axios.delete(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-        this.$emit('review-deleted')
-        
-    },
+  
 
     showCommentInput() {
         this.showComment = !this.showComment
-        },
-    // 대댓글 작성
-    createComment(reviewId) {
-        const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${reviewId}/comments/`
-        const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
+    },
 
-        axios.post(SERVER_URL, {content: this.commentContent, review: reviewId}, headers)
-            .then(res=>{
-            console.log(' comment created? ')
-            console.log(res)
-            })
-            .catch(err=> {
-            console.log(err)
-            })
-            this.commentCreated = !this.commentCreated
-            this.showComment = false
-            this.commentContent = ''
-            this.$emit('comment-created')
+    // 대댓글 작성
+    createOneComment(review) {
+        const commentContent = this.commentContent
+        this.$store.dispatch('createReviewComment', {review, commentContent})
+        this.commentCreated = !this.commentCreated
+        this.showComment = false
+        this.commentContent = ''
         },
     },
 }
