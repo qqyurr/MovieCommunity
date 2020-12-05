@@ -16,7 +16,7 @@ const BASE_URL = 'http://localhost:8000/api/v1/movie_community/all_movies/'
 import axios from 'axios'
 
 export default {
-  name:'Searching',
+  name:'SearchBar',
   data () {
     return {
       newTag: '',

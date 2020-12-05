@@ -32,7 +32,7 @@
               <router-link @click.native="logout" to="/" class='link'> Logout </router-link>
               </v-list-item>
             </span>
-          <searching class='searching'/>
+          <SearchBar class='searching'/>
         </v-list>
       </v-navigation-drawer>
       <!-- 왼쪽 네브 바 끝 -->
@@ -54,14 +54,14 @@
 </template>
 
 <script>
-import Searching from '@/components/Searching'
+import SearchBar from '@/components/SearchBar'
 import MenuItem from '../components/MenuItem.vue'
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'Menu',
   components:{
-    Searching,
+    SearchBar,
     MenuItem,
   },
 
