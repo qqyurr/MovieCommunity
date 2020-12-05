@@ -4,26 +4,21 @@
       <hr>
       <h2>내가 작성한 리뷰</h2>
       <br>
+
+      <h3>내가 리뷰 쓴 영화 페이지로 이동하기</h3>
         
-
     <div  v-for="(review, idx) in myReviews" :key="idx" class='myreview'>
-      
-
         <div class='reviewcolor'>
-            <div > {{ review.content }}</div>
-                <div class='starcolor' style='color:#FFCC80;'>
-
-            <span v-for="index in (5-review.star)" :key="index">
-                <i class='far fa-star'></i>
-            </span>
-            <span v-for="index in review.star" :key="index">
-                <i class='fas fa-star'></i>
-            </span>
-
+            <div> {{ review.content }}</div>
+            <div class='starcolor'>
+                <span v-for="index in (5-review.star)" :key="index">
+                    <i class='far fa-star'></i>
+                </span>
+                <span v-for="index in review.star" :key="index">
+                    <i class='fas fa-star'></i>
+                </span>
             </div>
-                
         </div>
-   
     </div>
   </div>
 </template>
@@ -81,8 +76,11 @@ export default {
     font-family: 'Noto Serif Kr';
 }
 .starcolor {
-    font-size: 20%;
-    margin-left: 3%;
+  font-size: 13px;
+  margin-top:1%; 
+  margin-bottom:1%; 
+  margin-left:1px; 
+  color: goldenrod;
 }
 
 </style>

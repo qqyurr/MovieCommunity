@@ -16,7 +16,7 @@
         
           </h4>
           <div class='reviewComment' style="background-color:#FAF8F5; border-radius:10px; margin-top:5px; padding-top:5px; padding-left: 20px; padding-bottom:20px;" >
-            <div class='starcolor' style='margin-top:1%; margin-bottom:1%; margin-left:1px; color:#FFCC80;'>     
+            <div class='starcolor'>     
               <span v-for="index in (5-review.star)" :key="index">
                   <i class='far fa-star'></i>
               </span>
@@ -131,8 +131,11 @@ export default {
   flex-direction: column;
 }
 .starcolor {
-  margin-left: 2%;
-  font-size: 6px;
+  font-size: 13px;
+  margin-top:1%; 
+  margin-bottom:1%; 
+  margin-left:1px; 
+  color: goldenrod;
 }
 .inputStar {
   font-size: 10px;
