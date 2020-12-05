@@ -70,9 +70,7 @@ export default {
 
   data() {
     return {
-      // 별점 기본 값
       rating: 0,
-      // 별점 선택 값
       star : 0,
       content : '',
     }
@@ -91,7 +89,6 @@ export default {
       const content = this.content
       const star = this.star
       const movieId = this.movieId
-      console.log('content :',  content, 'star :', star, 'movieId :', movieId )
       this.$store.dispatch('createReview', {content, star, movieId})
       this.star = 0 
       this.content = ''
@@ -131,8 +128,5 @@ v-container {
   /* margin: auto; */
   top: 5%;
   /* left: 20%;  */
-}
-.description{
-  
 }
 </style>

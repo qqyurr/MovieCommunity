@@ -4,9 +4,7 @@
       <span v-if="updateNotClicked">
         <li style="list-style: none; padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
           <div class='comment_one'>
-
           <h4 class='bold'>익명  {{ review.id }}
-  
             <span v-if="this.$store.getters.LoggedInUserData.userId === this.review.user"  class='pointer'>
               <i class="far fa-edit" style="margin-left:1%" @click="showReview()"></i>
               <i class="far fa-trash-alt pointer" style="margin-left:1%" @click="deleteOneReview(review)"></i>

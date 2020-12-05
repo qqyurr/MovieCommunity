@@ -65,7 +65,6 @@ export default new Vuex.Store({
       const myToken = localStorage.getItem('jwt')
       axios.get(`http://localhost:8000/api/v1/movie_community/movies/${movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
       .then(res=>{
-        console.log('review 가 바로 반영되서 날라왔읕텐데? : ', res.data.reviews)
         const acts = res.data.actors.split(',')
         state.movieDetail.reviews = res.data.reviews
         state.movieDetail.movieInfo = res.data
@@ -80,7 +79,6 @@ export default new Vuex.Store({
   actions: {
     // 리뷰작성 포스트요청
     createReview(context, review) {
-      console.log('post : ' , review)
       const SERVER_URL = `http://localhost:8000/api/v1/movie_community/movies/${review.movieId}/reviews/`
       const myToken = localStorage.getItem('jwt')
       const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
@@ -118,7 +116,6 @@ export default new Vuex.Store({
 
     // 리뷰 삭제
     deleteReview(context, review) {
-      console.log('clicked!')
       const myToken = localStorage.getItem('jwt')
       const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${review.id}/`
   
