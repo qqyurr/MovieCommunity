@@ -13,6 +13,7 @@
             <span>
               <i class="far fa-comment pointer" style="margin-left:1%" @click="showCommentInput"></i>
             </span>
+            <span class="review-createdTime">{{createdDate}}</span>
         
           </h4>
           <div class='reviewComment' style="background-color:#FAF8F5; border-radius:10px; margin-top:5px; padding-top:5px; padding-left: 20px; padding-bottom:20px;" >
@@ -24,12 +25,13 @@
                   <i class='fas fa-star'></i>
               </span>
             </div>
+            <!-- 리뷰 내용 출력 -->
             <h4 v-bind:class="{myReview: this.$store.getters.LoggedInUserData.userId === this.review.user}">{{review.content}}</h4>
           </div>
           </div>
         </li>
       </span>
-      <!-- 댓글 끝 -->
+      <!-- 리뷰 끝 -->
 
       <!-- 수정) 댓글 업데이트 인풋 출력 시작(수정버튼 클릭시에만 보여주기) 원래 댓글을 숨긴다-->
       <!-- v-model 이 양방향바인딩을 해줘서 value 와 충돌이 일어남 -->
@@ -60,7 +62,8 @@
         <span class="comment" style="font-size:20px; font-color:black; margin-left:1%">
           <i class="fa fa-share fa-flip-vertical re" style=color:#ccc;></i>
           {{ comment.content }}</span>
-          <span>{{comment.created_at}}</span>
+          <div>
+          </div>
         </li>
       </div>
       <!-- 리뷰에 달린 대댓글 출력 끝 -->
@@ -68,6 +71,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 
 export default {
     name: 'Review',
@@ -76,6 +81,7 @@ export default {
     },
     data() {
         return {
+            createdDate: moment(this.review.created_at).format('YYYY-MM-DD, h:mm'),
             originalContent: this.review.content,
             showUpdateInput: false,
             showComment: false, 
@@ -122,6 +128,13 @@ export default {
 </script>
 
 <style scoped>
+.review-createdTime {
+  text-align: left;
+  margin-left: 3%;
+  font-size: 10px;
+}
+
+
 .myReview {
   color: brown;
 }

@@ -41,6 +41,7 @@ export default new Vuex.Store({
     drawerState: (state) => state.drawerState,
 
     FetchedMovieDetail(state) {
+      console.log(state.movieDetail)
       return state.movieDetail
     },
 
