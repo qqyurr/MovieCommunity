@@ -16,49 +16,13 @@
         
           </h4>
           <div class='reviewComment' style="background-color:#FAF8F5; border-radius:10px; margin-top:5px; padding-top:5px; padding-left: 20px; padding-bottom:20px;" >
-            <div class='starcolor' style='margin-top:1%; margin-bottom:1%; color:#FFCC80;'>
-            <div style="margin-left: -20px;" v-if="review.star === 0">
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div style="margin-left: -20px;" v-if="review.star === 1">
-            <i class='fas fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div style="margin-left: -20px;" v-if="review.star === 2">
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div style="margin-left: -20px;" v-if="review.star === 3">
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div style="margin-left: -20px;" v-if="review.star === 4">
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div style="margin-left: -20px;" v-if="review.star === 5">
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            </div>
+            <div class='starcolor' style='margin-top:1%; margin-bottom:1%; margin-left:1px; color:#FFCC80;'>     
+              <span v-for="index in (5-review.star)" :key="index">
+                  <i class='far fa-star'></i>
+              </span>
+              <span v-for="index in review.star" :key="index">
+                  <i class='fas fa-star'></i>
+              </span>
             </div>
             <h4 v-bind:class="{myReview: this.$store.getters.LoggedInUserData.userId === this.review.user}">{{review.content}}</h4>
           </div>
@@ -159,7 +123,7 @@ export default {
 
 <style scoped>
 .myReview {
-  color: darkgreen;
+  color: brown;
 }
 
 .comment_one {

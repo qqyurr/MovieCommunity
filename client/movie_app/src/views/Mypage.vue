@@ -10,50 +10,16 @@
       
 
         <div class='reviewcolor'>
-                <div > {{ review.content }}</div>
-                 <div class='starcolor' style='color:#FFCC80;'>
-            <div v-if="review.star === 0">
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div v-if="review.star === 1">
-            <i class='fas fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div v-if="review.star === 2">
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div v-if="review.star === 3">
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='far fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div v-if="review.star === 4">
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='far fa-star'></i>
-            </div>
-            <div v-if="review.star === 5">
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            <i class='fas fa-star'></i>
-            </div>
+            <div > {{ review.content }}</div>
+                <div class='starcolor' style='color:#FFCC80;'>
+
+            <span v-for="index in (5-review.star)" :key="index">
+                <i class='far fa-star'></i>
+            </span>
+            <span v-for="index in review.star" :key="index">
+                <i class='fas fa-star'></i>
+            </span>
+
             </div>
                 
         </div>
