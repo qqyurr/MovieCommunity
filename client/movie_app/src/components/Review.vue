@@ -4,7 +4,7 @@
       <span v-if="updateNotClicked">
         <li style="list-style: none; padding: 12px !important; border-top:1px solid; border-color: #EEE; ">
           <div class='comment_one'>
-          <h4 class='bold'>익명  {{ review.id }}
+          <h4 v-bind:class="{myReview: this.$store.getters.LoggedInUserData.userId === this.review.user}">익명  {{ review.id }}
             <!-- 리뷰 작성자와 로그인한 유저가 일치하면 수정, 삭제 아이콘 보이기 -->
             <span v-if="this.$store.getters.LoggedInUserData.userId === this.review.user">
               <i class="far fa-edit" style="margin-left:1%" @click="showReview()"></i>
@@ -26,7 +26,7 @@
               </span>
             </div>
             <!-- 리뷰 내용 출력 -->
-            <h4 v-bind:class="{myReview: this.$store.getters.LoggedInUserData.userId === this.review.user}">{{review.content}}</h4>
+            <h4>{{review.content}}</h4>
           </div>
           </div>
         </li>

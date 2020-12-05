@@ -97,15 +97,22 @@ def review_detail(request, movie_id):
 #     return Response(serializer.data)
 
 
-# user가 작성한 리뷰 리스트 반환 (마이페이지에서 사용)
+# 마이페이지) 유저가 리뷰를 작성한 영화(겹치지 않게)목록을 반환해주기.
 @api_view(['GET'])
 def user_review_list(request):
-    print('------------------------------------------------------------')
-    print(request.user.id)
-    my_reviews = request.user.reviews
-    serializer = ReviewSerializer(
-        my_reviews, many=True)
-    return Response(data=serializer.data, status=status.HTTP_200_OK)
+    my_movies_ids = list(Review.objects.filter(user_id=request.user.id).values_list('movie_id', flat=True).distinct())
+    
+    movies = []
+    for movieId in my_movies_ids:
+        movie = {Movie.objects.filter(id=movieId).values('id', 'title', 'avg_vote', 'year')}
+        my_review_count = Review.objects.filter(user_id=request.user.id).filter(movie_id=movieId).count()
+        data = {
+            'movie': movie,
+            'my_review_count' : my_review_count
+        }
+        movies.append(data)
+    
+    return Response(movies, status=status.HTTP_200_OK)
 
 
 # 리뷰작성 & 모든 리뷰 리스트 반환

@@ -5,19 +5,14 @@
       <h2>내가 작성한 리뷰</h2>
       <br>
 
-      <h3>내가 리뷰 쓴 영화 페이지로 이동하기</h3>
+      <h3>내가 쓴 리뷰 페이지로 이동할 수 있습니다.</h3>
         
     <div  v-for="(review, idx) in myReviews" :key="idx" class='myreview'>
-        <div class='reviewcolor'>
-            <div> {{ review.content }}</div>
-            <div class='starcolor'>
-                <span v-for="index in (5-review.star)" :key="index">
-                    <i class='far fa-star'></i>
-                </span>
-                <span v-for="index in review.star" :key="index">
-                    <i class='fas fa-star'></i>
-                </span>
-            </div>
+        <div class='myMovie'>
+            <div> {{ review.movie[0][0].title }}</div>
+            <div> 내가 쓴 댓글 수 : {{ review.my_review_count }}</div>
+            <div> 내가 준 평균 평점 : 추가하기 </div>
+            <div> 내 댓글에 달린 대댓글 수 : 추가하기</div>
         </div>
     </div>
   </div>
@@ -40,6 +35,9 @@ export default {
             const myToken = localStorage.getItem('jwt')
             axios.get(SERVER_URL, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
                 .then(res => {
+                    console.log(res.data)
+                    this.myReviews = res.data
+                    console.log(res.data[1].movie[0][0])
                     this.myReviews = res.data
                 })
                 .catch(err => {
@@ -64,12 +62,11 @@ export default {
 .myreview {
     border-bottom: 0.5px solid #d8d8d8;
 }
-.reviewcolor {
+.myMovie {
     margin: 2%;
     padding: 4%;
     background-color :#f7f7f7;
     border-radius: 10px;
-    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
