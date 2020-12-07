@@ -62,7 +62,7 @@ const actions= {
     const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${payload.review.id}/comments/`
     const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
 
-    axios.post(SERVER_URL, {content: payload.commentContent, review: payload.review.id}, headers)
+    axios.post(SERVER_URL, {content: payload.commentContent, review: payload.review.id, movie:payload.movieId}, headers)
         .then(res=>{
           console.log(res)
         })

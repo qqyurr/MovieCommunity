@@ -41,6 +41,8 @@ class Review(models.Model):
 
 
 class Review_Comment(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
     review = models.ForeignKey(
         Review, verbose_name=("오리지널 리뷰"), on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

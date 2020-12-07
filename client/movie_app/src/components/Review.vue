@@ -116,7 +116,8 @@ export default {
       // 대댓글 작성 mutation 함수 호출하기
       createOneComment(review) {
           const commentContent = this.commentContent
-          this.$store.dispatch('createReviewComment', {review, commentContent})
+          const movieId = review.movie
+          this.$store.dispatch('createReviewComment', {review, commentContent, movieId})
           this.commentCreated = !this.commentCreated
           this.showComment = false
           this.commentContent = ''
