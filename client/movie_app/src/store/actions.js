@@ -19,7 +19,6 @@ const actions= {
         console.log('finally')
         context.commit('fetchMovieDetail', review.movieId)
       })
-    
   },
 
   // 리뷰 업데이트
