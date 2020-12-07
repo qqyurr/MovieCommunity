@@ -1,8 +1,8 @@
 <template>
   <div id="app"
     class="d-flex flex-row appBack">
-      <div class='what'>
-        <Menu :login="login"/>
+      <div>
+        <Menu/>
       </div>
            
   </div>
@@ -21,16 +21,10 @@ export default {
 
   data: function() {
     return {
-      login: false
     }
   },
   
   created: function() {
-    const token = localStorage.getItem('jwt')
-    if (token) {
-      this.login = true
-      this.$store.state.login = true
-    }
   },
 };
 </script>

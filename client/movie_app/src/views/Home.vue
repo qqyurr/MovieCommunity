@@ -1,7 +1,6 @@
 <template>
   <div id="homeBack">
     <no-login />
-    <!-- <규연이가 아이패드로 그린 우리의 로고...손그림 그것이 매력포인트여 -->
     <main-movie-list class="sticker"/>
   </div>
 </template>

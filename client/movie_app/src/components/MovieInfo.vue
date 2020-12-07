@@ -1,45 +1,40 @@
 <template>
   <v-container class='back'>
-    <!-- 영화 정보 출력  -->
-    
-
+    <!-- 영화 정보 출력 시작-->
     <div class="movieInfo col" style="margin-bottom: 5%; border-radius: 10px;">
-      
       <div class="poster col-3" style="display:inline">
-        <img class="imgTag" width=240 height=360 :src="movieinfo.poster_path" alt="">
+        <img class="imgTag" width=240 height=360 :src="FetchedMovieDetail.movieInfo.poster_path" alt="">
       </div>
-
       <div class="col-8 description" style="margin-left:4%;">
-        <h1>{{ movieinfo.title }}</h1>
+        <h1>{{ FetchedMovieDetail.movieInfo.title }}</h1>
         <h5 style="color:#ffcc80">RATE</h5> 
-          <h5>{{ movieinfo.avg_vote }} / 10</h5>
+          <h5>{{ FetchedMovieDetail.movieInfo.avg_vote }} / 10</h5>
         <br>
         <h3>Actors</h3>
-        <div style="font-size:13px;" v-for="(actor,idx) in actors" :key='idx'>
+        <div style="font-size:13px;" v-for="(actor,idx) in FetchedMovieDetail.actors" :key='idx'>
           {{ actor }}
         </div>
-        
         <br>
         <h3>Synopsis</h3>
-        <p style="margin-bottom:3%;">{{ movieinfo.description }}</p>
+        <p style="margin-bottom:3%;">{{ FetchedMovieDetail.movieInfo.description }}</p>
       </div>
     </div>
     <div style="margin:5%;"></div>
+    <!-- 영화 정보 출력 끝-->
 
     <!-- 리뷰창 시작 : 리뷰 컴포넌트 불러오기 -->
     <div>
-    <h3 style="margin-left:1%; margin-bottom:2%">댓글 목록 ({{length_of_reviews}}개의 댓글)</h3>
+    <h3 style="margin-left:1%; margin-bottom:2%">댓글 목록 ({{FetchedMovieDetail.length_of_reviews}}개의 댓글)</h3>
+    <!-- for 문 돌면서 리뷰들 하나씩 출력 -->
     <Review
-      v-for="(review, idx) in movieinfo.reviews"
+      v-for="(review, idx) in FetchedMovieDetail.reviews"
       :key="idx"
       :review="review"
-      @comment-created="onCommentCreated"
-      @review-deleted="onReviewDeleted"
     />
     </div>
-
+    <!-- 리뷰 출력하는 for 문 끝 -->
     
-    <!-- 아래는 리뷰 작성하는 form  -->
+    <!-- 리뷰 작성하는 form 시작 -->
       <!-- 별점 -->
       <v-rating
         v-model="star"
@@ -56,34 +51,28 @@
         label="코멘트를 작성해주세요"
         value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
       ></v-textarea>
+  <!-- 리뷰 작성하는 form 끝 -->
   </v-container>
 </template>
 
 
 <script>
-import axios from 'axios'
 import Review from './Review.vue'
+import {mapGetters} from 'vuex'
 
 
 export default {
   components: { Review },
   name:'MovieInfo',
   computed: {
+    ...mapGetters(['FetchedMovieDetail'])
   },
 
   data() {
     return {
-      // 별점 기본 값
       rating: 0,
-      // 별점 선택 값
       star : 0,
-      movieinfo: [],
       content : '',
-      movie : this.movieId,
-      reviewAdded: false,
-      reviewDeleted: false,
-      actors: [],
-      length_of_reviews: 0,
     }
   },
 
@@ -92,65 +81,17 @@ export default {
   },
 
   created() {
-    this.getMovieInfo()
+    this.$store.commit('fetchMovieDetail', this.movieId)
   },
 
-  watch: {
-    movieId() {
-      this.getMovieInfo()
-    },
-
-    reviewAdded() {
-      this.getMovieInfo()
-    },
-
-    reviewDeleted() {
-      this.getMovieInfo()
-    },
-  },
   methods: {
-
-    // 영화와 댓글과 대댓글 반환
-    getMovieInfo() {
-      const myToken = localStorage.getItem('jwt')
-      axios.get(`http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
-      .then(res=>{
-        console.log(res)
-        const acts = res.data.actors.split(',')
-        this.actors = acts.slice(0,5)
-        this.movieinfo = res.data
-        this.length_of_reviews = res.data.reviews.length
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    },
-
-    // 리뷰작성 포스트요청
-      createPost() {
-      const SERVER_URL = `http://localhost:8000/api/v1/movie_community/movies/${this.movieId}/reviews/`
-      const myToken = localStorage.getItem('jwt')
-      const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
-
-      axios.post(SERVER_URL, {content: this.content, star: this.star, movie: this.movieId}, headers)
-        .then(res=> {
-          console.log(res)
-        })
-        .catch(err=> {
-          console.log(err)
-        })
+    createPost() {
+      const content = this.content
+      const star = this.star
+      const movieId = this.movieId
+      this.$store.dispatch('createReview', {content, star, movieId})
       this.star = 0 
       this.content = ''
-      this.reviewAdded = !this.reviewAdded
-    },
-
-    onCommentCreated() {
-      console.log(' comment created : movieInfo')
-      this.reviewAdded = !this.reviewAdded
-    },
-
-    onReviewDeleted() {
-      this.reviewDeleted = !this.reviewDeleted
     },
   },
 
@@ -187,8 +128,5 @@ v-container {
   /* margin: auto; */
   top: 5%;
   /* left: 20%;  */
-}
-.description{
-  
 }
 </style>
