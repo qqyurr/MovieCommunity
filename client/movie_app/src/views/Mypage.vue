@@ -4,25 +4,25 @@
       <hr>
       <h2>내가 작성한 리뷰</h2>
       <br>
+    
+      <div class="mypage-description">영화 창을 클릭하여 리뷰페이지로 이동하세요</div>
 
-      <h3>내가 쓴 리뷰 페이지로 이동할 수 있습니다.</h3>
-        
-    <div  v-for="(review, idx) in myReviews" :key="idx" class='myreview'>
-        <div class='myMovie' @click="goToMovieReviewPage(review.movie[0][0].id)">
-            <div> {{ review.movie[0][0].title }}</div>
-            <div> 내가 준 평균 평점 : {{review.my_vote.star__avg}} </div>
-            <div> 내가 쓴 댓글 수 : {{ review.my_review_count }}</div>
-            <div> 새로운 답글 {{review.newly_added_review_counts}} 개가 달렸어요! </div>
-        </div>
-    </div>
+      <MyPageReview 
+      v-for="(review, idx) in myReviews" :key="idx"
+      class="my-review"
+      :review="review"
+      />
+
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import MyPageReview from '../components/MyPageReview.vue'
 const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/user_reviews/'
 
 export default {
+  components: { MyPageReview },
     name: 'Mypage',
     data: function() {
         return {
@@ -30,10 +30,7 @@ export default {
         }
     },
     methods: {
-        goToMovieReviewPage(movieId) {
-            console.log('gotomovie')
-            this.$router.push(`/movies/${movieId}/reviews/`)
-        },
+     
         getMyReviews(){
             console.log('getMyReviews called')
             const myToken = localStorage.getItem('jwt')
@@ -56,6 +53,11 @@ export default {
 </script>
 
 <style>
+.mypage-description {
+    margin-top: 3%;
+    margin-left: 18px;
+}
+
 .nomargin {
     padding: 0px !important;
     margin: 0px !important;
@@ -63,10 +65,12 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.myreview {
+.my-review {
     border-bottom: 0.5px solid #d8d8d8;
 }
+
 .myMovie {
+    cursor : pointer;
     margin: 2%;
     padding: 4%;
     background-color :#f7f7f7;
