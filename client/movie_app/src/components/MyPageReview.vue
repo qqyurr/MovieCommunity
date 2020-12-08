@@ -48,4 +48,8 @@ export default {
 
 <style scoped>
 
+.movieTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
 </style>

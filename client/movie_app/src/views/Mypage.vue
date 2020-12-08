@@ -6,6 +6,7 @@
       <br>
     
       <div class="mypage-description">영화 창을 클릭하여 리뷰페이지로 이동하세요</div>
+      <!-- <DropDown/> -->
 
       <MyPageReview 
       v-for="(review, idx) in myReviews" :key="idx"
@@ -19,6 +20,7 @@
 <script>
 import axios from 'axios'
 import MyPageReview from '../components/MyPageReview.vue'
+// import DropDown from '../components/DropDown.vue'
 const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/user_reviews/'
 
 export default {
@@ -30,7 +32,6 @@ export default {
         }
     },
     methods: {
-     
         getMyReviews(){
             console.log('getMyReviews called')
             const myToken = localStorage.getItem('jwt')

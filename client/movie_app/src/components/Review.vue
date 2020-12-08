@@ -18,10 +18,10 @@
           </h4>
           <div class='reviewComment' style="background-color:#FAF8F5; border-radius:10px; margin-top:5px; padding-top:5px; padding-left: 20px; padding-bottom:20px;" >
             <div class='starcolor'>     
-              <span v-for="index in (5-review.star)" :key="index">
+              <span v-for="index in (5-review.star)" :key="'a' + index">
                   <i class='far fa-star'></i>
               </span>
-              <span v-for="index in review.star" :key="index">
+              <span v-for="index in review.star" :key="'b' + index">
                   <i class='fas fa-star'></i>
               </span>
             </div>
