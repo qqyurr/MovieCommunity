@@ -3,6 +3,8 @@ import {Authentication} from './state.js'
 
 
 const mutations = {
+  
+
   fetchLoggedInUserData(state) {
     state.loggedInUserData = Authentication.fetchUserData()
   },
@@ -12,6 +14,7 @@ const mutations = {
   },
 
   fetchMovieDetail(state, movieId) {
+
     const myToken = localStorage.getItem('jwt')
     axios.get(`http://localhost:8000/api/v1/movie_community/movies/${movieId}/reviews`, {params:{}, headers: {'Authorization' : 'JWT ' + myToken }})
     .then(res=>{

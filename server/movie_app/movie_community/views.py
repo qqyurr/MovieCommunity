@@ -13,6 +13,7 @@ import urllib.request
 from django.core import serializers
 from django.forms.models import model_to_dict
 from django.db.models import Avg
+import datetime
 
 # Create your views here.
 
@@ -77,6 +78,22 @@ def review_detail(request, movie_id):
         serialized = json.dumps(dict_obj)
         return Response(serialized)
 
+
+@api_view(['PUT'])
+def updateReviewCheckedDate(request, movieId):
+    print('----------------------update checked Time !!!!!!')
+    reviewIds = list(Review.objects.filter(movie_id=movieId).filter(user_id=request.user.id).values_list('id', flat=True))
+    for reviewId in reviewIds:
+        review = get_object_or_404(Review, pk=reviewId)
+        review.checked_time = datetime.datetime.now()
+        review.save()
+        print(review.checked_time)
+    
+    return Response(data={'msg' : 'checked_date updated'})
+
+
+
+
 # @api_view(['GET'])
 # def movie_list(request):
 #     # movies = get_list_or_404(Movie)
@@ -124,13 +141,6 @@ def user_review_list(request):
                 new_comments_count += len(review_comments)
                 review_comments_serializer = ReviewCommentSerializer(review_comments, many=True)
                 new_comments.append(review_comments_serializer.data)
-
-        # review_comments = Review_Comment.objects.filter(review_id=)
-
-        # for myReviewId in my_reviews:
-        #     const reviewCheckedTime = m
-        #     new_comments = Review_Comment.objects.filter(review_id=myReviewId).filter(created_at__gt=)
-
         data = {
             'movie': movie,
             'my_review_count' : my_review_count,
