@@ -35,6 +35,7 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     star = models.IntegerField()
+    checked_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.content

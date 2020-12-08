@@ -2,6 +2,7 @@ from .serializers import MovieSerializer, ReviewSerializer, ReviewCommentSeriali
 from .models import Movie, Review, Review_Comment
 from accounts.models import User
 from django.shortcuts import get_object_or_404, get_list_or_404
+from django.core import serializers
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -11,6 +12,7 @@ import json
 import urllib.request
 from django.core import serializers
 from django.forms.models import model_to_dict
+from django.db.models import Avg
 
 # Create your views here.
 
@@ -103,12 +105,38 @@ def user_review_list(request):
     my_movies_ids = list(Review.objects.filter(user_id=request.user.id).values_list('movie_id', flat=True).distinct())
     
     movies = []
+    # 내가 리뷰를 작성한 영화 아이디들을 for loop
     for movieId in my_movies_ids:
         movie = {Movie.objects.filter(id=movieId).values('id', 'title', 'avg_vote', 'year')}
+        my_vote = Review.objects.filter(user_id=request.user.id).filter(movie_id=movieId).aggregate(Avg('star'))
         my_review_count = Review.objects.filter(user_id=request.user.id).filter(movie_id=movieId).count()
+        reviewIds = list(Review.objects.filter(movie_id=movieId).filter(user_id=request.user.id).values_list('id', flat=True))
+        print('my review ids : ', reviewIds)
+
+        new_comments = []
+        new_comments_count = 0
+        for reviewId in reviewIds:
+            rv = get_object_or_404(Review, pk=reviewId)
+            print(f'rv.checked time : {rv.checked_time}')
+            review_comments = Review_Comment.objects.filter(review_id=reviewId).filter(created_at__gte=rv.checked_time)
+            if len(review_comments) != 0:
+                print(f'number of new comments:  {len(review_comments)}')
+                new_comments_count += len(review_comments)
+                review_comments_serializer = ReviewCommentSerializer(review_comments, many=True)
+                new_comments.append(review_comments_serializer.data)
+
+        # review_comments = Review_Comment.objects.filter(review_id=)
+
+        # for myReviewId in my_reviews:
+        #     const reviewCheckedTime = m
+        #     new_comments = Review_Comment.objects.filter(review_id=myReviewId).filter(created_at__gt=)
+
         data = {
             'movie': movie,
-            'my_review_count' : my_review_count
+            'my_review_count' : my_review_count,
+            'newly_added_review_comments' : new_comments,
+            'newly_added_review_counts' : new_comments_count,
+            'my_vote': my_vote,
         }
         movies.append(data)
     

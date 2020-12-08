@@ -8,11 +8,11 @@
       <h3>내가 쓴 리뷰 페이지로 이동할 수 있습니다.</h3>
         
     <div  v-for="(review, idx) in myReviews" :key="idx" class='myreview'>
-        <div class='myMovie'>
+        <div class='myMovie' @click="goToMovieReviewPage(review.movie[0][0].id)">
             <div> {{ review.movie[0][0].title }}</div>
+            <div> 내가 준 평균 평점 : {{review.my_vote.star__avg}} </div>
             <div> 내가 쓴 댓글 수 : {{ review.my_review_count }}</div>
-            <div> 내가 준 평균 평점 : 추가하기 </div>
-            <div> 내 댓글에 달린 대댓글 수 : 추가하기</div>
+            <div> 새로운 답글 {{review.newly_added_review_counts}} 개가 달렸어요! </div>
         </div>
     </div>
   </div>
@@ -26,10 +26,14 @@ export default {
     name: 'Mypage',
     data: function() {
         return {
-            myReviews: []
+            myReviews: [],
         }
     },
     methods: {
+        goToMovieReviewPage(movieId) {
+            console.log('gotomovie')
+            this.$router.push(`/movies/${movieId}/reviews/`)
+        },
         getMyReviews(){
             console.log('getMyReviews called')
             const myToken = localStorage.getItem('jwt')
