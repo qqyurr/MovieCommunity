@@ -35,12 +35,15 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     star = models.IntegerField()
+    checked_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.content
 
 
 class Review_Comment(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
     review = models.ForeignKey(
         Review, verbose_name=("오리지널 리뷰"), on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,

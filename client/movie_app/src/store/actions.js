@@ -21,6 +21,19 @@ const actions= {
       })
   },
 
+  updateMyReviewCheckedDate(context, movieId) {
+    const SERVER_URL = `http://localhost:8000/api/v1/movie_community/movies/${movieId}/reviewsChecked`
+    const myToken = localStorage.getItem('jwt')
+    const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
+    axios.put(SERVER_URL, {content: ''}, headers)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+
   // 리뷰 업데이트
   updateReview(context, payload) {
     const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${payload.review.id}/`
@@ -62,7 +75,7 @@ const actions= {
     const SERVER_URL = `http://localhost:8000/api/v1/movie_community/reviews/${payload.review.id}/comments/`
     const headers = {headers : {'Authorization' : 'JWT ' + myToken }}
 
-    axios.post(SERVER_URL, {content: payload.commentContent, review: payload.review.id}, headers)
+    axios.post(SERVER_URL, {content: payload.commentContent, review: payload.review.id, movie:payload.movieId}, headers)
         .then(res=>{
           console.log(res)
         })

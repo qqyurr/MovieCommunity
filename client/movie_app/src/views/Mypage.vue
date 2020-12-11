@@ -4,29 +4,31 @@
       <hr>
       <h2>내가 작성한 리뷰</h2>
       <br>
+    
+      <div class="mypage-description">영화 창을 클릭하여 리뷰페이지로 이동하세요</div>
+      <!-- <DropDown/> -->
 
-      <h3>내가 쓴 리뷰 페이지로 이동할 수 있습니다.</h3>
-        
-    <div  v-for="(review, idx) in myReviews" :key="idx" class='myreview'>
-        <div class='myMovie'>
-            <div> {{ review.movie[0][0].title }}</div>
-            <div> 내가 쓴 댓글 수 : {{ review.my_review_count }}</div>
-            <div> 내가 준 평균 평점 : 추가하기 </div>
-            <div> 내 댓글에 달린 대댓글 수 : 추가하기</div>
-        </div>
-    </div>
+      <MyPageReview 
+      v-for="(review, idx) in myReviews" :key="idx"
+      class="my-review"
+      :review="review"
+      />
+
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import MyPageReview from '../components/MyPageReview.vue'
+// import DropDown from '../components/DropDown.vue'
 const SERVER_URL = 'http://127.0.0.1:8000/api/v1/movie_community/user_reviews/'
 
 export default {
+  components: { MyPageReview },
     name: 'Mypage',
     data: function() {
         return {
-            myReviews: []
+            myReviews: [],
         }
     },
     methods: {
@@ -52,6 +54,11 @@ export default {
 </script>
 
 <style>
+.mypage-description {
+    margin-top: 3%;
+    margin-left: 18px;
+}
+
 .nomargin {
     padding: 0px !important;
     margin: 0px !important;
@@ -59,10 +66,12 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.myreview {
+.my-review {
     border-bottom: 0.5px solid #d8d8d8;
 }
+
 .myMovie {
+    cursor : pointer;
     margin: 2%;
     padding: 4%;
     background-color :#f7f7f7;

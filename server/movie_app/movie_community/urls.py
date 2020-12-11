@@ -34,4 +34,7 @@ urlpatterns = [
     # GET : 로그인한 사용자가 리뷰 작성자인지 아닌지 boolean 값 반환
     path('reviews/<int:reviewId>/writer/', views.findWriter),
 
+    # PUT : 유저가 작성한 리뷰를 확인했을 때 checked time 을 현재 시간으로 업데이트
+    path('movies/<int:movieId>/reviewsChecked', views.updateReviewCheckedDate)
+
 ]
