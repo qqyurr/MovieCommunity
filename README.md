@@ -10,7 +10,7 @@
 
 ### 프로젝트 주제 🎈
 
-![image-20210304223756594](READMEassets\image-20210304223756594.png)
+![image-20210304223756594](.\READMEassets\image-20210304223756594.png)
 
 
 
@@ -32,13 +32,13 @@ Python, Django, sqlite3
 
 ### ERD 다이어그램
 
-![movie_erd](READMEassets\movie_erd.jpg)
+![movie_erd](.\READMEassets\movie_erd.jpg)
 
 ### 주요 기능
 
 #### ✨장르별 영화 추천 페이지
 
-![메인](READMEassets\메인.gif)
+![메인](.\READMEassets\메인.gif)
 
 
 
@@ -48,7 +48,7 @@ Python, Django, sqlite3
 
 > 선택지를 고르면 그에 맞는 영화를 추천해줍니다.
 
-![추천](READMEassets\추천.gif)
+![추천](.\READMEassets\추천.gif)
 
 
 
@@ -56,7 +56,7 @@ Python, Django, sqlite3
 
 > autocomplete 기능을 사용하여 서치를 구현하였습니다.
 
-![서치](READMEassets\서치.gif)
+![서치](.\READMEassets\서치.gif)
 
 
 
@@ -64,8 +64,8 @@ Python, Django, sqlite3
 
 > 댓글과 대댓글, 별점을 달 수 있습니다.
 
-![댓글](READMEassets\댓글.gif)
+![댓글](.\READMEassets\댓글.gif)
 
 
 
-![대댓글](READMEassets\대댓글.gif)
+![대댓글](.\READMEassets\대댓글.gif)
