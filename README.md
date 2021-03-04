@@ -1,240 +1,73 @@
-# Movie Object 예시
+# Oh, Young Me
 
-```
-{
-	"id":2,
-	"imdb_title_id":"tt10549312",
-	"title":"Baba Parasi",
-	"year":"2020",
-	"genre":"Comedy",
-	"duration":"116",
-	"country":"Turkey",
-	"language":"Turkish, English",
-	"director":"Selçuk Aydemir",
-	"actors":"Ahmet Kural, Murat Cemcir, Onur Cavit Idin",
-	"description":"description is so long",
-	"avg_vote":"4.6",
-	"poster_path":"https://m.media-amazon.com/images/M/MV5BNmI5ZmM2NDgtMmNjNi00ZjY4LWJmZmYtYWVkNjdhODNiZjdiXkEyXkFqcGdeQXVyMTIxODU0NzI5._V1_UX182_CR0,0,182,268_AL_.jpg",
-	"avg_star":"3.5"
-}
-```
 
-# API 요청 주소
 
-### `http://127.0.0.1:8000/swagger/` 에서도 확인 가능
+### 팀원 👩👩
 
-### 특정 영화의 리뷰 창
+김규연, 조현지
 
-- method : `GET요청`
-- endpoint : /api/v1/movie_community/specific_movies/
-- 응답 예시
-  ```
-  {
-      "id": 3,
-      "title": "Ask Tesadüfleri Sever 2",
-      "year": "2020",
-      ... 중략 ...
-      "avg_star": "",
-      "reviews": [
-          {
-              "id": 2,
-              "content": "해리포터는아즈카반의죄수가최",
-              "movie": 3,
-              "star": 5,
-              "comments": [
-                  {
-                      "id": 4,
-                      "content": "2번리뷰의 1댓글",
-                      "created_at": "2020-11-22T20:01:42.690017+09:00",
-                      "updated_at": "2020-11-22T20:01:42.690043+09:00",
-                      "review": 2
-                  },
-                  {
-                      "id": 5,
-                      "content": "2번리뷰의 2댓글",
-                      "created_at": "2020-11-22T20:01:45.933366+09:00",
-                      "updated_at": "2020-11-22T20:01:45.933472+09:00",
-                      "review": 2
-                  }
-              ]
-          },
-          {
-              "id": 3,
-              "content": "영화안본지오래ㄴ",
-              "movie": 3,
-              "star": 5,
-              "comments": []
-          }
-      ]
-  }
-  ```
 
-## 홈 화면
 
-- method : `GET요청`
-- endpoint : /api/v1/movie_community/movies
-- 응답 예시
-  ```
-  {
-  "comedy_movies": [],
-  "romance_movies": [],
-  "thriller_movies": [],
-  "action_movies": [],
-  "horror_movies": []
-  }
-  ```
+### 프로젝트 주제 🎈
 
----
+![image-20210304223756594](C:\Users\multicampus\AppData\Roaming\Typora\typora-user-images\image-20210304223756594.png)
 
-## 회원가입
 
-- method : `POST`
-- endpoint : /api/v1/movie_community/accounts/signup/
-- request body 예시
 
-  ```
-  {
-    "username":"gyuyeonKim",
-    "password":"password1234",
-    "passwordConfirmation":"password1234"
-  }
-  ```
+"오늘 볼 영화를 내일로 미루지 말자"의 약자 **Oh, Young Me**는 다국적 영화 추천 커뮤니티 서비스입니다.  다국적 영화를 다루는 영화 커뮤니티가 있으면 좋겠다는 생각에 서비스를 기획하게 되었습니다.
 
-- 응답 예시
-  ```
-  {
-  "username":"gyuyeonKim",
-  "today_choice":null
-  }
-  ```
 
----
 
-## 로그인
+### 사용기술🔧
 
-- method : `POST`
-- endpoint : /api/v1/movie_community/accounts/api-token-auth/
-- request body 예시
-  ```
-  {
-    "username":"gyuyeonKim",
-    "password":"password1234"
-  }
-  ```
-- 응답 예시
-  ```
-  {
-  	"token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0LCJ1c2VybmFtZSI6InVzZXI0IiwiZXhwIjoxNjA2MDU2MzIzLCJlbWFpbCI6IiJ9.vYs8-UYpEy1EyUU3OCsJ6kziCS-bp-HnSX4sUmvYTV0"
-  }
-  ```
+**FRONT-END**
 
----
+Vue.js, Vuex, Vuetify, Javascript
 
-## 리뷰 작성
+**BACK-END**
 
-- method : `POST`
-- endpoint : /api/v1/movie_community/reviews/
-- request body 예시
-  ```
-  {
-      "content" : "1111",
-      "movie" : 3,
-      "star" : 5
-  }
-  ```
-- 응답 예시
-  ```
-  {
-      "id": 4,
-      "content": "1111",
-      "movie": 3,
-      "star": 5
-  }
-  ```
+Python, Django, sqlite3
 
----
 
-## 전체 리뷰 리스트
 
-- method : `GET`
-- endpoint : /api/v1/movie_community/reviews/
-- 응답 예시
-  ```
-  [
-    {
-        "content": "반지의 제왕은 내 두개의 탑이 최고",
-        "movie": 2,
-        "star": 5
-    },
-    {
-        "content": "해리포터는아즈카반의죄수가최",
-        "movie": 3,
-        "star": 5
-    }
-  ]
-  ```
+### ERD 다이어그램
 
----
+![movie_erd.jpg](https://github.com/cocojen/movie-community/blob/master/README.assets/movie_erd.jpg?raw=true)
 
-## 로그인 한 유저가 작성한 리뷰 리스트
 
-- method : `GET`
-- endpoint : user_reviews
-- request 필요한 값 없고, headers 에 토큰 값만 넣어주면 됨.
-- 응답 예시:
-  ```
-  [
-      {
-          "id": 1,
-          "content": "반지의 제왕은 내 두개의 탑이 최고",
-          "movie": 2,
-          "star": 5
-      },
-      {
-          "id": 2,
-          "content": "해리포터는아즈카반의죄수가최",
-          "movie": 3,
-          "star": 5
-      },
-      {
-          "id": 3,
-          "content": "영화안본지오래ㄴ",
-          "movie": 3,
-          "star": 5
-      }
-  ]
-  ```
 
----
+### 주요 기능
 
-## 영화 제목 검색 결과 리스트
+#### ✨장르별 영화 추천 페이지
 
-- method : `GET`
-- endpoint : /api/v1/movie_community/search_movie_title/
-- request body 예시
-  ```
-  {
-      "title" : "oh my"
-  }
-  ```
-- 응답 예시
-  ```
-  [
-      {
-          "id": 33,
-          "imdb_title_id": "tt11143108",
-          "title": "Oh My Kadavule",
-          "year": "2020",
-          "genre": "Comedy",
-          "duration": "151",
-          "country": "India",
-          "language": "Tamil",
-          "director": "Ashwath Marimuthu",
-          "actors": "Ashok Selvan, Ritika Singh, Vani Bhojan, Vijay Sethupathi, Sha Ra, M.S. Bhaskar, Gajaraj, Ramesh Thilak, Gautham Menon",
-          "description": "hahahahahahaha",
-          "avg_vote": "8.1",
-          "poster_path": "https://m.media-amazon.com/images/M/MV5BNmI5ZmM2NDgtMmNjNi00ZjY4LWJmZmYtYWVkNjdhODNiZjdiXkEyXkFqcGdeQXVyMTIxODU0NzI5._V1_UX182_CR0,0,182,268_AL_.jpg",
-          "avg_star": ""
-      }
-  ]
-  ```
+![메인](C:\Users\multicampus\Documents\메인.gif)
+
+
+
+
+
+#### ✨ 오늘의 영화 추천 페이지
+
+> 선택지를 고르면 그에 맞는 영화를 추천해줍니다.
+
+![추천](C:\Users\multicampus\Documents\추천.gif)
+
+
+
+#### ✨ 서치
+
+> autocomplete 기능을 사용하여 서치를 구현하였습니다.
+
+![서치](C:\Users\multicampus\Documents\서치.gif)
+
+
+
+#### ✨ 댓글, 대댓글, 별점
+
+> 댓글과 대댓글, 별점을 달 수 있습니다.
+
+![댓글](C:\Users\multicampus\Documents\댓글.gif)
+
+
+
+![대댓글](C:\Users\multicampus\Documents\대댓글.gif)
